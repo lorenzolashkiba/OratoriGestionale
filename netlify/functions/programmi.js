@@ -49,6 +49,20 @@ async function programmiHandler(event, context, user) {
         }
       }
 
+      // Se richiesto, ritorna tutti i programmi con data e oratoreId (per calcolare disponibilita)
+      if (params.allOccupied === 'true') {
+        const programmi = await programmiCollection
+          .find({})
+          .project({ data: 1, oratoreId: 1 })
+          .toArray()
+
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify(programmi),
+        }
+      }
+
       // Altrimenti ritorna solo i programmi dell'utente corrente
       const programmi = await programmiCollection
         .aggregate([

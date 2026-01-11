@@ -73,14 +73,15 @@ export default function Programmi() {
 
   return (
     <Layout>
-      <div className="flex justify-between items-center mb-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">I miei Programmi</h1>
-          <p className="text-gray-600">Gestisci i tuoi programmi personali</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">I miei Programmi</h1>
+          <p className="text-gray-500 mt-1">Gestisci i tuoi programmi personali</p>
         </div>
         <button
           onClick={handleCreate}
-          className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 flex items-center gap-2"
+          className="bg-green-600 text-white px-5 py-2.5 rounded-xl hover:bg-green-700 active:bg-green-800 transition-colors flex items-center justify-center gap-2 font-medium shadow-sm w-full sm:w-auto"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -90,41 +91,53 @@ export default function Programmi() {
       </div>
 
       {pastProgrammi.length > 0 && (
-        <div className="mb-4">
-          <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+        <div className="mb-4 bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+          <label className="flex items-center gap-3 text-sm text-gray-700 cursor-pointer">
             <input
               type="checkbox"
               checked={showPast}
               onChange={(e) => setShowPast(e.target.checked)}
-              className="rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+              className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500"
             />
-            Mostra programmi passati ({pastProgrammi.length})
+            <span>Mostra programmi passati <span className="text-gray-500">({pastProgrammi.length})</span></span>
           </label>
         </div>
       )}
 
       {loading && (
-        <div className="flex justify-center py-12">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600"></div>
+        <div className="flex flex-col items-center justify-center py-16">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-200 border-t-green-600 mb-4"></div>
+          <p className="text-gray-500">Caricamento programmi...</p>
         </div>
       )}
 
       {error && (
-        <div className="bg-red-50 text-red-700 p-4 rounded-lg mb-6">
+        <div className="bg-red-50 border border-red-200 text-red-700 p-4 rounded-xl mb-6 flex items-center gap-3">
+          <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
           Errore: {error}
         </div>
       )}
 
       {!loading && !error && displayProgrammi.length === 0 && (
-        <div className="text-center py-12 text-gray-500">
-          <svg className="w-16 h-16 mx-auto mb-4 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-          </svg>
-          <p>{showPast ? 'Nessun programma trovato' : 'Nessun programma futuro'}</p>
+        <div className="text-center py-16">
+          <div className="bg-gray-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg className="w-10 h-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-1">
+            {showPast ? 'Nessun programma trovato' : 'Nessun programma futuro'}
+          </h3>
+          <p className="text-gray-500 mb-4">Inizia creando il tuo primo programma</p>
           <button
             onClick={handleCreate}
-            className="mt-4 text-green-600 hover:text-green-800 font-medium"
+            className="inline-flex items-center gap-2 text-green-600 hover:text-green-800 font-medium"
           >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
             Crea il tuo primo programma
           </button>
         </div>
@@ -132,10 +145,12 @@ export default function Programmi() {
 
       {!loading && !error && displayProgrammi.length > 0 && (
         <>
-          <p className="text-sm text-gray-500 mb-4">
-            {displayProgrammi.length} programma{displayProgrammi.length !== 1 ? 'i' : ''} {showPast ? 'totale' : 'in programma'}
-          </p>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          <div className="flex items-center justify-between mb-4">
+            <p className="text-sm text-gray-500">
+              <span className="font-medium text-gray-700">{displayProgrammi.length}</span> programma{displayProgrammi.length !== 1 ? 'i' : ''} {showPast ? 'totale' : 'in programma'}
+            </p>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {displayProgrammi.map((programma) => (
               <ProgrammaCard
                 key={programma._id}
@@ -159,25 +174,32 @@ export default function Programmi() {
 
       {deleteConfirm && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl shadow-xl max-w-md w-full p-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-2">Conferma eliminazione</h3>
-            <p className="text-gray-600 mb-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-red-100 p-2 rounded-full">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900">Conferma eliminazione</h3>
+            </div>
+            <p className="text-gray-600 mb-2">
               Sei sicuro di voler eliminare il programma del{' '}
               <strong>{new Date(deleteConfirm.data).toLocaleDateString('it-IT')}</strong>?
             </p>
-            <p className="text-sm text-red-600 mb-4">
+            <p className="text-sm text-red-600 mb-6">
               Questa azione non puo essere annullata.
             </p>
-            <div className="flex justify-end gap-3">
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200"
+                className="w-full sm:w-auto px-5 py-2.5 text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 font-medium transition-colors"
               >
                 Annulla
               </button>
               <button
                 onClick={confirmDelete}
-                className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                className="w-full sm:w-auto px-5 py-2.5 bg-red-600 text-white rounded-xl hover:bg-red-700 font-medium transition-colors"
               >
                 Elimina
               </button>

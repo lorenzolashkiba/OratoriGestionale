@@ -65,6 +65,7 @@ export const oratoriApi = {
 // Programmi API
 export const programmiApi = {
   getAll: () => fetchWithAuth('/programmi'),
+  getAllOccupied: () => fetchWithAuth('/programmi?allOccupied=true'),
   getOccupiedDates: (oratoreId) => fetchWithAuth(`/programmi?oratoreId=${oratoreId}&occupiedOnly=true`),
   create: (data) => fetchWithAuth('/programmi', {
     method: 'POST',
