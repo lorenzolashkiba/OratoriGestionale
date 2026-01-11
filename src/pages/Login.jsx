@@ -34,7 +34,7 @@ export default function Login() {
             </svg>
           </div>
           <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2">
-            Gestionale Oratori
+            Oratori EU2
           </h1>
           <p className="text-blue-100 text-lg">
             Organizza i tuoi programmi in modo semplice
