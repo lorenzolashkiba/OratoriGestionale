@@ -4,14 +4,40 @@ let app = null
 
 function getFirebaseAdmin() {
   if (!app) {
-    const projectId = process.env.VITE_FIREBASE_PROJECT_ID
-    if (!projectId) {
-      throw new Error('VITE_FIREBASE_PROJECT_ID non configurato')
-    }
+    // Usa le credenziali del Service Account
+    const serviceAccount = process.env.FIREBASE_SERVICE_ACCOUNT
 
-    app = admin.initializeApp({
-      projectId: projectId,
-    })
+    if (serviceAccount) {
+      // Se le credenziali sono passate come JSON string
+      const credentials = JSON.parse(serviceAccount)
+      app = admin.initializeApp({
+        credential: admin.credential.cert(credentials),
+      })
+    } else {
+      // Fallback: usa variabili separate
+      const projectId = process.env.VITE_FIREBASE_PROJECT_ID
+      const clientEmail = process.env.FIREBASE_CLIENT_EMAIL
+      const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n')
+
+      if (!projectId) {
+        throw new Error('Firebase non configurato correttamente')
+      }
+
+      if (clientEmail && privateKey) {
+        app = admin.initializeApp({
+          credential: admin.credential.cert({
+            projectId,
+            clientEmail,
+            privateKey,
+          }),
+        })
+      } else {
+        // Solo projectId (per ambienti con ADC configurato)
+        app = admin.initializeApp({
+          projectId,
+        })
+      }
+    }
   }
   return app
 }
