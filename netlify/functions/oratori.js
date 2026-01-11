@@ -1,8 +1,8 @@
 import { ObjectId } from 'mongodb'
 import { connectToDatabase } from './utils/mongodb.js'
-import { requireAuth } from './utils/auth.js'
+import { requireApprovedUser } from './utils/auth.js'
 
-async function oratoriHandler(event, context, user) {
+async function oratoriHandler(event, context, user, dbUser) {
   const { db } = await connectToDatabase()
   const oratoriCollection = db.collection('oratori')
   const usersCollection = db.collection('users')
@@ -19,15 +19,8 @@ async function oratoriHandler(event, context, user) {
   }
 
   try {
-    // Ottieni l'utente corrente dal database
-    const currentUser = await usersCollection.findOne({ googleId: user.uid })
-    if (!currentUser) {
-      return {
-        statusCode: 403,
-        headers,
-        body: JSON.stringify({ message: 'Utente non trovato' }),
-      }
-    }
+    // L'utente corrente viene passato dal middleware requireApprovedUser
+    const currentUser = dbUser
 
     // GET - Ottieni tutti gli oratori o uno specifico
     if (event.httpMethod === 'GET') {
@@ -208,4 +201,4 @@ async function oratoriHandler(event, context, user) {
   }
 }
 
-export const handler = requireAuth(oratoriHandler)
+export const handler = requireApprovedUser(oratoriHandler)

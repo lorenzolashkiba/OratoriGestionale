@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { connectToDatabase } from './utils/mongodb.js'
 import { requireAuth } from './utils/auth.js'
+import { sendApprovalRequestEmail } from './utils/email.js'
 
 async function usersHandler(event, context, user) {
   const { db } = await connectToDatabase()
@@ -23,7 +24,19 @@ async function usersHandler(event, context, user) {
     if (event.httpMethod === 'GET') {
       let userProfile = await usersCollection.findOne({ googleId: user.uid })
 
-      // Se non esiste, crealo
+      // Se utente era stato rifiutato, blocca accesso
+      if (userProfile?.status === 'rejected') {
+        return {
+          statusCode: 403,
+          headers,
+          body: JSON.stringify({
+            message: 'Accesso negato',
+            code: 'ACCESS_DENIED',
+          }),
+        }
+      }
+
+      // Se non esiste, crealo come PENDING
       if (!userProfile) {
         const newUser = {
           googleId: user.uid,
@@ -33,12 +46,27 @@ async function usersHandler(event, context, user) {
           telefono: '',
           congregazione: '',
           localita: '',
-          oratoreId: null, // Collegamento all'oratore
+          oratoreId: null,
+          role: 'pending',
+          status: 'active',
+          requestedAt: new Date(),
+          approvedAt: null,
+          approvedBy: null,
+          rejectedAt: null,
+          rejectedBy: null,
+          rejectionReason: null,
           createdAt: new Date(),
           updatedAt: new Date(),
         }
         await usersCollection.insertOne(newUser)
         userProfile = newUser
+
+        // Invia email di notifica all'admin
+        try {
+          await sendApprovalRequestEmail(newUser)
+        } catch (emailError) {
+          console.error('Errore invio email notifica:', emailError)
+        }
       }
 
       // Se l'utente e' collegato a un oratore, carica i dati dell'oratore
@@ -56,6 +84,19 @@ async function usersHandler(event, context, user) {
 
     // PUT - Aggiorna profilo utente
     if (event.httpMethod === 'PUT') {
+      // Verifica che utente non sia pending
+      const existingUser = await usersCollection.findOne({ googleId: user.uid })
+      if (existingUser?.role === 'pending') {
+        return {
+          statusCode: 403,
+          headers,
+          body: JSON.stringify({
+            message: 'Account in attesa di approvazione',
+            code: 'PENDING_APPROVAL',
+          }),
+        }
+      }
+
       const data = JSON.parse(event.body)
       const { nome, cognome, telefono, congregazione, localita, oratoreId } = data
 

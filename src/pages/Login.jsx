@@ -3,7 +3,7 @@ import { useAuth } from '../context/AuthContext'
 import LoginButton from '../components/auth/LoginButton'
 
 export default function Login() {
-  const { isAuthenticated, loading } = useAuth()
+  const { isAuthenticated, loading, pendingApproval, accessDenied } = useAuth()
 
   if (loading) {
     return (
@@ -43,6 +43,41 @@ export default function Login() {
 
         {/* Login Card */}
         <div className="bg-white rounded-3xl shadow-2xl p-8 sm:p-10">
+
+          {/* Messaggio richiesta in attesa */}
+          {pendingApproval && (
+            <div className="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+              <div className="flex items-start gap-3">
+                <svg className="w-6 h-6 text-yellow-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div>
+                  <h3 className="font-semibold text-yellow-800">Richiesta inviata</h3>
+                  <p className="text-yellow-700 text-sm mt-1">
+                    La tua richiesta di accesso e stata inviata. Riceverai una email quando un amministratore approvera il tuo account.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Messaggio accesso negato */}
+          {accessDenied && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-xl">
+              <div className="flex items-start gap-3">
+                <svg className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                  <h3 className="font-semibold text-red-800">Accesso negato</h3>
+                  <p className="text-red-700 text-sm mt-1">
+                    La tua richiesta di accesso non e stata approvata. Contatta l'amministratore per maggiori informazioni.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
+
           <div className="text-center mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-2">
               Benvenuto

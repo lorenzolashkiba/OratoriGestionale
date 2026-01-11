@@ -1,4 +1,5 @@
 import admin from 'firebase-admin'
+import { connectToDatabase } from './mongodb.js'
 
 let app = null
 
@@ -70,10 +71,86 @@ export function requireAuth(handler) {
     if (!user) {
       return {
         statusCode: 401,
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: 'Non autorizzato' }),
       }
     }
 
     return handler(event, context, user)
+  }
+}
+
+// Ottiene utente con ruolo dal database
+export async function getUserWithRole(uid) {
+  const { db } = await connectToDatabase()
+  const user = await db.collection('users').findOne({ googleId: uid })
+  return user
+}
+
+// Middleware per endpoint che richiedono utenti approvati
+export function requireApprovedUser(handler) {
+  return async (event, context) => {
+    const user = await verifyToken(event.headers.authorization)
+
+    if (!user) {
+      return {
+        statusCode: 401,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Non autorizzato' }),
+      }
+    }
+
+    const dbUser = await getUserWithRole(user.uid)
+
+    if (!dbUser || dbUser.role === 'pending') {
+      return {
+        statusCode: 403,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: 'Account in attesa di approvazione',
+          code: 'PENDING_APPROVAL',
+        }),
+      }
+    }
+
+    if (dbUser.status === 'rejected') {
+      return {
+        statusCode: 403,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          message: 'Accesso negato',
+          code: 'ACCESS_DENIED',
+        }),
+      }
+    }
+
+    return handler(event, context, user, dbUser)
+  }
+}
+
+// Middleware per endpoint solo admin
+export function requireAdmin(handler) {
+  return async (event, context) => {
+    const user = await verifyToken(event.headers.authorization)
+
+    if (!user) {
+      return {
+        statusCode: 401,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Non autorizzato' }),
+      }
+    }
+
+    const dbUser = await getUserWithRole(user.uid)
+
+    if (!dbUser || dbUser.role !== 'admin') {
+      return {
+        statusCode: 403,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: 'Accesso riservato agli amministratori' }),
+      }
+    }
+
+    return handler(event, context, user, dbUser)
   }
 }

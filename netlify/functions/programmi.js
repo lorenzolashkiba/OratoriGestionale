@@ -1,8 +1,8 @@
 import { ObjectId } from 'mongodb'
 import { connectToDatabase } from './utils/mongodb.js'
-import { requireAuth } from './utils/auth.js'
+import { requireApprovedUser } from './utils/auth.js'
 
-async function programmiHandler(event, context, user) {
+async function programmiHandler(event, context, user, dbUser) {
   const { db } = await connectToDatabase()
   const programmiCollection = db.collection('programmi')
   const usersCollection = db.collection('users')
@@ -20,15 +20,8 @@ async function programmiHandler(event, context, user) {
   }
 
   try {
-    // Ottieni l'utente corrente dal database
-    const currentUser = await usersCollection.findOne({ googleId: user.uid })
-    if (!currentUser) {
-      return {
-        statusCode: 403,
-        headers,
-        body: JSON.stringify({ message: 'Utente non trovato' }),
-      }
-    }
+    // L'utente corrente viene passato dal middleware requireApprovedUser
+    const currentUser = dbUser
 
     // GET - Ottieni programmi
     if (event.httpMethod === 'GET') {
@@ -290,4 +283,4 @@ async function programmiHandler(event, context, user) {
   }
 }
 
-export const handler = requireAuth(programmiHandler)
+export const handler = requireApprovedUser(programmiHandler)

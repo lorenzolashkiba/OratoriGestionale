@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Oratori from './pages/Oratori'
 import Programmi from './pages/Programmi'
 import Profilo from './pages/Profilo'
+import Admin from './pages/Admin'
 
 function App() {
   return (
@@ -42,6 +43,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <Profilo />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <Admin />
               </ProtectedRoute>
             }
           />

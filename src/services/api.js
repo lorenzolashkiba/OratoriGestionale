@@ -80,3 +80,26 @@ export const programmiApi = {
     body: JSON.stringify({ id }),
   }),
 }
+
+// Admin API
+export const adminApi = {
+  getPendingUsers: () => fetchWithAuth('/admin/pending'),
+  getAllUsers: (filters = {}) => {
+    const params = new URLSearchParams(filters)
+    const query = params.toString()
+    return fetchWithAuth(`/admin/users${query ? `?${query}` : ''}`)
+  },
+  getStats: () => fetchWithAuth('/admin/stats'),
+  approveUser: (userId) => fetchWithAuth('/admin/approve', {
+    method: 'POST',
+    body: JSON.stringify({ userId }),
+  }),
+  rejectUser: (userId, reason) => fetchWithAuth('/admin/reject', {
+    method: 'POST',
+    body: JSON.stringify({ userId, reason }),
+  }),
+  changeRole: (userId, role) => fetchWithAuth('/admin/role', {
+    method: 'PUT',
+    body: JSON.stringify({ userId, role }),
+  }),
+}
