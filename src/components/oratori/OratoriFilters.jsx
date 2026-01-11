@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { searchDiscorsi } from '../../data/discorsi'
 
 export default function OratoriFilters({ filters, onFilterChange }) {
   const [localFilters, setLocalFilters] = useState(filters)
@@ -17,7 +18,7 @@ export default function OratoriFilters({ filters, onFilterChange }) {
   }
 
   const clearFilters = () => {
-    const empty = { localita: '', nome: '', cognome: '', congregazione: '' }
+    const empty = { localita: '', nome: '', cognome: '', congregazione: '', discorso: '' }
     setLocalFilters(empty)
     onFilterChange(empty)
   }
@@ -115,6 +116,18 @@ export default function OratoriFilters({ filters, onFilterChange }) {
                 placeholder="Cerca per localita..."
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-gray-50 focus:bg-white transition-colors"
               />
+            </div>
+            <div className="sm:col-span-2">
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Discorso (numero o tema)</label>
+              <input
+                type="text"
+                name="discorso"
+                value={localFilters.discorso || ''}
+                onChange={handleChange}
+                placeholder="Es: 42 oppure Армагеддон..."
+                className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-gray-50 focus:bg-white transition-colors"
+              />
+              <p className="text-xs text-gray-400 mt-1">Cerca per numero o testo nel titolo russo</p>
             </div>
           </div>
         </div>

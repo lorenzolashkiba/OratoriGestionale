@@ -4,8 +4,10 @@ import OratoreCard from '../components/oratori/OratoreCard'
 import OratoreForm from '../components/oratori/OratoreForm'
 import OratoriFilters from '../components/oratori/OratoriFilters'
 import { useOratori } from '../hooks/useOratori'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Oratori() {
+  const { t } = useLanguage()
   const {
     oratori,
     loading,
@@ -73,8 +75,8 @@ export default function Oratori() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Oratori</h1>
-          <p className="text-gray-500 mt-1">Lista condivisa di tutti gli oratori</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('oratori.title')}</h1>
+          <p className="text-gray-500 mt-1">{t('oratori.subtitle')}</p>
         </div>
         <button
           onClick={handleCreate}
@@ -83,7 +85,7 @@ export default function Oratori() {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-          Nuovo Oratore
+          {t('oratori.newOratore')}
         </button>
       </div>
 
@@ -92,7 +94,7 @@ export default function Oratori() {
       {loading && (
         <div className="flex flex-col items-center justify-center py-16">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600 mb-4"></div>
-          <p className="text-gray-500">Caricamento oratori...</p>
+          <p className="text-gray-500">{t('common.loading')}</p>
         </div>
       )}
 
@@ -101,7 +103,7 @@ export default function Oratori() {
           <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          Errore: {error}
+          {t('common.error')}: {error}
         </div>
       )}
 
@@ -112,8 +114,8 @@ export default function Oratori() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
             </svg>
           </div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-1">Nessun oratore trovato</h3>
-          <p className="text-gray-500 mb-4">Inizia aggiungendo il primo oratore alla lista</p>
+          <h3 className="text-lg font-semibold text-gray-900 mb-1">{t('oratori.noOratori')}</h3>
+          <p className="text-gray-500 mb-4">{t('oratori.startAdding')}</p>
           <button
             onClick={handleCreate}
             className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-800 font-medium"
@@ -121,7 +123,7 @@ export default function Oratori() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            Aggiungi oratore
+            {t('oratori.addOratore')}
           </button>
         </div>
       )}
@@ -130,10 +132,10 @@ export default function Oratori() {
         <>
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-gray-500">
-              <span className="font-medium text-gray-700">{oratori.length}</span> oratore{oratori.length !== 1 ? 'i' : ''} trovato{oratori.length !== 1 ? 'i' : ''}
+              <span className="font-medium text-gray-700">{oratori.length}</span> {oratori.length !== 1 ? t('oratori.oratoriPlural') : t('oratori.oratore')} {oratori.length !== 1 ? t('oratori.foundPlural') : t('oratori.found')}
             </p>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="space-y-2">
             {oratori.map((oratore) => (
               <OratoreCard
                 key={oratore._id}

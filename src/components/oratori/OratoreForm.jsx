@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { getDiscorsoTitolo } from '../../data/discorsi'
 
 export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
   const [formData, setFormData] = useState({
@@ -183,23 +184,30 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
                 </button>
               </div>
               {formData.discorsi.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-1.5">
+                <div className="mt-3 space-y-2">
                   {formData.discorsi.map((num) => (
-                    <span
+                    <div
                       key={num}
-                      className="bg-blue-100 text-blue-700 text-sm px-3 py-1.5 rounded-full flex items-center gap-1.5 font-medium"
+                      className="bg-blue-50 border border-blue-100 rounded-xl px-3 py-2 flex items-start justify-between gap-2"
                     >
-                      {num}
+                      <div className="flex items-start gap-2 min-w-0">
+                        <span className="bg-blue-600 text-white text-xs font-bold px-2 py-0.5 rounded-full shrink-0">
+                          {num}
+                        </span>
+                        <span className="text-sm text-gray-700 leading-tight">
+                          {getDiscorsoTitolo(num)}
+                        </span>
+                      </div>
                       <button
                         type="button"
                         onClick={() => removeDiscorso(num)}
-                        className="text-blue-500 hover:text-blue-700 p-0.5"
+                        className="text-gray-400 hover:text-red-600 p-1 hover:bg-red-50 rounded-lg transition-colors shrink-0"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                       </button>
-                    </span>
+                    </div>
                   ))}
                 </div>
               )}

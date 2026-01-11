@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import { oratoriApi, programmiApi } from '../../services/api'
 import { useAuth } from '../../context/AuthContext'
 import { getDistanceBetweenLocalities, formatDistance } from '../../services/geocoding'
+import { getDiscorsoTitolo } from '../../data/discorsi'
 
 export default function ProgrammaForm({ programma, onSave, onCancel, loading }) {
   const { profile } = useAuth()
@@ -21,6 +22,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
   const [searchOratore, setSearchOratore] = useState('')
   const [dateError, setDateError] = useState('')
   const [showOratoriList, setShowOratoriList] = useState(false)
+  const [monthlyWarning, setMonthlyWarning] = useState(null)
 
   // Carica tutti gli oratori e le loro date occupate
   useEffect(() => {
@@ -134,6 +136,10 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
       if (selectedOratore && !isOratoreAvailable(selectedOratore._id)) {
         setDateError('Oratore gia occupato in questa data')
       }
+      // Verifica limite mensile
+      if (selectedOratore) {
+        checkMonthlyLimit(selectedOratore._id, value)
+      }
     }
   }
 
@@ -175,6 +181,9 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
     } else {
       setDateError('')
     }
+
+    // Verifica limite mensile
+    checkMonthlyLimit(oratore._id, formData.data)
   }
 
   // Filtra oratori in base alla ricerca
@@ -208,6 +217,36 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
     const currentProgramDate = programma ? new Date(programma.data).toISOString().split('T')[0] : null
     return dates.filter((d) => d !== currentProgramDate)
   }
+
+  // Verifica se l'oratore ha già un discorso nello stesso mese
+  const checkMonthlyLimit = useCallback((oratoreId, dateStr) => {
+    if (!oratoreId || !dateStr) {
+      setMonthlyWarning(null)
+      return
+    }
+
+    const selectedDate = new Date(dateStr)
+    const selectedMonth = selectedDate.getMonth()
+    const selectedYear = selectedDate.getFullYear()
+    const currentProgramDate = programma ? new Date(programma.data).toISOString().split('T')[0] : null
+
+    const dates = allOccupiedDates[oratoreId] || []
+    const otherDatesInMonth = dates.filter((d) => {
+      if (d === currentProgramDate) return false // Escludi la data corrente se stiamo modificando
+      const date = new Date(d)
+      return date.getMonth() === selectedMonth && date.getFullYear() === selectedYear
+    })
+
+    if (otherDatesInMonth.length > 0) {
+      const formattedDates = otherDatesInMonth.map((d) => new Date(d).toLocaleDateString('it-IT')).join(', ')
+      setMonthlyWarning({
+        message: `Questo oratore ha già un discorso questo mese`,
+        dates: formattedDates
+      })
+    } else {
+      setMonthlyWarning(null)
+    }
+  }, [allOccupiedDates, programma])
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -319,6 +358,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
                           setFormData((prev) => ({ ...prev, oratoreId: '', discorso: '' }))
                           setSelectedOratore(null)
                           setDateError('')
+                          setMonthlyWarning(null)
                         }}
                         className="p-2 text-green-600 hover:text-green-800 hover:bg-green-100 rounded-full transition-colors"
                       >
@@ -433,6 +473,24 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
               )}
             </div>
 
+            {/* Warning limite mensile */}
+            {monthlyWarning && (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 flex items-start gap-3">
+                <svg className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <div>
+                  <p className="text-sm font-medium text-amber-800">{monthlyWarning.message}</p>
+                  <p className="text-xs text-amber-600 mt-1">
+                    Altre date: {monthlyWarning.dates}
+                  </p>
+                  <p className="text-xs text-amber-500 mt-1 italic">
+                    In linea di massima ogni oratore dovrebbe fare al massimo un discorso al mese.
+                  </p>
+                </div>
+              </div>
+            )}
+
             {selectedOratore && selectedOratore.discorsi && selectedOratore.discorsi.length > 0 && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
@@ -448,7 +506,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
                   <option value="">Seleziona discorso...</option>
                   {selectedOratore.discorsi.sort((a, b) => a - b).map((num) => (
                     <option key={num} value={num}>
-                      Discorso n. {num}
+                      {num}. {getDiscorsoTitolo(num)}
                     </option>
                   ))}
                 </select>
