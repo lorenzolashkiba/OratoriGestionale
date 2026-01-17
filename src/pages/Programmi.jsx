@@ -3,8 +3,11 @@ import Layout from '../components/layout/Layout'
 import ProgrammaCard from '../components/programmi/ProgrammaCard'
 import ProgrammaForm from '../components/programmi/ProgrammaForm'
 import { useProgrammi } from '../hooks/useProgrammi'
+import { useLanguage } from '../context/LanguageContext'
 
 export default function Programmi() {
+  const { t, language } = useLanguage()
+  const locale = language === 'ru' ? 'ru-RU' : 'it-IT'
   const {
     programmi,
     loading,
@@ -76,8 +79,8 @@ export default function Programmi() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">I miei Programmi</h1>
-          <p className="text-gray-500 mt-1">Gestisci i tuoi programmi personali</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">{t('programmi.title')}</h1>
+          <p className="text-gray-500 mt-1">{t('programmi.subtitle')}</p>
         </div>
         <button
           onClick={handleCreate}
@@ -86,7 +89,7 @@ export default function Programmi() {
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
-          Nuovo Programma
+          {t('programmi.newProgramma')}
         </button>
       </div>
 
@@ -99,7 +102,7 @@ export default function Programmi() {
               onChange={(e) => setShowPast(e.target.checked)}
               className="w-5 h-5 rounded border-gray-300 text-green-600 focus:ring-green-500"
             />
-            <span>Mostra programmi passati <span className="text-gray-500">({pastProgrammi.length})</span></span>
+            <span>{t('programmi.showPast')} <span className="text-gray-500">({pastProgrammi.length})</span></span>
           </label>
         </div>
       )}
@@ -107,7 +110,7 @@ export default function Programmi() {
       {loading && (
         <div className="flex flex-col items-center justify-center py-16">
           <div className="animate-spin rounded-full h-12 w-12 border-4 border-green-200 border-t-green-600 mb-4"></div>
-          <p className="text-gray-500">Caricamento programmi...</p>
+          <p className="text-gray-500">{t('common.loading')}</p>
         </div>
       )}
 
@@ -116,7 +119,7 @@ export default function Programmi() {
           <svg className="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          Errore: {error}
+          {t('common.error')}: {error}
         </div>
       )}
 
@@ -128,9 +131,9 @@ export default function Programmi() {
             </svg>
           </div>
           <h3 className="text-lg font-semibold text-gray-900 mb-1">
-            {showPast ? 'Nessun programma trovato' : 'Nessun programma futuro'}
+            {showPast ? t('programmi.noProgrammi') : t('programmi.noProgrammiFuturi')}
           </h3>
-          <p className="text-gray-500 mb-4">Inizia creando il tuo primo programma</p>
+          <p className="text-gray-500 mb-4">{t('programmi.startCreating')}</p>
           <button
             onClick={handleCreate}
             className="inline-flex items-center gap-2 text-green-600 hover:text-green-800 font-medium"
@@ -138,7 +141,7 @@ export default function Programmi() {
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
             </svg>
-            Crea il tuo primo programma
+            {t('programmi.createFirst')}
           </button>
         </div>
       )}
@@ -147,7 +150,7 @@ export default function Programmi() {
         <>
           <div className="flex items-center justify-between mb-4">
             <p className="text-sm text-gray-500">
-              <span className="font-medium text-gray-700">{displayProgrammi.length}</span> programma{displayProgrammi.length !== 1 ? 'i' : ''} {showPast ? 'totale' : 'in programma'}
+              <span className="font-medium text-gray-700">{displayProgrammi.length}</span> {displayProgrammi.length !== 1 ? t('programmi.programmiPlural') : t('programmi.programma')} {showPast ? t('programmi.totale') : t('programmi.inProgramma')}
             </p>
           </div>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -181,27 +184,27 @@ export default function Programmi() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                 </svg>
               </div>
-              <h3 className="text-lg font-bold text-gray-900">Conferma eliminazione</h3>
+              <h3 className="text-lg font-bold text-gray-900">{t('programmi.confirmDelete')}</h3>
             </div>
             <p className="text-gray-600 mb-2">
-              Sei sicuro di voler eliminare il programma del{' '}
-              <strong>{new Date(deleteConfirm.data).toLocaleDateString('it-IT')}</strong>?
+              {t('programmi.confirmDeleteText')}{' '}
+              <strong>{new Date(deleteConfirm.data).toLocaleDateString(locale)}</strong>?
             </p>
             <p className="text-sm text-red-600 mb-6">
-              Questa azione non puo essere annullata.
+              {t('oratori.deleteWarning')}
             </p>
             <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
               <button
                 onClick={() => setDeleteConfirm(null)}
                 className="w-full sm:w-auto px-5 py-2.5 text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 font-medium transition-colors"
               >
-                Annulla
+                {t('common.cancel')}
               </button>
               <button
                 onClick={confirmDelete}
                 className="w-full sm:w-auto px-5 py-2.5 bg-red-600 text-white rounded-xl hover:bg-red-700 font-medium transition-colors"
               >
-                Elimina
+                {t('common.delete')}
               </button>
             </div>
           </div>

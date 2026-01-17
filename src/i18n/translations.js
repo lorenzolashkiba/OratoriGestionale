@@ -34,10 +34,20 @@ export const translations = {
     home: {
       title: 'Benvenuto',
       subtitle: 'Gestionale Oratori EU2',
+      greeting: 'Ciao',
+      heroText: 'Gestisci oratori e programmi in modo semplice e veloce.',
       quickActions: 'Azioni rapide',
       viewOratori: 'Visualizza Oratori',
       viewProgrammi: 'Gestisci Programmi',
       viewProfile: 'Il tuo Profilo',
+      completeProfile: 'Completa il tuo profilo',
+      completeProfileHint: 'Aggiungi la tua congregazione e altri dati per sfruttare tutte le funzionalità.',
+      goToProfile: 'Vai al profilo',
+      oratoriDesc: 'Gestisci la lista condivisa degli oratori',
+      programmiDesc: 'Crea e gestisci i tuoi programmi',
+      profiloDesc: 'Modifica i tuoi dati personali',
+      linkedAsSpeaker: 'Sei collegato come oratore',
+      discorsiAvailable: 'discorsi disponibili',
     },
 
     // Oratori
@@ -74,7 +84,7 @@ export const translations = {
 
       // Delete confirmation
       confirmDelete: 'Conferma eliminazione',
-      confirmDeleteText: "Sei sicuro di voler eliminare l'oratore",
+      deleteMessage: "Sei sicuro di voler eliminare l'oratore",
       deleteWarning: 'Questa azione non può essere annullata.',
 
       // Errors
@@ -222,10 +232,20 @@ export const translations = {
     home: {
       title: 'Добро пожаловать',
       subtitle: 'Система управления ораторами EU2',
+      greeting: 'Привет',
+      heroText: 'Управляйте ораторами и программами просто и быстро.',
       quickActions: 'Быстрые действия',
       viewOratori: 'Просмотр ораторов',
       viewProgrammi: 'Управление программами',
       viewProfile: 'Ваш профиль',
+      completeProfile: 'Заполните профиль',
+      completeProfileHint: 'Добавьте своё собрание и другие данные для полного использования функций.',
+      goToProfile: 'Перейти к профилю',
+      oratoriDesc: 'Управление общим списком ораторов',
+      programmiDesc: 'Создание и управление вашими программами',
+      profiloDesc: 'Редактирование личных данных',
+      linkedAsSpeaker: 'Вы зарегистрированы как оратор',
+      discorsiAvailable: 'доступных речей',
     },
 
     // Oratori
@@ -262,7 +282,7 @@ export const translations = {
 
       // Delete confirmation
       confirmDelete: 'Подтверждение удаления',
-      confirmDeleteText: 'Вы уверены, что хотите удалить оратора',
+      deleteMessage: 'Вы уверены, что хотите удалить оратора',
       deleteWarning: 'Это действие нельзя отменить.',
 
       // Errors

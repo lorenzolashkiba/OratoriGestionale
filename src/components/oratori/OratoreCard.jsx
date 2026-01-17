@@ -1,12 +1,16 @@
 import { useState } from 'react'
 import { getDiscorsoTitolo } from '../../data/discorsi'
+import { useLanguage } from '../../context/LanguageContext'
 
 export default function OratoreCard({ oratore, onEdit, onDelete }) {
+  const { t, language } = useLanguage()
   const [expanded, setExpanded] = useState(false)
+
+  const locale = language === 'ru' ? 'ru-RU' : 'it-IT'
 
   const formatDate = (date) => {
     if (!date) return '-'
-    return new Date(date).toLocaleDateString('it-IT')
+    return new Date(date).toLocaleDateString(locale)
   }
 
   return (
@@ -58,7 +62,7 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
               <svg className="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
-              <span className="text-xs font-medium text-amber-700">Mese</span>
+              <span className="text-xs font-medium text-amber-700">{t('oratori.questoMese')}</span>
             </div>
           )}
           {/* Contatore discorsi */}
@@ -77,7 +81,7 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
           <button
             onClick={() => onEdit(oratore)}
             className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-            title="Modifica"
+            title={t('common.edit')}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
@@ -86,7 +90,7 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
           <button
             onClick={() => onDelete(oratore)}
             className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-            title="Elimina"
+            title={t('common.delete')}
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -137,16 +141,16 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
                 </div>
               )}
               {!oratore.telefono && !oratore.email && !oratore.localita && (
-                <p className="text-sm text-gray-400 italic">Nessun contatto disponibile</p>
+                <p className="text-sm text-gray-400 italic">{t('oratori.noContatti')}</p>
               )}
             </div>
 
             {/* Date */}
             <div className="text-xs text-gray-400 space-y-1 sm:text-right">
-              <p>Creato: {formatDate(oratore.createdAt)}</p>
-              <p>Aggiornato: {formatDate(oratore.updatedAt)}</p>
+              <p>{t('common.created')}: {formatDate(oratore.createdAt)}</p>
+              <p>{t('common.updated')}: {formatDate(oratore.updatedAt)}</p>
               {oratore.createdByName && (
-                <p>Da: {oratore.createdByName}</p>
+                <p>{t('common.by')}: {oratore.createdByName}</p>
               )}
             </div>
           </div>
@@ -158,7 +162,7 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                 </svg>
-                Programmi futuri ({oratore.programmiFuturi.length})
+                {t('oratori.programmiFuturi')} ({oratore.programmiFuturi.length})
               </p>
               <div className="space-y-1.5">
                 {oratore.programmiFuturi
@@ -166,7 +170,7 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
                   .map((p) => (
                     <div key={p._id} className="flex items-center gap-2 text-xs bg-green-50 border border-green-100 rounded-lg px-2.5 py-1.5">
                       <span className="font-semibold text-green-700">
-                        {new Date(p.data).toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short' })}
+                        {new Date(p.data).toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' })}
                       </span>
                       {p.discorso && (
                         <>
@@ -189,7 +193,7 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
                 <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
-                Questo mese
+                {t('oratori.questoMese')}
               </p>
               <div className="space-y-1.5">
                 {oratore.programmiQuestoMese
@@ -198,7 +202,7 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
                   .map((p) => (
                     <div key={p._id} className="flex items-center gap-2 text-xs bg-amber-50 border border-amber-100 rounded-lg px-2.5 py-1.5">
                       <span className="font-semibold text-amber-700">
-                        {new Date(p.data).toLocaleDateString('it-IT', { weekday: 'short', day: 'numeric', month: 'short' })}
+                        {new Date(p.data).toLocaleDateString(locale, { weekday: 'short', day: 'numeric', month: 'short' })}
                       </span>
                       {p.discorso && (
                         <>
@@ -218,7 +222,7 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
           {oratore.discorsi && oratore.discorsi.length > 0 && (
             <div className="mt-3 pt-3 border-t border-gray-200">
               <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
-                Discorsi ({oratore.discorsi.length})
+                {t('oratori.discorsi')} ({oratore.discorsi.length})
               </p>
               <div className="space-y-1.5">
                 {oratore.discorsi.sort((a, b) => a - b).map((discorso) => (

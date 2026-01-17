@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { searchDiscorsi } from '../../data/discorsi'
+import { useLanguage } from '../../context/LanguageContext'
 
 export default function OratoriFilters({ filters, onFilterChange }) {
+  const { t } = useLanguage()
   const [localFilters, setLocalFilters] = useState(filters)
   const [isExpanded, setIsExpanded] = useState(false)
 
@@ -40,9 +42,9 @@ export default function OratoriFilters({ filters, onFilterChange }) {
             </svg>
           </div>
           <div>
-            <h3 className="font-semibold text-gray-900">Filtra oratori</h3>
+            <h3 className="font-semibold text-gray-900">{t('filters.title')}</h3>
             {activeFiltersCount > 0 && (
-              <p className="text-sm text-blue-600">{activeFiltersCount} filtro/i attivo/i</p>
+              <p className="text-sm text-blue-600">{activeFiltersCount} {t('filters.activeFilters')}</p>
             )}
           </div>
         </div>
@@ -55,7 +57,7 @@ export default function OratoriFilters({ filters, onFilterChange }) {
               }}
               className="text-sm text-red-600 hover:text-red-800 font-medium px-3 py-1 rounded-lg hover:bg-red-50 transition-colors"
             >
-              Cancella
+              {t('filters.clear')}
             </button>
           )}
           <svg
@@ -74,60 +76,60 @@ export default function OratoriFilters({ filters, onFilterChange }) {
         <div className="px-4 pb-4 pt-2 border-t border-gray-100">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Nome</label>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">{t('oratori.nome')}</label>
               <input
                 type="text"
                 name="nome"
                 value={localFilters.nome}
                 onChange={handleChange}
-                placeholder="Cerca per nome..."
+                placeholder={t('filters.searchByName')}
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-gray-50 focus:bg-white transition-colors"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Cognome</label>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">{t('oratori.cognome')}</label>
               <input
                 type="text"
                 name="cognome"
                 value={localFilters.cognome}
                 onChange={handleChange}
-                placeholder="Cerca per cognome..."
+                placeholder={t('filters.searchBySurname')}
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-gray-50 focus:bg-white transition-colors"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Congregazione</label>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">{t('oratori.congregazione')}</label>
               <input
                 type="text"
                 name="congregazione"
                 value={localFilters.congregazione}
                 onChange={handleChange}
-                placeholder="Cerca per congregazione..."
+                placeholder={t('filters.searchByCongregazione')}
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-gray-50 focus:bg-white transition-colors"
               />
             </div>
             <div>
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Localita</label>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">{t('oratori.localita')}</label>
               <input
                 type="text"
                 name="localita"
                 value={localFilters.localita}
                 onChange={handleChange}
-                placeholder="Cerca per localita..."
+                placeholder={t('filters.searchByLocalita')}
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-gray-50 focus:bg-white transition-colors"
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">Discorso (numero o tema)</label>
+              <label className="block text-xs font-medium text-gray-500 uppercase tracking-wide mb-1.5">{t('filters.searchByDiscorso')}</label>
               <input
                 type="text"
                 name="discorso"
                 value={localFilters.discorso || ''}
                 onChange={handleChange}
-                placeholder="Es: 42 oppure Армагеддон..."
+                placeholder={t('filters.searchByDiscorsoPlaceholder')}
                 className="w-full px-3 py-2.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-gray-50 focus:bg-white transition-colors"
               />
-              <p className="text-xs text-gray-400 mt-1">Cerca per numero o testo nel titolo russo</p>
+              <p className="text-xs text-gray-400 mt-1">{t('filters.searchByDiscorsoHint')}</p>
             </div>
           </div>
         </div>

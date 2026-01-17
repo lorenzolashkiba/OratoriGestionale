@@ -6,6 +6,7 @@ import { useLanguage } from '../../context/LanguageContext'
 // Componente bandiera
 function FlagIcon({ country }) {
   if (country === 'it') {
+    // Bandiera italiana: verde-bianco-rosso (verticale)
     return (
       <svg className="w-5 h-5 rounded-sm overflow-hidden" viewBox="0 0 640 480">
         <g fillRule="evenodd" strokeWidth="1pt">
@@ -16,11 +17,12 @@ function FlagIcon({ country }) {
       </svg>
     )
   }
+  // Bandiera russa: bianco-blu-rosso (orizzontale, dall'alto verso il basso)
   return (
     <svg className="w-5 h-5 rounded-sm overflow-hidden" viewBox="0 0 640 480">
       <g fillRule="evenodd" strokeWidth="1pt">
-        <path fill="#fff" d="M0 0h640v480H0z"/>
-        <path fill="#0039a6" d="M0 0h640v160H0z"/>
+        <path fill="#fff" d="M0 0h640v160H0z"/>
+        <path fill="#0039a6" d="M0 160h640v160H0z"/>
         <path fill="#d52b1e" d="M0 320h640v160H0z"/>
       </g>
     </svg>
@@ -111,9 +113,9 @@ export default function Navbar() {
               className="flex items-center gap-2 px-3 py-1.5 rounded-lg hover:bg-gray-100 transition-colors"
               title={language === 'it' ? 'Switch to Russian' : 'Переключить на итальянский'}
             >
-              <FlagIcon country={language === 'it' ? 'ru' : 'it'} />
+              <FlagIcon country={language} />
               <span className="text-xs font-medium text-gray-600">
-                {language === 'it' ? 'RU' : 'IT'}
+                {language === 'it' ? 'IT' : 'RU'}
               </span>
             </button>
 
@@ -186,9 +188,9 @@ export default function Navbar() {
             {/* Language toggle mobile */}
             <button
               onClick={toggleLanguage}
-              className="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-gray-600 hover:bg-gray-50 active:bg-gray-100 transition-all"
+              className="flex items-center gap-3 px-4 py-3 rounded-xl text-base font-medium text-gray-600 hover:bg-gray-50 active:bg-gray-100 transition-all w-full"
             >
-              <FlagIcon country={language === 'it' ? 'ru' : 'it'} />
+              <FlagIcon country={language} />
               {language === 'it' ? 'Passa al Russo' : 'Переключить на итальянский'}
             </button>
           </div>

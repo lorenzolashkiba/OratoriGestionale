@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useLanguage } from '../context/LanguageContext'
 import Layout from '../components/layout/Layout'
 
 export default function Home() {
   const { profile, user } = useAuth()
+  const { t } = useLanguage()
 
   const userName = profile?.nome || user?.displayName?.split(' ')[0] || 'Utente'
 
@@ -15,10 +17,10 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
               <h1 className="text-2xl sm:text-3xl font-bold mb-2">
-                Ciao, {userName}!
+                {t('home.greeting')}, {userName}!
               </h1>
               <p className="text-blue-100">
-                Gestisci oratori e programmi in modo semplice e veloce.
+                {t('home.heroText')}
               </p>
             </div>
             {user?.photoURL && (
@@ -41,15 +43,15 @@ export default function Home() {
                 </svg>
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-amber-800">Completa il tuo profilo</p>
+                <p className="font-semibold text-amber-800">{t('home.completeProfile')}</p>
                 <p className="text-sm text-amber-700 mt-0.5">
-                  Aggiungi la tua congregazione e altri dati per sfruttare tutte le funzionalita.
+                  {t('home.completeProfileHint')}
                 </p>
                 <Link
                   to="/profilo"
                   className="inline-flex items-center gap-1 mt-2 text-sm font-medium text-amber-700 hover:text-amber-900"
                 >
-                  Vai al profilo
+                  {t('home.goToProfile')}
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
@@ -73,10 +75,10 @@ export default function Home() {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 group-hover:text-blue-700 transition-colors">
-                  Oratori
+                  {t('nav.oratori')}
                 </h2>
                 <p className="text-gray-500 text-sm mt-1">
-                  Gestisci la lista condivisa degli oratori
+                  {t('home.oratoriDesc')}
                 </p>
               </div>
             </div>
@@ -94,10 +96,10 @@ export default function Home() {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 group-hover:text-green-700 transition-colors">
-                  Programmi
+                  {t('nav.programmi')}
                 </h2>
                 <p className="text-gray-500 text-sm mt-1">
-                  Crea e gestisci i tuoi programmi
+                  {t('home.programmiDesc')}
                 </p>
               </div>
             </div>
@@ -115,10 +117,10 @@ export default function Home() {
               </div>
               <div>
                 <h2 className="text-lg font-semibold text-gray-900 group-hover:text-purple-700 transition-colors">
-                  Profilo
+                  {t('nav.profilo')}
                 </h2>
                 <p className="text-gray-500 text-sm mt-1">
-                  Modifica i tuoi dati personali
+                  {t('home.profiloDesc')}
                 </p>
               </div>
             </div>
@@ -135,14 +137,14 @@ export default function Home() {
                 </svg>
               </div>
               <div className="flex-1">
-                <p className="font-semibold text-blue-900">Sei collegato come oratore</p>
+                <p className="font-semibold text-blue-900">{t('home.linkedAsSpeaker')}</p>
                 <p className="text-sm text-blue-700 mt-1">
                   {profile.oratore.cognome} {profile.oratore.nome}
                   {profile.oratore.congregazione && ` - ${profile.oratore.congregazione}`}
                 </p>
                 {profile.oratore.discorsi?.length > 0 && (
                   <p className="text-xs text-blue-600 mt-1">
-                    {profile.oratore.discorsi.length} discorsi disponibili
+                    {profile.oratore.discorsi.length} {t('home.discorsiAvailable')}
                   </p>
                 )}
               </div>

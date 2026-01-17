@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
 import { getDiscorsoTitolo } from '../../data/discorsi'
+import { useLanguage } from '../../context/LanguageContext'
 
 export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     nome: '',
     cognome: '',
@@ -61,7 +63,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
         {/* Header */}
         <div className="sticky top-0 bg-white border-b border-gray-100 px-4 sm:px-6 py-4 flex items-center justify-between rounded-t-2xl">
           <h2 className="text-xl font-bold text-gray-900">
-            {oratore ? 'Modifica Oratore' : 'Nuovo Oratore'}
+            {oratore ? t('oratori.editOratore') : t('oratori.newOratore')}
           </h2>
           <button
             type="button"
@@ -79,7 +81,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Nome *
+                  {t('oratori.nome')} *
                 </label>
                 <input
                   type="text"
@@ -92,7 +94,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Cognome *
+                  {t('oratori.cognome')} *
                 </label>
                 <input
                   type="text"
@@ -107,7 +109,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Email
+                {t('oratori.email')}
               </label>
               <input
                 type="email"
@@ -121,7 +123,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Telefono
+                {t('oratori.telefono')}
               </label>
               <input
                 type="tel"
@@ -136,7 +138,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Congregazione
+                  {t('oratori.congregazione')}
                 </label>
                 <input
                   type="text"
@@ -148,7 +150,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                  Località
+                  {t('oratori.localita')}
                 </label>
                 <input
                   type="text"
@@ -162,7 +164,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
-                Discorsi (1-194)
+                {t('oratori.discorsiRange')}
               </label>
               <div className="flex gap-2">
                 <input
@@ -172,7 +174,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
                   value={discorsoInput}
                   onChange={(e) => setDiscorsoInput(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addDiscorso())}
-                  placeholder="N. discorso"
+                  placeholder={t('oratori.discorsoNum')}
                   className="flex-1 px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
                 />
                 <button
@@ -180,7 +182,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
                   onClick={addDiscorso}
                   className="px-5 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 active:bg-blue-800 transition-colors font-medium shrink-0"
                 >
-                  Aggiungi
+                  {t('common.add')}
                 </button>
               </div>
               {formData.discorsi.length > 0 && (
@@ -212,7 +214,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
                 </div>
               )}
               {formData.discorsi.length > 0 && (
-                <p className="mt-2 text-xs text-gray-500">{formData.discorsi.length} discorso{formData.discorsi.length !== 1 ? 'i' : ''} selezionato{formData.discorsi.length !== 1 ? 'i' : ''}</p>
+                <p className="mt-2 text-xs text-gray-500">{formData.discorsi.length} {t('oratori.discorsiSelected')}</p>
               )}
             </div>
 
@@ -222,7 +224,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
                 onClick={onCancel}
                 className="w-full sm:w-auto px-5 py-2.5 text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 font-medium transition-colors"
               >
-                Annulla
+                {t('common.cancel')}
               </button>
               <button
                 type="submit"
@@ -232,10 +234,10 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
                 {loading ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                    Salvataggio...
+                    {t('common.loading')}
                   </>
                 ) : (
-                  'Salva'
+                  t('common.save')
                 )}
               </button>
             </div>

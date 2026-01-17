@@ -11,13 +11,19 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
   const [pendingApproval, setPendingApproval] = useState(false)
   const [accessDenied, setAccessDenied] = useState(false)
+  const [authError, setAuthError] = useState(null)
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
+      console.log('Auth state changed:', firebaseUser?.email)
       setUser(firebaseUser)
+      setAuthError(null)
+
       if (firebaseUser) {
         try {
+          console.log('Fetching user profile...')
           const profileData = await usersApi.getProfile()
+          console.log('Profile loaded:', profileData)
           setProfile(profileData)
 
           // Verifica stato approvazione
@@ -47,11 +53,16 @@ export function AuthProvider({ children }) {
             setPendingApproval(true)
           } else if (error.message?.includes('ACCESS_DENIED') || error.code === 'ACCESS_DENIED') {
             setAccessDenied(true)
+          } else {
+            // Mostra errore generico
+            setAuthError(error.message || 'Errore durante il caricamento del profilo')
           }
           setProfile(null)
         }
       } else {
         setProfile(null)
+        setPendingApproval(false)
+        setAccessDenied(false)
       }
       setLoading(false)
     })
@@ -110,6 +121,7 @@ export function AuthProvider({ children }) {
     isAdmin: profile?.role === 'admin',
     pendingApproval,
     accessDenied,
+    authError,
   }
 
   return (
