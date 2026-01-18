@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 import Layout from '../components/layout/Layout'
 import OratoreCard from '../components/oratori/OratoreCard'
 import OratoreForm from '../components/oratori/OratoreForm'
@@ -23,6 +23,33 @@ export default function Oratori() {
   const [editingOratore, setEditingOratore] = useState(null)
   const [saving, setSaving] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState(null)
+  const [collapsedSections, setCollapsedSections] = useState({})
+
+  // Raggruppa oratori per congregazione
+  const { groupedOratori, sortedCongregazioni } = useMemo(() => {
+    const grouped = oratori.reduce((acc, oratore) => {
+      const cong = oratore.congregazione || ''
+      if (!acc[cong]) acc[cong] = []
+      acc[cong].push(oratore)
+      return acc
+    }, {})
+
+    // Ordina congregazioni alfabeticamente, '' alla fine
+    const sorted = Object.keys(grouped).sort((a, b) => {
+      if (a === '') return 1
+      if (b === '') return -1
+      return a.localeCompare(b)
+    })
+
+    return { groupedOratori: grouped, sortedCongregazioni: sorted }
+  }, [oratori])
+
+  const toggleSection = (cong) => {
+    setCollapsedSections((prev) => ({
+      ...prev,
+      [cong]: !prev[cong],
+    }))
+  }
 
   const handleCreate = () => {
     setEditingOratore(null)
@@ -135,15 +162,59 @@ export default function Oratori() {
               <span className="font-medium text-gray-700">{oratori.length}</span> {oratori.length !== 1 ? t('oratori.oratoriPlural') : t('oratori.oratore')} {oratori.length !== 1 ? t('oratori.foundPlural') : t('oratori.found')}
             </p>
           </div>
-          <div className="space-y-2">
-            {oratori.map((oratore) => (
-              <OratoreCard
-                key={oratore._id}
-                oratore={oratore}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-              />
-            ))}
+          <div className="space-y-4">
+            {sortedCongregazioni.map((cong) => {
+              const congregazioneOratori = groupedOratori[cong]
+              const isCollapsed = collapsedSections[cong]
+              const displayName = cong || t('oratori.noCongregazione')
+
+              return (
+                <div key={cong || '_no_cong'} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                  {/* Header congregazione */}
+                  <button
+                    onClick={() => toggleSection(cong)}
+                    className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="bg-blue-100 p-2 rounded-lg">
+                        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                      </div>
+                      <div className="text-left">
+                        <h3 className="font-semibold text-gray-900">{displayName}</h3>
+                        <p className="text-sm text-gray-500">
+                          {congregazioneOratori.length} {congregazioneOratori.length !== 1 ? t('oratori.oratoriPlural') : t('oratori.oratore')}
+                        </p>
+                      </div>
+                    </div>
+                    <svg
+                      className={`w-5 h-5 text-gray-400 transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </button>
+
+                  {/* Lista oratori */}
+                  {!isCollapsed && (
+                    <div className="divide-y divide-gray-100">
+                      {congregazioneOratori.map((oratore) => (
+                        <OratoreCard
+                          key={oratore._id}
+                          oratore={oratore}
+                          onEdit={handleEdit}
+                          onDelete={handleDelete}
+                          grouped
+                        />
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
           </div>
         </>
       )}

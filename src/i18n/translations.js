@@ -91,6 +91,9 @@ export const translations = {
       errorLoading: 'Errore durante il caricamento',
       errorSaving: 'Errore durante il salvataggio',
       errorDeleting: 'Errore durante eliminazione',
+
+      // Grouping
+      noCongregazione: 'Senza congregazione',
     },
 
     // Filters
@@ -289,6 +292,9 @@ export const translations = {
       errorLoading: 'Ошибка при загрузке',
       errorSaving: 'Ошибка при сохранении',
       errorDeleting: 'Ошибка при удалении',
+
+      // Grouping
+      noCongregazione: 'Без собрания',
     },
 
     // Filters

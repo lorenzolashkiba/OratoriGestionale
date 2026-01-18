@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { getDiscorsoTitolo } from '../../data/discorsi'
 import { useLanguage } from '../../context/LanguageContext'
 
-export default function OratoreCard({ oratore, onEdit, onDelete }) {
+export default function OratoreCard({ oratore, onEdit, onDelete, grouped = false }) {
   const { t, language } = useLanguage()
   const [expanded, setExpanded] = useState(false)
 
@@ -13,8 +13,13 @@ export default function OratoreCard({ oratore, onEdit, onDelete }) {
     return new Date(date).toLocaleDateString(locale)
   }
 
+  // Stili diversi se raggruppato (dentro una sezione) o standalone
+  const containerClass = grouped
+    ? 'bg-white hover:bg-gray-50 transition-colors'
+    : 'bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-200'
+
   return (
-    <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden hover:shadow-md transition-all duration-200">
+    <div className={containerClass}>
       {/* Header compatto - sempre visibile */}
       <div
         className="flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors"
