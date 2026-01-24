@@ -14,11 +14,11 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
     note: '',
   })
   const [oratori, setOratori] = useState([])
-  const [oratoriWithDistance, setOratoriWithDistance] = useState([])
   const [selectedOratore, setSelectedOratore] = useState(null)
+  const [selectedOratoreDistance, setSelectedOratoreDistance] = useState(null)
   const [allOccupiedDates, setAllOccupiedDates] = useState({}) // { oratoreId: [dates] }
   const [loadingOratori, setLoadingOratori] = useState(true)
-  const [loadingDistances, setLoadingDistances] = useState(false)
+  const [loadingDistance, setLoadingDistance] = useState(false)
   const [searchOratore, setSearchOratore] = useState('')
   const [dateError, setDateError] = useState('')
   const [showOratoriList, setShowOratoriList] = useState(false)
@@ -55,47 +55,23 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
     fetchData()
   }, [])
 
-  // Calcola le distanze quando abbiamo gli oratori e la localita dell'utente
-  useEffect(() => {
-    const calculateDistances = async () => {
-      if (!oratori.length || !profile?.localita) {
-        setOratoriWithDistance(oratori.map((o) => ({ ...o, distance: null })))
-        return
-      }
-
-      setLoadingDistances(true)
-
-      // Calcola le distanze in batch con un piccolo delay per rispettare i limiti di Nominatim
-      const results = []
-      for (const oratore of oratori) {
-        if (oratore.localita) {
-          try {
-            const distance = await getDistanceBetweenLocalities(profile.localita, oratore.localita)
-            results.push({ ...oratore, distance })
-          } catch {
-            results.push({ ...oratore, distance: null })
-          }
-          // Piccolo delay per non sovraccaricare Nominatim (max 1 request/second)
-          await new Promise((resolve) => setTimeout(resolve, 100))
-        } else {
-          results.push({ ...oratore, distance: null })
-        }
-      }
-
-      // Ordina per distanza (null alla fine)
-      results.sort((a, b) => {
-        if (a.distance === null && b.distance === null) return 0
-        if (a.distance === null) return 1
-        if (b.distance === null) return -1
-        return a.distance - b.distance
-      })
-
-      setOratoriWithDistance(results)
-      setLoadingDistances(false)
+  // Calcola la distanza solo per l'oratore selezionato
+  const calculateDistanceForOratore = useCallback(async (oratore) => {
+    if (!profile?.localita || !oratore?.localita) {
+      setSelectedOratoreDistance(null)
+      return
     }
 
-    calculateDistances()
-  }, [oratori, profile?.localita])
+    setLoadingDistance(true)
+    try {
+      const distance = await getDistanceBetweenLocalities(profile.localita, oratore.localita)
+      setSelectedOratoreDistance(distance)
+    } catch {
+      setSelectedOratoreDistance(null)
+    } finally {
+      setLoadingDistance(false)
+    }
+  }, [profile?.localita])
 
   useEffect(() => {
     if (programma) {
@@ -172,6 +148,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
   const handleSelectOratore = (oratore) => {
     setFormData((prev) => ({ ...prev, oratoreId: oratore._id, discorso: '' }))
     setSelectedOratore(oratore)
+    setSelectedOratoreDistance(null)
     setSearchOratore('')
     setShowOratoriList(false)
 
@@ -184,6 +161,9 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
 
     // Verifica limite mensile
     checkMonthlyLimit(oratore._id, formData.data)
+
+    // Calcola la distanza per questo oratore
+    calculateDistanceForOratore(oratore)
   }
 
   // Filtra oratori in base alla ricerca

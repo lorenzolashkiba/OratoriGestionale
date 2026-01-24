@@ -3,7 +3,10 @@ import Layout from '../components/layout/Layout'
 import OratoreCard from '../components/oratori/OratoreCard'
 import OratoreForm from '../components/oratori/OratoreForm'
 import OratoriFilters from '../components/oratori/OratoriFilters'
+import CongregazioneHeader from '../components/congregazioni/CongregazioneHeader'
+import CongregazioneForm from '../components/congregazioni/CongregazioneForm'
 import { useOratori } from '../hooks/useOratori'
+import { useCongregazioni } from '../hooks/useCongregazioni'
 import { useLanguage } from '../context/LanguageContext'
 
 export default function Oratori() {
@@ -19,11 +22,24 @@ export default function Oratori() {
     deleteOratore,
   } = useOratori()
 
+  const {
+    congregazioniMap,
+    loading: loadingCongregazioni,
+    createCongregazione,
+    updateCongregazione,
+  } = useCongregazioni()
+
   const [showForm, setShowForm] = useState(false)
   const [editingOratore, setEditingOratore] = useState(null)
   const [saving, setSaving] = useState(false)
   const [deleteConfirm, setDeleteConfirm] = useState(null)
   const [collapsedSections, setCollapsedSections] = useState({})
+
+  // Stato per form congregazione
+  const [showCongForm, setShowCongForm] = useState(false)
+  const [editingCongregazione, setEditingCongregazione] = useState(null)
+  const [configuringCongNome, setConfiguringCongNome] = useState(null)
+  const [savingCong, setSavingCong] = useState(false)
 
   // Raggruppa oratori per congregazione
   const { groupedOratori, sortedCongregazioni } = useMemo(() => {
@@ -97,6 +113,43 @@ export default function Oratori() {
     setEditingOratore(null)
   }
 
+  // Handler per congregazioni
+  const handleConfiguraCongregazione = (nome) => {
+    setConfiguringCongNome(nome)
+    setEditingCongregazione(null)
+    setShowCongForm(true)
+  }
+
+  const handleEditCongregazione = (congregazione) => {
+    setEditingCongregazione(congregazione)
+    setConfiguringCongNome(null)
+    setShowCongForm(true)
+  }
+
+  const handleSaveCongregazione = async (data) => {
+    setSavingCong(true)
+    try {
+      if (editingCongregazione) {
+        await updateCongregazione(editingCongregazione._id, data)
+      } else {
+        await createCongregazione(data)
+      }
+      setShowCongForm(false)
+      setEditingCongregazione(null)
+      setConfiguringCongNome(null)
+    } catch (err) {
+      alert('Errore: ' + err.message)
+    } finally {
+      setSavingCong(false)
+    }
+  }
+
+  const handleCancelCongregazione = () => {
+    setShowCongForm(false)
+    setEditingCongregazione(null)
+    setConfiguringCongNome(null)
+  }
+
   return (
     <Layout>
       {/* Header */}
@@ -166,37 +219,20 @@ export default function Oratori() {
             {sortedCongregazioni.map((cong) => {
               const congregazioneOratori = groupedOratori[cong]
               const isCollapsed = collapsedSections[cong]
-              const displayName = cong || t('oratori.noCongregazione')
+              // Cerca la congregazione nel database (case insensitive)
+              const congregazioneData = cong ? congregazioniMap[cong.toLowerCase()] : null
 
               return (
                 <div key={cong || '_no_cong'} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
-                  {/* Header congregazione */}
-                  <button
-                    onClick={() => toggleSection(cong)}
-                    className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="bg-blue-100 p-2 rounded-lg">
-                        <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
-                        </svg>
-                      </div>
-                      <div className="text-left">
-                        <h3 className="font-semibold text-gray-900">{displayName}</h3>
-                        <p className="text-sm text-gray-500">
-                          {congregazioneOratori.length} {congregazioneOratori.length !== 1 ? t('oratori.oratoriPlural') : t('oratori.oratore')}
-                        </p>
-                      </div>
-                    </div>
-                    <svg
-                      className={`w-5 h-5 text-gray-400 transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                    </svg>
-                  </button>
+                  <CongregazioneHeader
+                    nome={cong}
+                    congregazione={congregazioneData}
+                    oratoriCount={congregazioneOratori.length}
+                    isCollapsed={isCollapsed}
+                    onToggle={() => toggleSection(cong)}
+                    onConfigura={handleConfiguraCongregazione}
+                    onEdit={handleEditCongregazione}
+                  />
 
                   {/* Lista oratori */}
                   {!isCollapsed && (
@@ -262,6 +298,16 @@ export default function Oratori() {
             </div>
           </div>
         </div>
+      )}
+
+      {showCongForm && (
+        <CongregazioneForm
+          congregazione={editingCongregazione}
+          initialNome={configuringCongNome}
+          onSave={handleSaveCongregazione}
+          onCancel={handleCancelCongregazione}
+          loading={savingCong}
+        />
       )}
     </Layout>
   )

@@ -81,6 +81,24 @@ export const programmiApi = {
   }),
 }
 
+// Congregazioni API
+export const congregazioniApi = {
+  getAll: () => fetchWithAuth('/congregazioni'),
+  getByNome: (nome) => fetchWithAuth(`/congregazioni?nome=${encodeURIComponent(nome)}`),
+  create: (data) => fetchWithAuth('/congregazioni', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  }),
+  update: (id, data) => fetchWithAuth('/congregazioni', {
+    method: 'PUT',
+    body: JSON.stringify({ id, ...data }),
+  }),
+  delete: (id) => fetchWithAuth('/congregazioni', {
+    method: 'DELETE',
+    body: JSON.stringify({ id }),
+  }),
+}
+
 // Admin API
 export const adminApi = {
   getPendingUsers: () => fetchWithAuth('/admin/pending'),

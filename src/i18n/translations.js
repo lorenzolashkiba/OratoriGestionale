@@ -96,6 +96,22 @@ export const translations = {
       noCongregazione: 'Senza congregazione',
     },
 
+    // Congregazioni
+    congregazioni: {
+      title: 'Congregazioni',
+      new: 'Nuova Congregazione',
+      edit: 'Modifica Congregazione',
+      nome: 'Nome',
+      responsabile: 'Responsabile',
+      selectResponsabile: 'Seleziona responsabile...',
+      orari: 'Orari adunanze',
+      indirizzo: 'Indirizzo',
+      telefono: 'Telefono',
+      configura: 'Configura congregazione',
+      deleteConfirm: 'Sei sicuro di voler eliminare questa congregazione?',
+      noResponsabile: 'Nessun responsabile assegnato',
+    },
+
     // Filters
     filters: {
       title: 'Filtra oratori',
@@ -295,6 +311,22 @@ export const translations = {
 
       // Grouping
       noCongregazione: 'Без собрания',
+    },
+
+    // Congregazioni
+    congregazioni: {
+      title: 'Собрания',
+      new: 'Новое собрание',
+      edit: 'Редактировать собрание',
+      nome: 'Название',
+      responsabile: 'Ответственный',
+      selectResponsabile: 'Выберите ответственного...',
+      orari: 'Время встреч',
+      indirizzo: 'Адрес',
+      telefono: 'Телефон',
+      configura: 'Настроить собрание',
+      deleteConfirm: 'Вы уверены, что хотите удалить это собрание?',
+      noResponsabile: 'Ответственный не назначен',
     },
 
     // Filters
