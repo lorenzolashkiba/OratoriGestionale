@@ -29,19 +29,10 @@ export function AuthProvider({ children }) {
           // Verifica stato approvazione
           if (profileData.role === 'pending') {
             setPendingApproval(true)
-            // Auto logout per utenti pending
-            setTimeout(async () => {
-              await firebaseLogout()
-              setUser(null)
-              setProfile(null)
-            }, 100)
+            // Non fare auto-logout, lascia l'utente sulla schermata di attesa
           } else if (profileData.status === 'rejected') {
             setAccessDenied(true)
-            setTimeout(async () => {
-              await firebaseLogout()
-              setUser(null)
-              setProfile(null)
-            }, 100)
+            // Non fare auto-logout, lascia l'utente sulla schermata di accesso negato
           } else {
             setPendingApproval(false)
             setAccessDenied(false)
