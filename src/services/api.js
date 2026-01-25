@@ -120,4 +120,8 @@ export const adminApi = {
     method: 'PUT',
     body: JSON.stringify({ userId, role }),
   }),
+  deleteUser: (userId) => fetchWithAuth('/admin/user', {
+    method: 'DELETE',
+    body: JSON.stringify({ userId }),
+  }),
 }

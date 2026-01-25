@@ -73,6 +73,21 @@ export default function Admin() {
     }
   }
 
+  const handleDelete = async (userId) => {
+    if (!confirm('Sei sicuro di voler eliminare questo utente? L\'utente potrà registrarsi nuovamente.')) {
+      return
+    }
+    try {
+      setActionLoading(userId)
+      await adminApi.deleteUser(userId)
+      await loadData()
+    } catch (error) {
+      console.error('Errore eliminazione:', error)
+    } finally {
+      setActionLoading(null)
+    }
+  }
+
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -188,6 +203,7 @@ export default function Admin() {
                           key={user._id}
                           user={user}
                           onRoleChange={(role) => handleRoleChange(user._id, role)}
+                          onDelete={() => handleDelete(user._id)}
                           loading={actionLoading === user._id}
                         />
                       ))}
@@ -300,7 +316,7 @@ function PendingUserCard({ user, onApprove, onReject, loading }) {
   )
 }
 
-function UserRow({ user, onRoleChange, loading }) {
+function UserRow({ user, onRoleChange, onDelete, loading }) {
   const roleColors = {
     admin: 'bg-blue-100 text-blue-700',
     user: 'bg-green-100 text-green-700',
@@ -354,17 +370,33 @@ function UserRow({ user, onRoleChange, loading }) {
         {new Date(user.createdAt).toLocaleDateString('it-IT')}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-right">
-        {user.role !== 'pending' && user.status !== 'rejected' && (
-          <select
-            value={user.role}
-            onChange={(e) => onRoleChange(e.target.value)}
+        <div className="flex items-center justify-end gap-2">
+          {user.role !== 'pending' && user.status !== 'rejected' && (
+            <select
+              value={user.role}
+              onChange={(e) => onRoleChange(e.target.value)}
+              disabled={loading}
+              className="text-sm border rounded-lg px-2 py-1 disabled:opacity-50 focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="user">Utente</option>
+              <option value="admin">Admin</option>
+            </select>
+          )}
+          <button
+            onClick={onDelete}
             disabled={loading}
-            className="text-sm border rounded-lg px-2 py-1 disabled:opacity-50 focus:ring-2 focus:ring-blue-500"
+            className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg disabled:opacity-50 transition-colors"
+            title="Elimina utente"
           >
-            <option value="user">Utente</option>
-            <option value="admin">Admin</option>
-          </select>
-        )}
+            {loading ? (
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-red-500 border-t-transparent"></div>
+            ) : (
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            )}
+          </button>
+        </div>
       </td>
     </tr>
   )

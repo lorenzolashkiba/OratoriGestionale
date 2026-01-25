@@ -163,6 +163,44 @@ async function adminHandler(event, context, firebaseUser, adminUser) {
       }
     }
 
+    // DELETE /admin/user - Elimina utente
+    if (event.httpMethod === 'DELETE' && path === '/user') {
+      const { userId } = JSON.parse(event.body)
+
+      if (!userId) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ message: 'userId obbligatorio' }),
+        }
+      }
+
+      // Impedisci all'admin di eliminare se stesso
+      if (userId === adminUser._id.toString()) {
+        return {
+          statusCode: 400,
+          headers,
+          body: JSON.stringify({ message: 'Non puoi eliminare il tuo account' }),
+        }
+      }
+
+      const result = await usersCollection.deleteOne({ _id: new ObjectId(userId) })
+
+      if (result.deletedCount === 0) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ message: 'Utente non trovato' }),
+        }
+      }
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ message: 'Utente eliminato con successo' }),
+      }
+    }
+
     // PUT /admin/role - Cambia ruolo utente
     if (event.httpMethod === 'PUT' && path === '/role') {
       const { userId, role } = JSON.parse(event.body)
