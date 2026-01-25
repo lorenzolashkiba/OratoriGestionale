@@ -167,7 +167,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
   }
 
   // Filtra oratori in base alla ricerca
-  const filteredOratori = oratoriWithDistance.filter((o) =>
+  const filteredOratori = oratori.filter((o) =>
     `${o.cognome} ${o.nome} ${o.congregazione} ${o.localita}`.toLowerCase().includes(searchOratore.toLowerCase())
   )
 
@@ -299,11 +299,6 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 Oratore *
-                {profile?.localita && (
-                  <span className="text-gray-400 font-normal ml-2">
-                    (distanze da {profile.localita})
-                  </span>
-                )}
               </label>
               {loadingOratori ? (
                 <div className="flex items-center gap-2 text-gray-500 py-2">
@@ -319,9 +314,12 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
                           <p className="font-semibold text-green-900">
                             {selectedOratore.cognome} {selectedOratore.nome}
                           </p>
-                          {selectedOratore.distance !== null && selectedOratore.distance !== undefined && (
+                          {loadingDistance && (
+                            <div className="animate-spin rounded-full h-3 w-3 border border-green-300 border-t-green-600"></div>
+                          )}
+                          {!loadingDistance && selectedOratoreDistance !== null && (
                             <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
-                              {formatDistance(selectedOratore.distance)}
+                              {formatDistance(selectedOratoreDistance)}
                             </span>
                           )}
                         </div>
@@ -337,6 +335,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
                         onClick={() => {
                           setFormData((prev) => ({ ...prev, oratoreId: '', discorso: '' }))
                           setSelectedOratore(null)
+                          setSelectedOratoreDistance(null)
                           setDateError('')
                           setMonthlyWarning(null)
                         }}
@@ -361,13 +360,6 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
                       {/* Lista oratori - sempre visibile quando il campo ha focus */}
                       {showOratoriList && (
                         <div className="mt-2 border border-gray-200 rounded-xl max-h-64 overflow-y-auto bg-white shadow-lg">
-                          {loadingDistances && (
-                            <div className="px-4 py-2 text-xs text-gray-500 bg-gray-50 flex items-center gap-2">
-                              <div className="animate-spin rounded-full h-3 w-3 border border-gray-300 border-t-green-600"></div>
-                              Calcolo distanze...
-                            </div>
-                          )}
-
                           {/* Oratori disponibili */}
                           {availableOratori.length > 0 && (
                             <>
@@ -383,22 +375,15 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
                                   onClick={() => handleSelectOratore(o)}
                                   className="w-full text-left px-4 py-3 hover:bg-gray-50 active:bg-gray-100 transition-colors border-b border-gray-100 last:border-0"
                                 >
-                                  <div className="flex justify-between items-start">
-                                    <div className="flex-1">
-                                      <span className="font-medium text-gray-900">
-                                        {o.cognome} {o.nome}
-                                      </span>
-                                      {o.congregazione && (
-                                        <span className="text-sm text-gray-500 ml-2">({o.congregazione})</span>
-                                      )}
-                                      {o.localita && (
-                                        <p className="text-xs text-gray-400 mt-0.5">{o.localita}</p>
-                                      )}
-                                    </div>
-                                    {o.distance !== null && o.distance !== undefined && (
-                                      <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full ml-2 whitespace-nowrap">
-                                        {formatDistance(o.distance)}
-                                      </span>
+                                  <div className="flex-1">
+                                    <span className="font-medium text-gray-900">
+                                      {o.cognome} {o.nome}
+                                    </span>
+                                    {o.congregazione && (
+                                      <span className="text-sm text-gray-500 ml-2">({o.congregazione})</span>
+                                    )}
+                                    {o.localita && (
+                                      <p className="text-xs text-gray-400 mt-0.5">{o.localita}</p>
                                     )}
                                   </div>
                                 </button>
@@ -417,23 +402,16 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
                                   key={o._id}
                                   className="w-full text-left px-4 py-3 bg-gray-50 opacity-60 border-b border-gray-100 last:border-0"
                                 >
-                                  <div className="flex justify-between items-start">
-                                    <div className="flex-1">
-                                      <span className="font-medium text-gray-500">
-                                        {o.cognome} {o.nome}
-                                      </span>
-                                      {o.congregazione && (
-                                        <span className="text-sm text-gray-400 ml-2">({o.congregazione})</span>
-                                      )}
-                                      <p className="text-xs text-orange-500 mt-0.5">
-                                        Occupato: {getOccupiedDatesForOratore(o._id).map((d) => new Date(d).toLocaleDateString('it-IT')).join(', ')}
-                                      </p>
-                                    </div>
-                                    {o.distance !== null && o.distance !== undefined && (
-                                      <span className="text-xs bg-gray-200 text-gray-500 px-2 py-1 rounded-full ml-2 whitespace-nowrap">
-                                        {formatDistance(o.distance)}
-                                      </span>
+                                  <div className="flex-1">
+                                    <span className="font-medium text-gray-500">
+                                      {o.cognome} {o.nome}
+                                    </span>
+                                    {o.congregazione && (
+                                      <span className="text-sm text-gray-400 ml-2">({o.congregazione})</span>
                                     )}
+                                    <p className="text-xs text-orange-500 mt-0.5">
+                                      Occupato: {getOccupiedDatesForOratore(o._id).map((d) => new Date(d).toLocaleDateString('it-IT')).join(', ')}
+                                    </p>
                                   </div>
                                 </div>
                               ))}
