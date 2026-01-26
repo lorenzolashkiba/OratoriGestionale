@@ -43,19 +43,24 @@ async function oratoriHandler(event, context, user, dbUser) {
         }
       }
 
-      // Costruisci i filtri
+      // Costruisci i filtri (normalizza spazi per evitare problemi con spazi extra)
       const filter = {}
       if (params.localita) {
-        filter.localita = { $regex: params.localita, $options: 'i' }
+        // Normalizza: rimuove spazi multipli e trim
+        const normalized = params.localita.trim().replace(/\s+/g, '\\s+')
+        filter.localita = { $regex: normalized, $options: 'i' }
       }
       if (params.nome) {
-        filter.nome = { $regex: params.nome, $options: 'i' }
+        const normalized = params.nome.trim().replace(/\s+/g, '\\s+')
+        filter.nome = { $regex: normalized, $options: 'i' }
       }
       if (params.cognome) {
-        filter.cognome = { $regex: params.cognome, $options: 'i' }
+        const normalized = params.cognome.trim().replace(/\s+/g, '\\s+')
+        filter.cognome = { $regex: normalized, $options: 'i' }
       }
       if (params.congregazione) {
-        filter.congregazione = { $regex: params.congregazione, $options: 'i' }
+        const normalized = params.congregazione.trim().replace(/\s+/g, '\\s+')
+        filter.congregazione = { $regex: normalized, $options: 'i' }
       }
 
       const oratori = await oratoriCollection

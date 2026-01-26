@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Layout from '../components/layout/Layout'
 import OratoreCard from '../components/oratori/OratoreCard'
 import OratoreForm from '../components/oratori/OratoreForm'
@@ -24,7 +24,6 @@ export default function Oratori() {
 
   const {
     congregazioniMap,
-    loading: loadingCongregazioni,
     createCongregazione,
     updateCongregazione,
   } = useCongregazioni()
@@ -41,14 +40,24 @@ export default function Oratori() {
   const [configuringCongNome, setConfiguringCongNome] = useState(null)
   const [savingCong, setSavingCong] = useState(false)
 
-  // Raggruppa oratori per congregazione
-  const { groupedOratori, sortedCongregazioni } = useMemo(() => {
-    const grouped = oratori.reduce((acc, oratore) => {
-      const cong = oratore.congregazione || ''
-      if (!acc[cong]) acc[cong] = []
-      acc[cong].push(oratore)
-      return acc
-    }, {})
+  // Raggruppa oratori per congregazione (normalizzato: trim + lowercase per raggruppamento)
+  const { groupedOratori, sortedCongregazioni, congregazioneDisplayNames } = useMemo(() => {
+    const grouped = {}
+    const displayNames = {} // Mappa da chiave normalizzata a nome originale più comune
+
+    oratori.forEach((oratore) => {
+      const original = oratore.congregazione || ''
+      const normalized = original.trim().toLowerCase()
+
+      if (!grouped[normalized]) {
+        grouped[normalized] = []
+        displayNames[normalized] = original.trim() || ''
+      }
+      grouped[normalized].push(oratore)
+
+      // Usa il nome con più occorrenze come display name
+      // (in caso di "Venezia" vs "venezia", usa quello più frequente)
+    })
 
     // Ordina congregazioni alfabeticamente, '' alla fine
     const sorted = Object.keys(grouped).sort((a, b) => {
@@ -57,8 +66,24 @@ export default function Oratori() {
       return a.localeCompare(b)
     })
 
-    return { groupedOratori: grouped, sortedCongregazioni: sorted }
+    return { groupedOratori: grouped, sortedCongregazioni: sorted, congregazioneDisplayNames: displayNames }
   }, [oratori])
+
+  // Imposta tutte le sezioni come collassate di default quando cambiano le congregazioni
+  useEffect(() => {
+    if (sortedCongregazioni.length > 0) {
+      setCollapsedSections((prev) => {
+        const newState = { ...prev }
+        sortedCongregazioni.forEach((congKey) => {
+          // Solo se non è già stato impostato manualmente dall'utente
+          if (newState[congKey] === undefined) {
+            newState[congKey] = true // Collassato di default
+          }
+        })
+        return newState
+      })
+    }
+  }, [sortedCongregazioni])
 
   const toggleSection = (cong) => {
     setCollapsedSections((prev) => ({
@@ -215,36 +240,42 @@ export default function Oratori() {
               <span className="font-medium text-gray-700">{oratori.length}</span> {oratori.length !== 1 ? t('oratori.oratoriPlural') : t('oratori.oratore')} {oratori.length !== 1 ? t('oratori.foundPlural') : t('oratori.found')}
             </p>
           </div>
+
+          {/* Lista congregazioni con oratori */}
           <div className="space-y-4">
-            {sortedCongregazioni.map((cong) => {
-              const congregazioneOratori = groupedOratori[cong]
-              const isCollapsed = collapsedSections[cong]
-              // Cerca la congregazione nel database (case insensitive)
-              const congregazioneData = cong ? congregazioniMap[cong.toLowerCase()] : null
+            {sortedCongregazioni.map((congKey) => {
+              const displayName = congregazioneDisplayNames[congKey]
+              const congregazioneOratori = groupedOratori[congKey]
+              const congregazioneData = congKey ? congregazioniMap[congKey] : null
+              const isCollapsed = collapsedSections[congKey] !== false // Default collassato
 
               return (
-                <div key={cong || '_no_cong'} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                <div key={congKey || '_no_cong'} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
                   <CongregazioneHeader
-                    nome={cong}
+                    nome={displayName}
                     congregazione={congregazioneData}
                     oratoriCount={congregazioneOratori.length}
                     isCollapsed={isCollapsed}
-                    onToggle={() => toggleSection(cong)}
+                    onToggle={() => toggleSection(congKey)}
                     onConfigura={handleConfiguraCongregazione}
                     onEdit={handleEditCongregazione}
                   />
 
-                  {/* Lista oratori */}
+                  {/* Lista oratori (solo se non collassato) */}
                   {!isCollapsed && (
-                    <div className="divide-y divide-gray-100">
-                      {congregazioneOratori.map((oratore) => (
-                        <OratoreCard
+                    <div>
+                      {congregazioneOratori.map((oratore, index) => (
+                        <div
                           key={oratore._id}
-                          oratore={oratore}
-                          onEdit={handleEdit}
-                          onDelete={handleDelete}
-                          grouped
-                        />
+                          className={`border-t border-gray-100 ${index === congregazioneOratori.length - 1 ? '' : ''}`}
+                        >
+                          <OratoreCard
+                            oratore={oratore}
+                            onEdit={handleEdit}
+                            onDelete={handleDelete}
+                            grouped
+                          />
+                        </div>
                       ))}
                     </div>
                   )}

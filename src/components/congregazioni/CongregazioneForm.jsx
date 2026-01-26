@@ -49,10 +49,16 @@ export default function CongregazioneForm({ congregazione, initialNome, onSave, 
     loadOratori()
   }, [])
 
-  // Filtra oratori per la congregazione corrente (se initialNome è impostato)
-  // Confronto case-insensitive
-  const filteredOratori = initialNome
-    ? oratori.filter((o) => o.congregazione?.toLowerCase() === initialNome.toLowerCase())
+  // Funzione per normalizzare stringhe (rimuove spazi extra e converte in lowercase)
+  const normalizeString = (str) => (str || '').trim().replace(/\s+/g, ' ').toLowerCase()
+
+  // Determina il nome della congregazione per filtrare (usa initialNome per nuove, congregazione.nome per modifica)
+  const congregazioneNomePerFiltro = initialNome || congregazione?.nome
+
+  // Filtra oratori per la congregazione corrente
+  // Confronto normalizzato: case-insensitive e ignora spazi extra
+  const filteredOratori = congregazioneNomePerFiltro
+    ? oratori.filter((o) => normalizeString(o.congregazione) === normalizeString(congregazioneNomePerFiltro))
     : oratori
 
   const handleChange = (e) => {

@@ -166,10 +166,15 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
     calculateDistanceForOratore(oratore)
   }
 
-  // Filtra oratori in base alla ricerca
-  const filteredOratori = oratori.filter((o) =>
-    `${o.cognome} ${o.nome} ${o.congregazione} ${o.localita}`.toLowerCase().includes(searchOratore.toLowerCase())
-  )
+  // Funzione per normalizzare stringhe (rimuove spazi extra)
+  const normalizeForSearch = (str) => (str || '').trim().replace(/\s+/g, ' ').toLowerCase()
+
+  // Filtra oratori in base alla ricerca (normalizza spazi per evitare problemi)
+  const filteredOratori = oratori.filter((o) => {
+    const searchNormalized = normalizeForSearch(searchOratore)
+    const oratoreString = normalizeForSearch(`${o.cognome} ${o.nome} ${o.congregazione} ${o.localita}`)
+    return oratoreString.includes(searchNormalized)
+  })
 
   // Separa oratori disponibili e non disponibili
   const availableOratori = filteredOratori.filter((o) => isOratoreAvailable(o._id))
