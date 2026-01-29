@@ -12,7 +12,7 @@ async function usersHandler(event, context, user) {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-    'Access-Control-Allow-Methods': 'GET, PUT, OPTIONS',
+    'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
   }
 
   if (event.httpMethod === 'OPTIONS') {
@@ -20,7 +20,10 @@ async function usersHandler(event, context, user) {
   }
 
   try {
-    // GET - Ottieni profilo utente
+    // Parsing query parameters
+    const params = event.queryStringParameters || {}
+
+    // GET - Ottieni profilo utente o export dati
     if (event.httpMethod === 'GET') {
       let userProfile = await usersCollection.findOne({ googleId: user.uid })
 
@@ -36,36 +39,15 @@ async function usersHandler(event, context, user) {
         }
       }
 
-      // Se non esiste, crealo come PENDING
+      // Se non esiste, ritorna 404 - l'utente deve prima accettare la privacy
       if (!userProfile) {
-        const newUser = {
-          googleId: user.uid,
-          email: user.email,
-          nome: '',
-          cognome: '',
-          telefono: '',
-          congregazione: '',
-          localita: '',
-          oratoreId: null,
-          role: 'pending',
-          status: 'active',
-          requestedAt: new Date(),
-          approvedAt: null,
-          approvedBy: null,
-          rejectedAt: null,
-          rejectedBy: null,
-          rejectionReason: null,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        }
-        await usersCollection.insertOne(newUser)
-        userProfile = newUser
-
-        // Invia email di notifica all'admin
-        try {
-          await sendApprovalRequestEmail(newUser)
-        } catch (emailError) {
-          console.error('Errore invio email notifica:', emailError)
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({
+            message: 'Utente non registrato',
+            code: 'USER_NOT_FOUND',
+          }),
         }
       }
 
@@ -75,10 +57,119 @@ async function usersHandler(event, context, user) {
         userProfile.oratore = oratore
       }
 
+      // Export completo dei dati (GDPR - diritto alla portabilità)
+      if (params.export === 'true') {
+        const programmiCollection = db.collection('programmi')
+        const congregazioniCollection = db.collection('congregazioni')
+
+        // Raccogli tutti i dati dell'utente
+        const exportData = {
+          exportDate: new Date().toISOString(),
+          exportType: 'GDPR_DATA_EXPORT',
+          account: {
+            email: userProfile.email,
+            nome: userProfile.nome,
+            cognome: userProfile.cognome,
+            telefono: userProfile.telefono,
+            congregazione: userProfile.congregazione,
+            localita: userProfile.localita,
+            role: userProfile.role,
+            privacyAcceptedAt: userProfile.privacyAcceptedAt,
+            createdAt: userProfile.createdAt,
+            updatedAt: userProfile.updatedAt,
+          },
+          oratore: userProfile.oratore ? {
+            nome: userProfile.oratore.nome,
+            cognome: userProfile.oratore.cognome,
+            email: userProfile.oratore.email,
+            telefono: userProfile.oratore.telefono,
+            congregazione: userProfile.oratore.congregazione,
+            localita: userProfile.oratore.localita,
+            discorsi: userProfile.oratore.discorsi,
+          } : null,
+          programmi: [],
+        }
+
+        // Se l'utente è collegato a un oratore, trova i programmi dove è assegnato
+        if (userProfile.oratoreId) {
+          const programmi = await programmiCollection.find({
+            oratoreId: new ObjectId(userProfile.oratoreId),
+          }).toArray()
+
+          exportData.programmi = programmi.map((p) => ({
+            data: p.data,
+            orario: p.orario,
+            discorso: p.discorso,
+            note: p.note,
+          }))
+        }
+
+        return {
+          statusCode: 200,
+          headers: {
+            ...headers,
+            'Content-Disposition': `attachment; filename="miei-dati-${new Date().toISOString().split('T')[0]}.json"`,
+          },
+          body: JSON.stringify(exportData, null, 2),
+        }
+      }
+
       return {
         statusCode: 200,
         headers,
         body: JSON.stringify(userProfile),
+      }
+    }
+
+    // POST - Registra nuovo utente (dopo accettazione privacy)
+    if (event.httpMethod === 'POST') {
+      // Verifica che l'utente non esista già
+      const existingUser = await usersCollection.findOne({ googleId: user.uid })
+      if (existingUser) {
+        return {
+          statusCode: 409,
+          headers,
+          body: JSON.stringify({
+            message: 'Utente già registrato',
+            code: 'USER_EXISTS',
+          }),
+        }
+      }
+
+      const newUser = {
+        googleId: user.uid,
+        email: user.email,
+        nome: '',
+        cognome: '',
+        telefono: '',
+        congregazione: '',
+        localita: '',
+        oratoreId: null,
+        role: 'pending',
+        status: 'active',
+        privacyAcceptedAt: new Date(),
+        requestedAt: new Date(),
+        approvedAt: null,
+        approvedBy: null,
+        rejectedAt: null,
+        rejectedBy: null,
+        rejectionReason: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }
+      await usersCollection.insertOne(newUser)
+
+      // Invia email di notifica all'admin
+      try {
+        await sendApprovalRequestEmail(newUser)
+      } catch (emailError) {
+        console.error('Errore invio email notifica:', emailError)
+      }
+
+      return {
+        statusCode: 201,
+        headers,
+        body: JSON.stringify(newUser),
       }
     }
 
@@ -158,6 +249,27 @@ async function usersHandler(event, context, user) {
         statusCode: 200,
         headers,
         body: JSON.stringify(result),
+      }
+    }
+
+    // DELETE - Cancella account utente (diritto all'oblio)
+    if (event.httpMethod === 'DELETE') {
+      const existingUser = await usersCollection.findOne({ googleId: user.uid })
+      if (!existingUser) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ message: 'Utente non trovato' }),
+        }
+      }
+
+      // Elimina l'utente
+      await usersCollection.deleteOne({ googleId: user.uid })
+
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ message: 'Account eliminato con successo' }),
       }
     }
 

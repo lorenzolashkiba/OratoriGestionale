@@ -11,6 +11,8 @@ export function AuthProvider({ children }) {
   const [loading, setLoading] = useState(true)
   const [pendingApproval, setPendingApproval] = useState(false)
   const [accessDenied, setAccessDenied] = useState(false)
+  const [needsPrivacyConsent, setNeedsPrivacyConsent] = useState(false)
+  const [acceptingPrivacy, setAcceptingPrivacy] = useState(false)
   const [authError, setAuthError] = useState(null)
 
   useEffect(() => {
@@ -25,27 +27,29 @@ export function AuthProvider({ children }) {
           const profileData = await usersApi.getProfile()
           console.log('Profile loaded:', profileData)
           setProfile(profileData)
+          setNeedsPrivacyConsent(false)
 
           // Verifica stato approvazione
           if (profileData.role === 'pending') {
             setPendingApproval(true)
-            // Non fare auto-logout, lascia l'utente sulla schermata di attesa
           } else if (profileData.status === 'rejected') {
             setAccessDenied(true)
-            // Non fare auto-logout, lascia l'utente sulla schermata di accesso negato
           } else {
             setPendingApproval(false)
             setAccessDenied(false)
           }
         } catch (error) {
           console.error('Errore nel caricamento del profilo:', error)
-          // Gestisci codici errore specifici
-          if (error.message?.includes('PENDING_APPROVAL') || error.code === 'PENDING_APPROVAL') {
+
+          // Se l'utente non esiste (404), deve accettare la privacy
+          if (error.message?.includes('USER_NOT_FOUND') || error.message?.includes('non registrato')) {
+            setNeedsPrivacyConsent(true)
+            setProfile(null)
+          } else if (error.message?.includes('PENDING_APPROVAL') || error.code === 'PENDING_APPROVAL') {
             setPendingApproval(true)
           } else if (error.message?.includes('ACCESS_DENIED') || error.code === 'ACCESS_DENIED') {
             setAccessDenied(true)
           } else {
-            // Mostra errore generico
             setAuthError(error.message || 'Errore durante il caricamento del profilo')
           }
           setProfile(null)
@@ -54,6 +58,7 @@ export function AuthProvider({ children }) {
         setProfile(null)
         setPendingApproval(false)
         setAccessDenied(false)
+        setNeedsPrivacyConsent(false)
       }
       setLoading(false)
     })
@@ -66,6 +71,7 @@ export function AuthProvider({ children }) {
       // Reset flags prima del login
       setPendingApproval(false)
       setAccessDenied(false)
+      setNeedsPrivacyConsent(false)
       await loginWithGoogle()
     } catch (error) {
       console.error('Errore durante il login:', error)
@@ -79,8 +85,39 @@ export function AuthProvider({ children }) {
       setProfile(null)
       setPendingApproval(false)
       setAccessDenied(false)
+      setNeedsPrivacyConsent(false)
     } catch (error) {
       console.error('Errore durante il logout:', error)
+      throw error
+    }
+  }
+
+  const acceptPrivacy = async () => {
+    setAcceptingPrivacy(true)
+    try {
+      // Registra l'utente nel database
+      const newProfile = await usersApi.register()
+      setProfile(newProfile)
+      setNeedsPrivacyConsent(false)
+      setPendingApproval(true) // Nuovo utente è sempre pending
+    } catch (error) {
+      console.error('Errore durante la registrazione:', error)
+      throw error
+    } finally {
+      setAcceptingPrivacy(false)
+    }
+  }
+
+  const deleteAccount = async () => {
+    try {
+      await usersApi.deleteAccount()
+      await firebaseLogout()
+      setProfile(null)
+      setPendingApproval(false)
+      setAccessDenied(false)
+      setNeedsPrivacyConsent(false)
+    } catch (error) {
+      console.error('Errore durante la cancellazione:', error)
       throw error
     }
   }
@@ -108,10 +145,14 @@ export function AuthProvider({ children }) {
     login,
     logout,
     refreshProfile,
+    acceptPrivacy,
+    acceptingPrivacy,
+    deleteAccount,
     isAuthenticated: !!user && !!profile && profile.role !== 'pending',
     isAdmin: profile?.role === 'admin',
     pendingApproval,
     accessDenied,
+    needsPrivacyConsent,
     authError,
   }
 

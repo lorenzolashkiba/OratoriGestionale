@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom'
+import { Navigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import LoginButton from '../components/auth/LoginButton'
 
@@ -102,6 +102,16 @@ export default function Login() {
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Privacy link */}
+        <div className="mt-6 text-center">
+          <Link
+            to="/privacy"
+            className="text-blue-100 hover:text-white text-sm transition-colors"
+          >
+            Privacy Policy
+          </Link>
         </div>
       </div>
     </div>

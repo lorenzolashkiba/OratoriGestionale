@@ -30,10 +30,17 @@ async function fetchWithAuth(url, options = {}) {
 // Users API
 export const usersApi = {
   getProfile: () => fetchWithAuth('/users'),
+  register: () => fetchWithAuth('/users', {
+    method: 'POST',
+  }),
   updateProfile: (data) => fetchWithAuth('/users', {
     method: 'PUT',
     body: JSON.stringify(data),
   }),
+  deleteAccount: () => fetchWithAuth('/users', {
+    method: 'DELETE',
+  }),
+  exportData: () => fetchWithAuth('/users?export=true'),
 }
 
 // Oratori API

@@ -6,13 +6,16 @@ import { useAuth } from '../context/AuthContext'
 import { usersApi, oratoriApi } from '../services/api'
 
 export default function Profilo() {
-  const { user, profile, refreshProfile } = useAuth()
+  const { user, profile, refreshProfile, deleteAccount } = useAuth()
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState(null)
   const [oratori, setOratori] = useState([])
   const [loadingOratori, setLoadingOratori] = useState(true)
   const [showOratoreSelector, setShowOratoreSelector] = useState(false)
   const [searchOratore, setSearchOratore] = useState('')
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
+  const [deleting, setDeleting] = useState(false)
+  const [exporting, setExporting] = useState(false)
 
   useEffect(() => {
     const fetchOratori = async () => {
@@ -75,6 +78,42 @@ export default function Profilo() {
   const filteredOratori = oratori.filter((o) =>
     `${o.cognome} ${o.nome} ${o.congregazione}`.toLowerCase().includes(searchOratore.toLowerCase())
   )
+
+  const handleDeleteAccount = async () => {
+    setDeleting(true)
+    try {
+      await deleteAccount()
+      // Il redirect avverrà automaticamente dopo il logout
+    } catch (err) {
+      setMessage({ type: 'error', text: 'Errore durante la cancellazione: ' + err.message })
+      setShowDeleteConfirm(false)
+    } finally {
+      setDeleting(false)
+    }
+  }
+
+  const handleExportData = async () => {
+    setExporting(true)
+    setMessage(null)
+    try {
+      const data = await usersApi.exportData()
+      // Crea il file JSON e scaricalo
+      const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
+      const url = URL.createObjectURL(blob)
+      const a = document.createElement('a')
+      a.href = url
+      a.download = `miei-dati-${new Date().toISOString().split('T')[0]}.json`
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+      URL.revokeObjectURL(url)
+      setMessage({ type: 'success', text: 'Dati esportati con successo!' })
+    } catch (err) {
+      setMessage({ type: 'error', text: 'Errore durante l\'esportazione: ' + err.message })
+    } finally {
+      setExporting(false)
+    }
+  }
 
   return (
     <Layout>
@@ -265,7 +304,118 @@ export default function Profilo() {
             <p>Ultimo aggiornamento: {new Date(profile.updatedAt).toLocaleDateString('it-IT')}</p>
           </div>
         )}
+
+        {/* Sezione export dati */}
+        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-4 sm:p-6 mt-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-green-100 p-2 rounded-xl">
+              <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+              </svg>
+            </div>
+            <h2 className="text-lg font-semibold text-gray-900">Esporta i tuoi dati</h2>
+          </div>
+          <p className="text-sm text-gray-600 mb-4">
+            Puoi scaricare una copia di tutti i tuoi dati personali in formato JSON (diritto alla portabilità - GDPR Art. 20).
+          </p>
+          <button
+            onClick={handleExportData}
+            disabled={exporting}
+            className="text-green-600 hover:text-green-800 font-medium text-sm px-4 py-2 border border-green-200 rounded-xl hover:bg-green-50 transition-colors disabled:opacity-50 flex items-center gap-2"
+          >
+            {exporting ? (
+              <>
+                <div className="animate-spin rounded-full h-4 w-4 border-2 border-green-600 border-t-transparent"></div>
+                Esportazione...
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                </svg>
+                Scarica i miei dati (JSON)
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Sezione cancellazione account */}
+        <div className="bg-white rounded-2xl shadow-sm border border-red-100 p-4 sm:p-6 mt-6">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="bg-red-100 p-2 rounded-xl">
+              <svg className="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+            </div>
+            <h2 className="text-lg font-semibold text-gray-900">Elimina Account</h2>
+          </div>
+          <p className="text-sm text-gray-600 mb-4">
+            Eliminando il tuo account, tutti i tuoi dati personali verranno rimossi permanentemente dal sistema.
+            Questa azione non può essere annullata.
+          </p>
+          <button
+            onClick={() => setShowDeleteConfirm(true)}
+            className="text-red-600 hover:text-red-800 font-medium text-sm px-4 py-2 border border-red-200 rounded-xl hover:bg-red-50 transition-colors"
+          >
+            Elimina il mio account
+          </button>
+        </div>
+
+        {/* Link privacy */}
+        <div className="mt-6 text-center">
+          <Link
+            to="/privacy"
+            className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          >
+            Privacy Policy
+          </Link>
+        </div>
       </div>
+
+      {/* Modale conferma cancellazione */}
+      {showDeleteConfirm && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="bg-red-100 p-2 rounded-full">
+                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900">Conferma eliminazione</h3>
+            </div>
+            <p className="text-gray-600 mb-2">
+              Sei sicuro di voler eliminare definitivamente il tuo account?
+            </p>
+            <p className="text-sm text-red-600 mb-6">
+              Tutti i tuoi dati verranno eliminati e non potranno essere recuperati.
+            </p>
+            <div className="flex flex-col-reverse sm:flex-row justify-end gap-3">
+              <button
+                onClick={() => setShowDeleteConfirm(false)}
+                disabled={deleting}
+                className="w-full sm:w-auto px-5 py-2.5 text-gray-700 bg-gray-100 rounded-xl hover:bg-gray-200 font-medium transition-colors disabled:opacity-50"
+              >
+                Annulla
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                disabled={deleting}
+                className="w-full sm:w-auto px-5 py-2.5 bg-red-600 text-white rounded-xl hover:bg-red-700 font-medium transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              >
+                {deleting ? (
+                  <>
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                    Eliminazione...
+                  </>
+                ) : (
+                  'Elimina account'
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </Layout>
   )
 }
