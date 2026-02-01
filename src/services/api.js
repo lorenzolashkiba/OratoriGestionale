@@ -36,6 +36,9 @@ export const usersApi = {
   acceptPrivacyVersion: () => fetchWithAuth('/users?privacy=true', {
     method: 'PUT',
   }),
+  acceptDataReview: () => fetchWithAuth('/users?dataReview=true', {
+    method: 'PUT',
+  }),
   updateProfile: (data) => fetchWithAuth('/users', {
     method: 'PUT',
     body: JSON.stringify(data),

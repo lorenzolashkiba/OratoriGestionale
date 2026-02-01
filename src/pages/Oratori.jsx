@@ -8,9 +8,11 @@ import CongregazioneForm from '../components/congregazioni/CongregazioneForm'
 import { useOratori } from '../hooks/useOratori'
 import { useCongregazioni } from '../hooks/useCongregazioni'
 import { useLanguage } from '../context/LanguageContext'
+import { useAuth } from '../context/AuthContext'
 
 export default function Oratori() {
   const { t } = useLanguage()
+  const { profile } = useAuth()
   const {
     oratori,
     loading,
@@ -41,6 +43,8 @@ export default function Oratori() {
   const [savingCong, setSavingCong] = useState(false)
 
   // Raggruppa oratori per congregazione (normalizzato: trim + lowercase per raggruppamento)
+  const hasActiveFilters = useMemo(() => Object.values(filters).some((value) => value), [filters])
+
   const { groupedOratori, sortedCongregazioni, congregazioneDisplayNames } = useMemo(() => {
     const grouped = {}
     const displayNames = {} // Mappa da chiave normalizzata a nome originale più comune
@@ -66,8 +70,19 @@ export default function Oratori() {
       return a.localeCompare(b)
     })
 
-    return { groupedOratori: grouped, sortedCongregazioni: sorted, congregazioneDisplayNames: displayNames }
-  }, [oratori])
+    const userCongregazione = (profile?.congregazione || '').trim()
+    const userCongregazioneKey = userCongregazione ? userCongregazione.toLowerCase() : ''
+    let ordered = sorted
+
+    if (!hasActiveFilters && userCongregazioneKey && grouped[userCongregazioneKey]) {
+      ordered = [
+        userCongregazioneKey,
+        ...sorted.filter((key) => key !== userCongregazioneKey),
+      ]
+    }
+
+    return { groupedOratori: grouped, sortedCongregazioni: ordered, congregazioneDisplayNames: displayNames }
+  }, [oratori, hasActiveFilters, profile?.congregazione])
 
   // Imposta tutte le sezioni come collassate di default quando cambiano le congregazioni
   useEffect(() => {
@@ -248,14 +263,22 @@ export default function Oratori() {
               const congregazioneOratori = groupedOratori[congKey]
               const congregazioneData = congKey ? congregazioniMap[congKey] : null
               const isCollapsed = collapsedSections[congKey] !== false // Default collassato
+              const userCongregazioneKey = (profile?.congregazione || '').trim().toLowerCase()
+              const isUserCongregazione = !!userCongregazioneKey && congKey === userCongregazioneKey
 
               return (
-                <div key={congKey || '_no_cong'} className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+                <div
+                  key={congKey || '_no_cong'}
+                  className={`bg-white rounded-xl border overflow-hidden ${
+                    isUserCongregazione ? 'border-blue-200 ring-2 ring-blue-100' : 'border-gray-200'
+                  }`}
+                >
                   <CongregazioneHeader
                     nome={displayName}
                     congregazione={congregazioneData}
                     oratoriCount={congregazioneOratori.length}
                     isCollapsed={isCollapsed}
+                    isUserCongregazione={isUserCongregazione}
                     onToggle={() => toggleSection(congKey)}
                     onConfigura={handleConfiguraCongregazione}
                     onEdit={handleEditCongregazione}

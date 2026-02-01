@@ -6,6 +6,7 @@ export default function CongregazioneHeader({
   congregazione,
   oratoriCount,
   isCollapsed,
+  isUserCongregazione = false,
   onToggle,
   onConfigura,
   onEdit,
@@ -29,10 +30,12 @@ export default function CongregazioneHeader({
     <div className="w-full">
       <button
         onClick={onToggle}
-        className="w-full flex items-center justify-between px-4 py-3 bg-gray-50 hover:bg-gray-100 transition-colors"
+        className={`w-full flex items-center justify-between px-4 py-3 transition-colors ${
+          isUserCongregazione ? 'bg-blue-50 hover:bg-blue-100' : 'bg-gray-50 hover:bg-gray-100'
+        }`}
       >
         <div className="flex items-center gap-3">
-          <div className="bg-blue-100 p-2 rounded-lg">
+          <div className={`p-2 rounded-lg ${isUserCongregazione ? 'bg-blue-200' : 'bg-blue-100'}`}>
             <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path
                 strokeLinecap="round"
@@ -43,7 +46,14 @@ export default function CongregazioneHeader({
             </svg>
           </div>
           <div className="text-left">
-            <h3 className="font-semibold text-gray-900">{displayName}</h3>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h3 className="font-semibold text-gray-900">{displayName}</h3>
+              {isUserCongregazione && (
+                <span className="inline-flex items-center text-xs font-semibold text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full">
+                  {t('oratori.yourCongregazione')}
+                </span>
+              )}
+            </div>
             <p className="text-sm text-gray-500">
               {oratoriCount} {oratoriCount !== 1 ? t('oratori.oratoriPlural') : t('oratori.oratore')}
             </p>

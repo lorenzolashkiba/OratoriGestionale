@@ -78,6 +78,7 @@ async function usersHandler(event, context, user) {
             role: userProfile.role,
             privacyAcceptedAt: userProfile.privacyAcceptedAt,
             privacyAcceptedVersion: userProfile.privacyAcceptedVersion,
+            dataReviewAcceptedAt: userProfile.dataReviewAcceptedAt,
             createdAt: userProfile.createdAt,
             updatedAt: userProfile.updatedAt,
           },
@@ -152,6 +153,7 @@ async function usersHandler(event, context, user) {
         status: 'active',
         privacyAcceptedAt: new Date(),
         privacyAcceptedVersion: PRIVACY_VERSION,
+        dataReviewAcceptedAt: new Date(),
         requestedAt: new Date(),
         approvedAt: null,
         approvedBy: null,
@@ -189,9 +191,10 @@ async function usersHandler(event, context, user) {
       }
 
       const isPrivacyUpdate = params.privacy === 'true'
+      const isDataReviewUpdate = params.dataReview === 'true'
 
       // Verifica che utente non sia pending (eccetto aggiornamento privacy)
-      if (!isPrivacyUpdate && existingUser?.role === 'pending') {
+      if (!isPrivacyUpdate && !isDataReviewUpdate && existingUser?.role === 'pending') {
         return {
           statusCode: 403,
           headers,
@@ -212,6 +215,8 @@ async function usersHandler(event, context, user) {
       if (isPrivacyUpdate) {
         updateData.privacyAcceptedAt = new Date()
         updateData.privacyAcceptedVersion = PRIVACY_VERSION
+      } else if (isDataReviewUpdate) {
+        updateData.dataReviewAcceptedAt = new Date()
       } else {
         updateData.nome = nome || ''
         updateData.cognome = cognome || ''
@@ -221,7 +226,7 @@ async function usersHandler(event, context, user) {
       }
 
       // Gestisci collegamento/scollegamento oratore
-      if (!isPrivacyUpdate && oratoreId !== undefined) {
+      if (!isPrivacyUpdate && !isDataReviewUpdate && oratoreId !== undefined) {
         if (oratoreId === null) {
           // Scollega l'oratore
           updateData.oratoreId = null

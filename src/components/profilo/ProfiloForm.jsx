@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import { useLanguage } from '../../context/LanguageContext'
 
 export default function ProfiloForm({ profile, onSave, loading }) {
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     nome: '',
     cognome: '',
@@ -36,27 +38,27 @@ export default function ProfiloForm({ profile, onSave, loading }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">
-            Nome
+            {t('profilo.form.nomeLabel')}
           </label>
           <input
             type="text"
             name="nome"
             value={formData.nome}
             onChange={handleChange}
-            placeholder="Il tuo nome"
+            placeholder={t('profilo.form.nomePlaceholder')}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">
-            Cognome
+            {t('profilo.form.cognomeLabel')}
           </label>
           <input
             type="text"
             name="cognome"
             value={formData.cognome}
             onChange={handleChange}
-            placeholder="Il tuo cognome"
+            placeholder={t('profilo.form.cognomePlaceholder')}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
           />
         </div>
@@ -64,14 +66,14 @@ export default function ProfiloForm({ profile, onSave, loading }) {
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-1.5">
-          Telefono
+          {t('profilo.form.telefonoLabel')}
         </label>
         <input
           type="tel"
           name="telefono"
           value={formData.telefono}
           onChange={handleChange}
-          placeholder="+39..."
+          placeholder={t('profilo.form.telefonoPlaceholder')}
           className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
         />
       </div>
@@ -79,27 +81,27 @@ export default function ProfiloForm({ profile, onSave, loading }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">
-            Congregazione
+            {t('profilo.form.congregazioneLabel')}
           </label>
           <input
             type="text"
             name="congregazione"
             value={formData.congregazione}
             onChange={handleChange}
-            placeholder="Nome congregazione"
+            placeholder={t('profilo.form.congregazionePlaceholder')}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
           />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">
-            Localita
+            {t('profilo.form.localitaLabel')}
           </label>
           <input
             type="text"
             name="localita"
             value={formData.localita}
             onChange={handleChange}
-            placeholder="Citta o paese"
+            placeholder={t('profilo.form.localitaPlaceholder')}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
           />
         </div>
@@ -114,10 +116,10 @@ export default function ProfiloForm({ profile, onSave, loading }) {
           {loading ? (
             <>
               <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-              Salvataggio...
+              {t('profilo.saving')}
             </>
           ) : (
-            'Salva modifiche'
+            t('profilo.saveButton')
           )}
         </button>
       </div>

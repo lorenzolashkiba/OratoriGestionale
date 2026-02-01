@@ -10,6 +10,8 @@ import Profilo from './pages/Profilo'
 import Admin from './pages/Admin'
 import Privacy from './pages/Privacy'
 import PrivacyConsent from './pages/PrivacyConsent'
+import DataReviewReminder from './components/modals/DataReviewReminder'
+import Doc from './pages/Doc'
 
 // Componente per gestire il redirect al consenso privacy
 function PrivacyConsentGuard({ children }) {
@@ -35,6 +37,7 @@ function PrivacyConsentGuard({ children }) {
 function AppRoutes() {
   return (
     <PrivacyConsentGuard>
+      <DataReviewReminder />
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/privacy" element={<Privacy />} />
@@ -75,6 +78,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <Admin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/doc"
+          element={
+            <ProtectedRoute>
+              <Doc />
             </ProtectedRoute>
           }
         />

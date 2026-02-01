@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useLanguage } from '../context/LanguageContext'
 import { adminApi } from '../services/api'
 import Layout from '../components/layout/Layout'
 
 export default function Admin() {
   const { isAdmin, loading: authLoading } = useAuth()
+  const { t } = useLanguage()
   const [pendingUsers, setPendingUsers] = useState([])
   const [allUsers, setAllUsers] = useState([])
   const [stats, setStats] = useState(null)
@@ -74,7 +76,7 @@ export default function Admin() {
   }
 
   const handleDelete = async (userId) => {
-    if (!confirm('Sei sicuro di voler eliminare questo utente? L\'utente potrà registrarsi nuovamente.')) {
+    if (!confirm(t('admin.confirmDeleteUser'))) {
       return
     }
     try {
@@ -103,26 +105,26 @@ export default function Admin() {
   return (
     <Layout>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Pannello Amministratore</h1>
+        <h1 className="text-2xl font-bold text-gray-900 mb-6">{t('admin.title')}</h1>
 
         {/* Stats Cards */}
         {stats && (
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div className="bg-white rounded-xl p-4 shadow-sm border">
               <div className="text-3xl font-bold text-gray-900">{stats.total}</div>
-              <div className="text-sm text-gray-500">Utenti totali</div>
+              <div className="text-sm text-gray-500">{t('admin.totalUsers')}</div>
             </div>
             <div className="bg-yellow-50 rounded-xl p-4 shadow-sm border border-yellow-200">
               <div className="text-3xl font-bold text-yellow-700">{stats.pending}</div>
-              <div className="text-sm text-yellow-600">In attesa</div>
+              <div className="text-sm text-yellow-600">{t('admin.pendingUsers')}</div>
             </div>
             <div className="bg-green-50 rounded-xl p-4 shadow-sm border border-green-200">
               <div className="text-3xl font-bold text-green-700">{stats.users}</div>
-              <div className="text-sm text-green-600">Utenti attivi</div>
+              <div className="text-sm text-green-600">{t('admin.activeUsers')}</div>
             </div>
             <div className="bg-blue-50 rounded-xl p-4 shadow-sm border border-blue-200">
               <div className="text-3xl font-bold text-blue-700">{stats.admins}</div>
-              <div className="text-sm text-blue-600">Amministratori</div>
+              <div className="text-sm text-blue-600">{t('admin.adminUsers')}</div>
             </div>
           </div>
         )}
@@ -138,7 +140,7 @@ export default function Admin() {
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              In attesa ({pendingUsers.length})
+              {t('admin.pendingTab')} ({pendingUsers.length})
             </button>
             <button
               onClick={() => setActiveTab('all')}
@@ -148,7 +150,7 @@ export default function Admin() {
                   : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               }`}
             >
-              Tutti gli utenti
+              {t('admin.allUsersTab')}
             </button>
           </nav>
         </div>
@@ -167,7 +169,7 @@ export default function Admin() {
                     <svg className="w-12 h-12 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <p className="text-gray-500">Nessuna richiesta in attesa</p>
+                    <p className="text-gray-500">{t('admin.noPending')}</p>
                   </div>
                 ) : (
                   pendingUsers.map((user) => (
@@ -190,11 +192,11 @@ export default function Admin() {
                   <table className="min-w-full divide-y divide-gray-200">
                     <thead className="bg-gray-50">
                       <tr>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Utente</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Ruolo</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stato</th>
-                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Data registrazione</th>
-                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Azioni</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('admin.tableUser')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('admin.tableRole')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('admin.tableStatus')}</th>
+                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">{t('admin.tableCreatedAt')}</th>
+                        <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">{t('admin.tableActions')}</th>
                       </tr>
                     </thead>
                     <tbody className="bg-white divide-y divide-gray-200">
@@ -222,6 +224,8 @@ export default function Admin() {
 function PendingUserCard({ user, onApprove, onReject, loading }) {
   const [showRejectModal, setShowRejectModal] = useState(false)
   const [rejectReason, setRejectReason] = useState('')
+  const { t, language } = useLanguage()
+  const locale = language === 'ru' ? 'ru-RU' : 'it-IT'
 
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm border">
@@ -235,13 +239,13 @@ function PendingUserCard({ user, onApprove, onReject, loading }) {
             </div>
             <div>
               <h3 className="font-semibold text-gray-900">
-                {user.nome || user.cognome ? `${user.nome} ${user.cognome}`.trim() : 'Nome non specificato'}
+                {user.nome || user.cognome ? `${user.nome} ${user.cognome}`.trim() : t('admin.nameNotProvided')}
               </h3>
               <p className="text-gray-500 text-sm">{user.email}</p>
             </div>
           </div>
           <p className="text-gray-400 text-xs mt-3">
-            Richiesto il {new Date(user.requestedAt || user.createdAt).toLocaleDateString('it-IT', {
+            {t('admin.requestedAt')} {new Date(user.requestedAt || user.createdAt).toLocaleDateString(locale, {
               day: 'numeric',
               month: 'long',
               year: 'numeric',
@@ -263,7 +267,7 @@ function PendingUserCard({ user, onApprove, onReject, loading }) {
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                Approva
+                {t('admin.approve')}
               </>
             )}
           </button>
@@ -272,7 +276,7 @@ function PendingUserCard({ user, onApprove, onReject, loading }) {
             disabled={loading}
             className="px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 disabled:opacity-50"
           >
-            Rifiuta
+            {t('admin.reject')}
           </button>
         </div>
       </div>
@@ -281,11 +285,11 @@ function PendingUserCard({ user, onApprove, onReject, loading }) {
       {showRejectModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-white rounded-2xl p-6 max-w-md w-full">
-            <h3 className="text-lg font-semibold mb-4">Rifiuta richiesta</h3>
+            <h3 className="text-lg font-semibold mb-4">{t('admin.rejectTitle')}</h3>
             <textarea
               value={rejectReason}
               onChange={(e) => setRejectReason(e.target.value)}
-              placeholder="Motivo del rifiuto (opzionale)"
+              placeholder={t('admin.rejectReasonPlaceholder')}
               className="w-full border rounded-lg p-3 h-24 resize-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
             <div className="flex gap-3 mt-4">
@@ -296,7 +300,7 @@ function PendingUserCard({ user, onApprove, onReject, loading }) {
                 }}
                 className="flex-1 px-4 py-2 border rounded-lg hover:bg-gray-50"
               >
-                Annulla
+                {t('common.cancel')}
               </button>
               <button
                 onClick={() => {
@@ -306,7 +310,7 @@ function PendingUserCard({ user, onApprove, onReject, loading }) {
                 }}
                 className="flex-1 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
               >
-                Conferma rifiuto
+                {t('admin.confirmReject')}
               </button>
             </div>
           </div>
@@ -317,6 +321,8 @@ function PendingUserCard({ user, onApprove, onReject, loading }) {
 }
 
 function UserRow({ user, onRoleChange, onDelete, loading }) {
+  const { t, language } = useLanguage()
+  const locale = language === 'ru' ? 'ru-RU' : 'it-IT'
   const roleColors = {
     admin: 'bg-blue-100 text-blue-700',
     user: 'bg-green-100 text-green-700',
@@ -329,14 +335,14 @@ function UserRow({ user, onRoleChange, onDelete, loading }) {
   }
 
   const roleLabels = {
-    admin: 'Admin',
-    user: 'Utente',
-    pending: 'In attesa',
+    admin: t('admin.roleAdmin'),
+    user: t('admin.roleUser'),
+    pending: t('admin.rolePending'),
   }
 
   const statusLabels = {
-    active: 'Attivo',
-    rejected: 'Rifiutato',
+    active: t('admin.statusActive'),
+    rejected: t('admin.statusRejected'),
   }
 
   return (
@@ -367,7 +373,7 @@ function UserRow({ user, onRoleChange, onDelete, loading }) {
         </span>
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-        {new Date(user.createdAt).toLocaleDateString('it-IT')}
+        {new Date(user.createdAt).toLocaleDateString(locale)}
       </td>
       <td className="px-6 py-4 whitespace-nowrap text-right">
         <div className="flex items-center justify-end gap-2">
@@ -378,15 +384,15 @@ function UserRow({ user, onRoleChange, onDelete, loading }) {
               disabled={loading}
               className="text-sm border rounded-lg px-2 py-1 disabled:opacity-50 focus:ring-2 focus:ring-blue-500"
             >
-              <option value="user">Utente</option>
-              <option value="admin">Admin</option>
+              <option value="user">{t('admin.roleUser')}</option>
+              <option value="admin">{t('admin.roleAdmin')}</option>
             </select>
           )}
           <button
             onClick={onDelete}
             disabled={loading}
             className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg disabled:opacity-50 transition-colors"
-            title="Elimina utente"
+            title={t('admin.deleteUser')}
           >
             {loading ? (
               <div className="animate-spin rounded-full h-4 w-4 border-2 border-red-500 border-t-transparent"></div>

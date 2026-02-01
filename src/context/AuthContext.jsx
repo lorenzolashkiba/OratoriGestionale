@@ -13,8 +13,18 @@ export function AuthProvider({ children }) {
   const [pendingApproval, setPendingApproval] = useState(false)
   const [accessDenied, setAccessDenied] = useState(false)
   const [needsPrivacyConsent, setNeedsPrivacyConsent] = useState(false)
+  const [needsDataReviewConfirmation, setNeedsDataReviewConfirmation] = useState(false)
   const [acceptingPrivacy, setAcceptingPrivacy] = useState(false)
   const [authError, setAuthError] = useState(null)
+
+  const isDataReviewDue = (lastAcceptedAt) => {
+    if (!lastAcceptedAt) return true
+    const lastDate = new Date(lastAcceptedAt)
+    if (Number.isNaN(lastDate.getTime())) return true
+    const nextDue = new Date(lastDate)
+    nextDue.setMonth(nextDue.getMonth() + 6)
+    return new Date() >= nextDue
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
@@ -31,6 +41,7 @@ export function AuthProvider({ children }) {
 
           const needsPrivacyUpdate = profileData.privacyAcceptedVersion !== PRIVACY_VERSION
           setNeedsPrivacyConsent(needsPrivacyUpdate)
+          setNeedsDataReviewConfirmation(isDataReviewDue(profileData.dataReviewAcceptedAt))
 
           // Verifica stato approvazione
           if (profileData.role === 'pending') {
@@ -47,6 +58,7 @@ export function AuthProvider({ children }) {
           // Se l'utente non esiste (404), deve accettare la privacy
           if (error.message?.includes('USER_NOT_FOUND') || error.message?.includes('non registrato')) {
             setNeedsPrivacyConsent(true)
+            setNeedsDataReviewConfirmation(false)
             setProfile(null)
           } else if (error.message?.includes('PENDING_APPROVAL') || error.code === 'PENDING_APPROVAL') {
             setPendingApproval(true)
@@ -62,6 +74,7 @@ export function AuthProvider({ children }) {
         setPendingApproval(false)
         setAccessDenied(false)
         setNeedsPrivacyConsent(false)
+        setNeedsDataReviewConfirmation(false)
       }
       setLoading(false)
     })
@@ -75,6 +88,7 @@ export function AuthProvider({ children }) {
       setPendingApproval(false)
       setAccessDenied(false)
       setNeedsPrivacyConsent(false)
+      setNeedsDataReviewConfirmation(false)
       await loginWithGoogle()
     } catch (error) {
       console.error('Errore durante il login:', error)
@@ -89,6 +103,7 @@ export function AuthProvider({ children }) {
       setPendingApproval(false)
       setAccessDenied(false)
       setNeedsPrivacyConsent(false)
+      setNeedsDataReviewConfirmation(false)
     } catch (error) {
       console.error('Errore durante il logout:', error)
       throw error
@@ -127,6 +142,7 @@ export function AuthProvider({ children }) {
       setPendingApproval(false)
       setAccessDenied(false)
       setNeedsPrivacyConsent(false)
+      setNeedsDataReviewConfirmation(false)
     } catch (error) {
       console.error('Errore durante la cancellazione:', error)
       throw error
@@ -141,6 +157,7 @@ export function AuthProvider({ children }) {
 
         const needsPrivacyUpdate = profileData.privacyAcceptedVersion !== PRIVACY_VERSION
         setNeedsPrivacyConsent(needsPrivacyUpdate)
+        setNeedsDataReviewConfirmation(isDataReviewDue(profileData.dataReviewAcceptedAt))
 
         // Verifica se ora approvato
         if (profileData.role !== 'pending') {
@@ -149,6 +166,17 @@ export function AuthProvider({ children }) {
       } catch (error) {
         console.error('Errore nel refresh del profilo:', error)
       }
+    }
+  }
+
+  const acceptDataReview = async () => {
+    try {
+      const updatedProfile = await usersApi.acceptDataReview()
+      setProfile(updatedProfile)
+      setNeedsDataReviewConfirmation(false)
+    } catch (error) {
+      console.error('Errore durante l\'aggiornamento della verifica dati:', error)
+      throw error
     }
   }
 
@@ -162,11 +190,13 @@ export function AuthProvider({ children }) {
     acceptPrivacy,
     acceptingPrivacy,
     deleteAccount,
+    acceptDataReview,
     isAuthenticated: !!user && !!profile && profile.role !== 'pending',
     isAdmin: profile?.role === 'admin',
     pendingApproval,
     accessDenied,
     needsPrivacyConsent,
+    needsDataReviewConfirmation,
     authError,
   }
 
