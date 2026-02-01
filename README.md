@@ -14,3 +14,22 @@ The React Compiler is not enabled on this template because of its impact on dev 
 ## Expanding the ESLint configuration
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+
+## Messa in produzione (Netlify)
+
+Prerequisiti:
+- Node.js e npm installati
+- Variabili d'ambiente configurate in Netlify (stesse chiavi usate in locale)
+- Netlify CLI installato e login effettuato
+
+Step:
+1. Installa le dipendenze:
+   `npm install`
+2. Verifica build in locale:
+   `npm run build`
+3. Deploy in produzione su Netlify:
+   `npx netlify deploy --prod`
+
+Note:
+- La configurazione di build e pubblicazione è definita in `netlify.toml`.
+- La cartella di output è `dist` e le funzioni si trovano in `netlify/functions`.

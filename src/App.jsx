@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { LanguageProvider } from './context/LanguageContext'
 import ProtectedRoute from './components/auth/ProtectedRoute'
@@ -14,6 +14,7 @@ import PrivacyConsent from './pages/PrivacyConsent'
 // Componente per gestire il redirect al consenso privacy
 function PrivacyConsentGuard({ children }) {
   const { user, loading, needsPrivacyConsent } = useAuth()
+  const location = useLocation()
 
   if (loading) {
     return (
@@ -24,7 +25,7 @@ function PrivacyConsentGuard({ children }) {
   }
 
   // Se l'utente è loggato ma deve accettare la privacy, mostra PrivacyConsent
-  if (user && needsPrivacyConsent) {
+  if (user && needsPrivacyConsent && location.pathname !== '/privacy') {
     return <PrivacyConsent />
   }
 

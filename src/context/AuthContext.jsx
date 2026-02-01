@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect } from 'react'
 import { auth, loginWithGoogle, logout as firebaseLogout } from '../services/firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 import { usersApi } from '../services/api'
+import { PRIVACY_VERSION } from '../config/privacy'
 
 const AuthContext = createContext(null)
 
@@ -27,7 +28,9 @@ export function AuthProvider({ children }) {
           const profileData = await usersApi.getProfile()
           console.log('Profile loaded:', profileData)
           setProfile(profileData)
-          setNeedsPrivacyConsent(false)
+
+          const needsPrivacyUpdate = profileData.privacyAcceptedVersion !== PRIVACY_VERSION
+          setNeedsPrivacyConsent(needsPrivacyUpdate)
 
           // Verifica stato approvazione
           if (profileData.role === 'pending') {
@@ -95,13 +98,21 @@ export function AuthProvider({ children }) {
   const acceptPrivacy = async () => {
     setAcceptingPrivacy(true)
     try {
-      // Registra l'utente nel database
-      const newProfile = await usersApi.register()
-      setProfile(newProfile)
-      setNeedsPrivacyConsent(false)
-      setPendingApproval(true) // Nuovo utente è sempre pending
+      if (profile) {
+        const updatedProfile = await usersApi.acceptPrivacyVersion()
+        setProfile(updatedProfile)
+        setNeedsPrivacyConsent(false)
+        setPendingApproval(updatedProfile.role === 'pending')
+        setAccessDenied(updatedProfile.status === 'rejected')
+      } else {
+        // Registra l'utente nel database
+        const newProfile = await usersApi.register()
+        setProfile(newProfile)
+        setNeedsPrivacyConsent(false)
+        setPendingApproval(true) // Nuovo utente è sempre pending
+      }
     } catch (error) {
-      console.error('Errore durante la registrazione:', error)
+      console.error('Errore durante l\'accettazione della privacy:', error)
       throw error
     } finally {
       setAcceptingPrivacy(false)
@@ -127,6 +138,9 @@ export function AuthProvider({ children }) {
       try {
         const profileData = await usersApi.getProfile()
         setProfile(profileData)
+
+        const needsPrivacyUpdate = profileData.privacyAcceptedVersion !== PRIVACY_VERSION
+        setNeedsPrivacyConsent(needsPrivacyUpdate)
 
         // Verifica se ora approvato
         if (profileData.role !== 'pending') {

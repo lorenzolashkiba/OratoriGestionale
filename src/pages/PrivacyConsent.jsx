@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { PRIVACY_UPDATED_LABEL } from '../config/privacy'
 
 export default function PrivacyConsent() {
-  const { user, acceptPrivacy, logout, acceptingPrivacy } = useAuth()
+  const { user, profile, acceptPrivacy, logout, acceptingPrivacy } = useAuth()
   const [accepted, setAccepted] = useState(false)
   const [error, setError] = useState(null)
+  const isExistingUser = !!profile
 
   const handleAccept = async () => {
     if (!accepted) return
@@ -14,7 +16,7 @@ export default function PrivacyConsent() {
     try {
       await acceptPrivacy()
     } catch (err) {
-      setError(err.message || 'Errore durante la registrazione')
+      setError(err.message || 'Errore durante l\'accettazione della privacy')
     }
   }
 
@@ -39,10 +41,15 @@ export default function PrivacyConsent() {
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-white mb-1">
-            Privacy e Consenso
+            {isExistingUser ? 'Privacy aggiornata' : 'Privacy e Consenso'}
           </h1>
           <p className="text-blue-100">
-            Prima di continuare, leggi e accetta la nostra privacy policy
+            {isExistingUser
+              ? 'La privacy policy è stata aggiornata. Per continuare, leggi e accetta la nuova versione.'
+              : 'Prima di continuare, leggi e accetta la nostra privacy policy'}
+          </p>
+          <p className="text-blue-200 text-sm mt-2">
+            Ultimo aggiornamento: {PRIVACY_UPDATED_LABEL}
           </p>
         </div>
 
@@ -158,7 +165,7 @@ export default function PrivacyConsent() {
               {acceptingPrivacy ? (
                 <>
                   <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
-                  Registrazione...
+                  {isExistingUser ? 'Aggiornamento...' : 'Registrazione...'}
                 </>
               ) : (
                 <>

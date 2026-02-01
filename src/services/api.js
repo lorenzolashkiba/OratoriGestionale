@@ -33,6 +33,9 @@ export const usersApi = {
   register: () => fetchWithAuth('/users', {
     method: 'POST',
   }),
+  acceptPrivacyVersion: () => fetchWithAuth('/users?privacy=true', {
+    method: 'PUT',
+  }),
   updateProfile: (data) => fetchWithAuth('/users', {
     method: 'PUT',
     body: JSON.stringify(data),

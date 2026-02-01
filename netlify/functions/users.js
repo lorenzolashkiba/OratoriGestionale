@@ -3,6 +3,8 @@ import { connectToDatabase } from './utils/mongodb.js'
 import { requireAuth } from './utils/auth.js'
 import { sendApprovalRequestEmail } from './utils/email.js'
 
+const PRIVACY_VERSION = process.env.PRIVACY_VERSION || '2025-01'
+
 async function usersHandler(event, context, user) {
   const { db } = await connectToDatabase()
   const usersCollection = db.collection('users')
@@ -75,6 +77,7 @@ async function usersHandler(event, context, user) {
             localita: userProfile.localita,
             role: userProfile.role,
             privacyAcceptedAt: userProfile.privacyAcceptedAt,
+            privacyAcceptedVersion: userProfile.privacyAcceptedVersion,
             createdAt: userProfile.createdAt,
             updatedAt: userProfile.updatedAt,
           },
@@ -148,6 +151,7 @@ async function usersHandler(event, context, user) {
         role: 'pending',
         status: 'active',
         privacyAcceptedAt: new Date(),
+        privacyAcceptedVersion: PRIVACY_VERSION,
         requestedAt: new Date(),
         approvedAt: null,
         approvedBy: null,
@@ -175,9 +179,19 @@ async function usersHandler(event, context, user) {
 
     // PUT - Aggiorna profilo utente
     if (event.httpMethod === 'PUT') {
-      // Verifica che utente non sia pending
       const existingUser = await usersCollection.findOne({ googleId: user.uid })
-      if (existingUser?.role === 'pending') {
+      if (!existingUser) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ message: 'Utente non trovato' }),
+        }
+      }
+
+      const isPrivacyUpdate = params.privacy === 'true'
+
+      // Verifica che utente non sia pending (eccetto aggiornamento privacy)
+      if (!isPrivacyUpdate && existingUser?.role === 'pending') {
         return {
           statusCode: 403,
           headers,
@@ -188,20 +202,26 @@ async function usersHandler(event, context, user) {
         }
       }
 
-      const data = JSON.parse(event.body)
+      const data = event.body ? JSON.parse(event.body) : {}
       const { nome, cognome, telefono, congregazione, localita, oratoreId } = data
 
       const updateData = {
-        nome: nome || '',
-        cognome: cognome || '',
-        telefono: telefono || '',
-        congregazione: congregazione || '',
-        localita: localita || '',
         updatedAt: new Date(),
       }
 
+      if (isPrivacyUpdate) {
+        updateData.privacyAcceptedAt = new Date()
+        updateData.privacyAcceptedVersion = PRIVACY_VERSION
+      } else {
+        updateData.nome = nome || ''
+        updateData.cognome = cognome || ''
+        updateData.telefono = telefono || ''
+        updateData.congregazione = congregazione || ''
+        updateData.localita = localita || ''
+      }
+
       // Gestisci collegamento/scollegamento oratore
-      if (oratoreId !== undefined) {
+      if (!isPrivacyUpdate && oratoreId !== undefined) {
         if (oratoreId === null) {
           // Scollega l'oratore
           updateData.oratoreId = null
