@@ -8,12 +8,12 @@ export default function Privacy() {
   const content = (
     <div className="max-w-4xl mx-auto">
       <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 sm:p-10">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">Privacy Policy</h1>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">PRIVACY POLICY - Versione Completa Aggiornata</h1>
         <p className="text-gray-500 mb-8">Ultimo aggiornamento: Gennaio 2025</p>
 
         <div className="prose prose-gray max-w-none">
           <section className="mb-8">
-            <h2 className="text-xl font-semibold text-gray-900 mb-4">1. Titolari e Responsabili del Trattamento</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mb-4">1. Titolari, Responsabili e Incaricati del Trattamento</h2>
 
             <h3 className="text-lg font-medium text-gray-800 mt-4 mb-2">1.1 Titolari del Trattamento</h3>
             <p className="text-gray-700 mb-4">
@@ -32,6 +32,27 @@ export default function Privacy() {
               dell'applicazione "Oratori EU2" (manutenzione, sicurezza, funzionamento). L'amministratore non è
               titolare del trattamento dei dati inseriti dagli utenti, ma agisce come responsabile del trattamento
               (data processor) per conto dei titolari (i responsabili delle congregazioni).
+            </p>
+
+            <h3 className="text-lg font-medium text-gray-800 mt-4 mb-2">1.3 Nota sulla conformità e sull'origine del software</h3>
+            <p className="text-gray-700 mb-4">
+              Il software "Oratori EU2" è stato preparato interamente da fratelli della nostra circoscrizione.
+            </p>
+            <p className="text-gray-700 mb-4">
+              L'infrastruttura tecnica utilizzata per l'archiviazione dei dati si appoggia a piattaforme che adottano
+              misure di sicurezza conformi alle normative vigenti sulla protezione dei dati personali. Ciò avviene in
+              armonia con le istruzioni riportate in SFGA relative all'utilizzo di software di terze parti da parte degli anziani.
+            </p>
+
+            <h3 className="text-lg font-medium text-gray-800 mt-4 mb-2">1.4 Persone autorizzate al trattamento (Incaricati)</h3>
+            <p className="text-gray-700 mb-4">
+              Oltre ai titolari delle singole congregazioni, anche gli utenti autorizzati che inseriscono e gestiscono i dati
+              all'interno dell'applicazione (ad esempio anziani, assistenti o altri incaricati dalla congregazione) trattano i dati
+              personali presenti nel sistema.
+            </p>
+            <p className="text-gray-700 mb-4">
+              Tali utenti operano esclusivamente per conto del Titolare della propria congregazione, secondo le istruzioni ricevute
+              e nel rispetto delle normative vigenti e delle linee guida riportate in SFGA.
             </p>
           </section>
 
@@ -112,6 +133,18 @@ export default function Privacy() {
               <h4 className="font-medium text-gray-800">Resend</h4>
               <p className="text-gray-600 text-sm">Invio email di notifica</p>
             </div>
+
+            <h3 className="text-lg font-medium text-gray-800 mt-6 mb-2">4.1 Conformità dell'infrastruttura e responsabilità degli anziani</h3>
+            <p className="text-gray-700 mb-4">
+              Gli anziani, in quanto titolari del trattamento per la propria congregazione, sono tenuti, in armonia con le istruzioni
+              riportate in SFGA, a verificare che l'utilizzo del presente software sia conforme alle normative vigenti sulla protezione dei dati.
+              La piattaforma su cui l'applicazione memorizza i dati si basa su servizi che implementano adeguate misure tecniche e organizzative
+              di sicurezza, conformi ai requisiti del GDPR e alle prassi indicate dalle autorità competenti.
+            </p>
+            <p className="text-gray-700 mb-4">
+              Ove previsto, i dati possono essere trattati su infrastrutture distribuite e trasferiti al di fuori dell'UE nel rispetto delle
+              Clausole Contrattuali Standard (SCC) e delle garanzie richieste dalla normativa europea.
+            </p>
           </section>
 
           <section className="mb-8">
@@ -159,7 +192,7 @@ export default function Privacy() {
           <section className="mb-8">
             <h2 className="text-xl font-semibold text-gray-900 mb-4">8. Cookie e Tracciamento</h2>
             <p className="text-gray-700 mb-4">
-              Questa applicazione utilizza cookie tecnici necessari per il funzionamento
+              L'applicazione utilizza solo cookie tecnici necessari per il funzionamento
               dell'autenticazione Firebase. Non utilizziamo cookie di tracciamento o profilazione
               a fini pubblicitari.
             </p>
@@ -175,16 +208,13 @@ export default function Privacy() {
 
           <section>
             <h2 className="text-xl font-semibold text-gray-900 mb-4">10. Contatti</h2>
-            <p className="text-gray-700 mb-4">
-              Per domande o richieste relative ai tuoi dati personali:
-            </p>
             <ul className="list-disc pl-6 text-gray-700 mb-4">
-              <li><strong>Dati oratori e programmi:</strong> Contatta il responsabile della tua congregazione</li>
-              <li><strong>Problemi tecnici della piattaforma:</strong> Contatta l'amministratore del sistema</li>
+              <li><strong>Per dati oratori e programmi:</strong> contatta il responsabile della tua congregazione</li>
+              <li><strong>Per problemi tecnici:</strong> contatta l'amministratore del sistema</li>
             </ul>
             <p className="text-gray-700">
-              Hai inoltre il diritto di presentare un reclamo all'autorità di controllo competente
-              (Garante per la Protezione dei Dati Personali - <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline">www.garanteprivacy.it</a>).
+              Hai inoltre il diritto di presentare un reclamo al Garante per la Protezione dei Dati Personali:
+              <a href="https://www.garanteprivacy.it" target="_blank" rel="noopener noreferrer" className="text-blue-600 hover:underline"> www.garanteprivacy.it</a>.
             </p>
           </section>
         </div>
