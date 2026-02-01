@@ -216,6 +216,20 @@ const DOC_CONTENT = {
               },
             ],
           },
+          {
+            id: 'operations-ux',
+            title: 'Migliorie UX recenti',
+            body: [
+              {
+                type: 'list',
+                items: [
+                  'Toast centralizzati: `src/context/ToastContext.jsx` (usati in Oratori/Programmi/Profilo).',
+                  'Badge “Da completare” sugli oratori con dati mancanti: `src/components/oratori/OratoreCard.jsx`.',
+                  'Micro‑help nei form: orari adunanze (Congregazioni), discorsi (Oratori), distanza (Programmi).',
+                ],
+              },
+            ],
+          },
         ],
       },
       {
@@ -524,6 +538,20 @@ const DOC_CONTENT = {
                 items: [
                   'Чтобы принудительно показать напоминание, сбросьте `dataReviewAcceptedAt` у пользователей.',
                   'Для диагностики API смотрите логи функций в Netlify.',
+                ],
+              },
+            ],
+          },
+          {
+            id: 'operations-ux',
+            title: 'Последние улучшения UX',
+            body: [
+              {
+                type: 'list',
+                items: [
+                  'Центральные toast‑уведомления: `src/context/ToastContext.jsx` (используются в Oratori/Programmi/Profilo).',
+                  'Бейдж «Нужно заполнить» для ораторов с неполными данными: `src/components/oratori/OratoreCard.jsx`.',
+                  'Микро‑подсказки в формах: время встреч (Congregazioni), речи (Oratori), расстояние (Programmi).',
                 ],
               },
             ],
