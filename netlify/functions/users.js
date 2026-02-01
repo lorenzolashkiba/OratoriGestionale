@@ -264,6 +264,20 @@ async function usersHandler(event, context, user) {
         { returnDocument: 'after', upsert: true }
       )
 
+      if (!isPrivacyUpdate && !isDataReviewUpdate) {
+        const displayName = `${updateData.nome} ${updateData.cognome}`.trim() || existingUser.email
+        await Promise.all([
+          oratoriCollection.updateMany(
+            { createdBy: existingUser._id },
+            { $set: { createdByName: displayName } }
+          ),
+          oratoriCollection.updateMany(
+            { updatedBy: existingUser._id },
+            { $set: { updatedByName: displayName } }
+          ),
+        ])
+      }
+
       // Carica i dati dell'oratore se collegato
       if (result.oratoreId) {
         const oratore = await oratoriCollection.findOne({ _id: result.oratoreId })

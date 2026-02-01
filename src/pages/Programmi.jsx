@@ -4,9 +4,11 @@ import ProgrammaCard from '../components/programmi/ProgrammaCard'
 import ProgrammaForm from '../components/programmi/ProgrammaForm'
 import { useProgrammi } from '../hooks/useProgrammi'
 import { useLanguage } from '../context/LanguageContext'
+import { useToast } from '../context/ToastContext'
 
 export default function Programmi() {
   const { t, language } = useLanguage()
+  const { showToast } = useToast()
   const locale = language === 'ru' ? 'ru-RU' : 'it-IT'
   const {
     programmi,
@@ -42,8 +44,9 @@ export default function Programmi() {
     try {
       await deleteProgramma(deleteConfirm._id)
       setDeleteConfirm(null)
+      showToast({ type: 'success', message: t('toast.programmaDeleted') })
     } catch (err) {
-      alert('Errore durante eliminazione: ' + err.message)
+      showToast({ type: 'error', message: `${t('toast.deleteError')}: ${err.message}` })
     }
   }
 
@@ -57,8 +60,9 @@ export default function Programmi() {
       }
       setShowForm(false)
       setEditingProgramma(null)
+      showToast({ type: 'success', message: t('toast.programmaSaved') })
     } catch (err) {
-      alert('Errore durante il salvataggio: ' + err.message)
+      showToast({ type: 'error', message: `${t('toast.saveError')}: ${err.message}` })
     } finally {
       setSaving(false)
     }

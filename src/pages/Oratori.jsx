@@ -9,9 +9,11 @@ import { useOratori } from '../hooks/useOratori'
 import { useCongregazioni } from '../hooks/useCongregazioni'
 import { useLanguage } from '../context/LanguageContext'
 import { useAuth } from '../context/AuthContext'
+import { useToast } from '../context/ToastContext'
 
 export default function Oratori() {
   const { t } = useLanguage()
+  const { showToast } = useToast()
   const { profile } = useAuth()
   const {
     oratori,
@@ -126,8 +128,9 @@ export default function Oratori() {
     try {
       await deleteOratore(deleteConfirm._id)
       setDeleteConfirm(null)
+      showToast({ type: 'success', message: t('toast.oratoreDeleted') })
     } catch (err) {
-      alert('Errore durante eliminazione: ' + err.message)
+      showToast({ type: 'error', message: `${t('toast.deleteError')}: ${err.message}` })
     }
   }
 
@@ -141,8 +144,9 @@ export default function Oratori() {
       }
       setShowForm(false)
       setEditingOratore(null)
+      showToast({ type: 'success', message: t('toast.oratoreSaved') })
     } catch (err) {
-      alert('Errore durante il salvataggio: ' + err.message)
+      showToast({ type: 'error', message: `${t('toast.saveError')}: ${err.message}` })
     } finally {
       setSaving(false)
     }
@@ -177,8 +181,9 @@ export default function Oratori() {
       setShowCongForm(false)
       setEditingCongregazione(null)
       setConfiguringCongNome(null)
+      showToast({ type: 'success', message: t('toast.congregazioneSaved') })
     } catch (err) {
-      alert('Errore: ' + err.message)
+      showToast({ type: 'error', message: `${t('toast.saveError')}: ${err.message}` })
     } finally {
       setSavingCong(false)
     }

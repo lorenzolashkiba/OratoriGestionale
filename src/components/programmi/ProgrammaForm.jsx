@@ -1,11 +1,13 @@
 import { useState, useEffect, useCallback } from 'react'
 import { oratoriApi, programmiApi } from '../../services/api'
 import { useAuth } from '../../context/AuthContext'
+import { useLanguage } from '../../context/LanguageContext'
 import { getDistanceBetweenLocalities, formatDistance } from '../../services/geocoding'
 import { getDiscorsoTitolo } from '../../data/discorsi'
 
 export default function ProgrammaForm({ programma, onSave, onCancel, loading }) {
   const { profile } = useAuth()
+  const { t } = useLanguage()
   const [formData, setFormData] = useState({
     data: '',
     orario: '',
@@ -305,6 +307,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 Oratore *
               </label>
+              <p className="text-xs text-gray-500 mb-2">{t('programmi.distanceHelp')}</p>
               {loadingOratori ? (
                 <div className="flex items-center gap-2 text-gray-500 py-2">
                   <div className="animate-spin rounded-full h-4 w-4 border-2 border-gray-300 border-t-green-600"></div>

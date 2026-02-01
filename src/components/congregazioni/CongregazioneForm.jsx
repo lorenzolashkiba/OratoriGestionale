@@ -145,6 +145,7 @@ export default function CongregazioneForm({ congregazione, initialNome, onSave, 
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 {t('congregazioni.orari')}
               </label>
+              <p className="text-xs text-gray-500 mb-2">{t('congregazioni.orariHelp')}</p>
               <input
                 type="text"
                 name="orari"

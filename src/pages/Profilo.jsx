@@ -4,11 +4,13 @@ import Layout from '../components/layout/Layout'
 import ProfiloForm from '../components/profilo/ProfiloForm'
 import { useAuth } from '../context/AuthContext'
 import { useLanguage } from '../context/LanguageContext'
+import { useToast } from '../context/ToastContext'
 import { usersApi, oratoriApi } from '../services/api'
 
 export default function Profilo() {
   const { user, profile, refreshProfile, deleteAccount } = useAuth()
   const { t, language } = useLanguage()
+  const { showToast } = useToast()
   const [saving, setSaving] = useState(false)
   const [message, setMessage] = useState(null)
   const [oratori, setOratori] = useState([])
@@ -40,8 +42,10 @@ export default function Profilo() {
       await usersApi.updateProfile(data)
       await refreshProfile()
       setMessage({ type: 'success', text: t('profilo.saveSuccess') })
+      showToast({ type: 'success', message: t('toast.profileUpdated') })
     } catch (err) {
       setMessage({ type: 'error', text: `${t('profilo.saveError')}: ${err.message}` })
+      showToast({ type: 'error', message: `${t('toast.saveError')}: ${err.message}` })
     } finally {
       setSaving(false)
     }
@@ -56,8 +60,10 @@ export default function Profilo() {
       setShowOratoreSelector(false)
       setSearchOratore('')
       setMessage({ type: 'success', text: t('profilo.linkSuccess') })
+      showToast({ type: 'success', message: t('toast.profileLinked') })
     } catch (err) {
       setMessage({ type: 'error', text: err.message })
+      showToast({ type: 'error', message: `${t('toast.saveError')}: ${err.message}` })
     } finally {
       setSaving(false)
     }
@@ -70,8 +76,10 @@ export default function Profilo() {
       await usersApi.updateProfile({ ...profile, oratoreId: null })
       await refreshProfile()
       setMessage({ type: 'success', text: t('profilo.unlinkSuccess') })
+      showToast({ type: 'success', message: t('toast.profileUnlinked') })
     } catch (err) {
       setMessage({ type: 'error', text: err.message })
+      showToast({ type: 'error', message: `${t('toast.saveError')}: ${err.message}` })
     } finally {
       setSaving(false)
     }
@@ -88,6 +96,7 @@ export default function Profilo() {
       // Il redirect avverrà automaticamente dopo il logout
     } catch (err) {
       setMessage({ type: 'error', text: `${t('profilo.deleteError')}: ${err.message}` })
+      showToast({ type: 'error', message: `${t('toast.deleteError')}: ${err.message}` })
       setShowDeleteConfirm(false)
     } finally {
       setDeleting(false)
@@ -110,8 +119,10 @@ export default function Profilo() {
       document.body.removeChild(a)
       URL.revokeObjectURL(url)
       setMessage({ type: 'success', text: t('profilo.exportSuccess') })
+      showToast({ type: 'success', message: t('toast.exportSuccess') })
     } catch (err) {
       setMessage({ type: 'error', text: `${t('profilo.exportError')}: ${err.message}` })
+      showToast({ type: 'error', message: `${t('toast.exportError')}: ${err.message}` })
     } finally {
       setExporting(false)
     }

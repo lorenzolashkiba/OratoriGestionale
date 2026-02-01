@@ -13,6 +13,15 @@ export default function OratoreCard({ oratore, onEdit, onDelete, grouped = false
     return new Date(date).toLocaleDateString(locale)
   }
 
+  const missingContacts = !oratore.telefono && !oratore.email
+  const missingInfo = !oratore.congregazione || !oratore.localita
+  const needsAttention = missingContacts || missingInfo
+  const missingTooltip = missingContacts && missingInfo
+    ? t('oratori.missingAllTooltip')
+    : missingContacts
+      ? t('oratori.missingContactsTooltip')
+      : t('oratori.missingInfoTooltip')
+
   // Stili diversi se raggruppato (dentro una sezione) o standalone
   const containerClass = grouped
     ? 'bg-white hover:bg-gray-50 transition-colors'
@@ -34,9 +43,19 @@ export default function OratoreCard({ oratore, onEdit, onDelete, grouped = false
 
         {/* Info principale */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-gray-900 truncate">
-            {oratore.cognome} {oratore.nome}
-          </h3>
+          <div className="flex items-center gap-2 min-w-0">
+            <h3 className="font-semibold text-gray-900 truncate">
+              {oratore.cognome} {oratore.nome}
+            </h3>
+            {needsAttention && (
+              <span
+                className="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-800 border border-amber-200"
+                title={missingTooltip}
+              >
+                {t('oratori.missingInfoBadge')}
+              </span>
+            )}
+          </div>
           <div className="flex items-center gap-2 text-sm text-gray-500">
             {oratore.congregazione && (
               <span className="truncate">{oratore.congregazione}</span>

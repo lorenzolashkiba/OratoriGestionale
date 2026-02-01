@@ -4,6 +4,7 @@ export const translations = {
     nav: {
       home: 'Home',
       oratori: 'Oratori',
+      discorsi: 'Discorsi',
       programmi: 'Programmi',
       profilo: 'Profilo',
       admin: 'Admin',
@@ -29,6 +30,22 @@ export const translations = {
       created: 'Creato',
       updated: 'Aggiornato',
       by: 'Da',
+    },
+
+    // Toast
+    toast: {
+      oratoreSaved: 'Oratore salvato',
+      oratoreDeleted: 'Oratore eliminato',
+      programmaSaved: 'Programma salvato',
+      programmaDeleted: 'Programma eliminato',
+      congregazioneSaved: 'Congregazione salvata',
+      profileUpdated: 'Profilo aggiornato',
+      profileLinked: 'Profilo collegato all\'oratore',
+      profileUnlinked: 'Profilo scollegato dall\'oratore',
+      exportSuccess: 'Dati esportati con successo',
+      exportError: 'Errore durante l\'esportazione',
+      saveError: 'Errore durante il salvataggio',
+      deleteError: 'Errore durante l\'eliminazione',
     },
 
     // Home
@@ -59,6 +76,10 @@ export const translations = {
       editOratore: 'Modifica Oratore',
       deleteOratore: 'Elimina Oratore',
       yourCongregazione: 'La tua congregazione',
+      missingInfoBadge: 'Da completare',
+      missingContactsTooltip: 'Mancano contatti (telefono o email)',
+      missingInfoTooltip: 'Mancano congregazione o località',
+      missingAllTooltip: 'Mancano contatti e dati località/congregazione',
       noOratori: 'Nessun oratore trovato',
       startAdding: 'Inizia aggiungendo il primo oratore alla lista',
       addOratore: 'Aggiungi oratore',
@@ -78,6 +99,7 @@ export const translations = {
       discorsiRange: 'Discorsi (1-194)',
       discorsoNum: 'N. discorso',
       discorsiSelected: 'discorso/i selezionato/i',
+      discorsiHelp: 'Inserisci i numeri dei discorsi (1-194). Puoi consultare la lista completa nella sezione Discorsi.',
 
       // Status badges
       programmiFuturi: 'Programmi futuri',
@@ -107,6 +129,7 @@ export const translations = {
       responsabile: 'Responsabile',
       selectResponsabile: 'Seleziona responsabile...',
       orari: 'Orari adunanze',
+      orariHelp: 'Formato consigliato: Sab 17:00 / Dom 10:00',
       indirizzo: 'Indirizzo',
       telefono: 'Telefono',
       configura: 'Configura congregazione',
@@ -156,6 +179,7 @@ export const translations = {
       distanceFrom: 'distanze da',
       loadingOratori: 'Caricamento oratori...',
       calculatingDistances: 'Calcolo distanze...',
+      distanceHelp: 'La distanza è calcolata dalla tua località nel profilo.',
       availableFor: 'Disponibili per',
       notAvailable: 'Non disponibili per questa data',
       occupied: 'Occupato',
@@ -175,6 +199,17 @@ export const translations = {
       // Delete
       confirmDelete: 'Conferma eliminazione',
       confirmDeleteText: 'Sei sicuro di voler eliminare il programma del',
+    },
+
+    // Discorsi
+    discorsi: {
+      title: 'Lista completa discorsi',
+      subtitle: 'Elenco numerato dei discorsi disponibili',
+      searchPlaceholder: 'Cerca per numero o titolo...',
+      totalPrefix: 'Mostrati',
+      totalSuffix: 'di',
+      clearSearch: 'Pulisci',
+      noResults: 'Nessun discorso trovato',
     },
 
     // Profile
@@ -297,6 +332,7 @@ export const translations = {
     nav: {
       home: 'Главная',
       oratori: 'Ораторы',
+      discorsi: 'Речи',
       programmi: 'Программы',
       profilo: 'Профиль',
       admin: 'Админ',
@@ -322,6 +358,22 @@ export const translations = {
       created: 'Создано',
       updated: 'Обновлено',
       by: 'От',
+    },
+
+    // Toast
+    toast: {
+      oratoreSaved: 'Оратор сохранён',
+      oratoreDeleted: 'Оратор удалён',
+      programmaSaved: 'Программа сохранена',
+      programmaDeleted: 'Программа удалена',
+      congregazioneSaved: 'Собрание сохранено',
+      profileUpdated: 'Профиль обновлён',
+      profileLinked: 'Профиль привязан к оратору',
+      profileUnlinked: 'Профиль отвязан от оратора',
+      exportSuccess: 'Данные успешно экспортированы',
+      exportError: 'Ошибка при экспорте',
+      saveError: 'Ошибка при сохранении',
+      deleteError: 'Ошибка при удалении',
     },
 
     // Home
@@ -352,6 +404,10 @@ export const translations = {
       editOratore: 'Редактировать оратора',
       deleteOratore: 'Удалить оратора',
       yourCongregazione: 'Ваше собрание',
+      missingInfoBadge: 'Нужно заполнить',
+      missingContactsTooltip: 'Нет контактов (телефон или email)',
+      missingInfoTooltip: 'Нет собрания или города',
+      missingAllTooltip: 'Нет контактов и данных собрания/города',
       noOratori: 'Ораторы не найдены',
       startAdding: 'Начните с добавления первого оратора в список',
       addOratore: 'Добавить оратора',
@@ -371,6 +427,7 @@ export const translations = {
       discorsiRange: 'Речи (1-194)',
       discorsoNum: '№ речи',
       discorsiSelected: 'речь(ей) выбрано',
+      discorsiHelp: 'Введите номера речей (1–194). Полный список доступен в разделе «Речи».',
 
       // Status badges
       programmiFuturi: 'Будущие программы',
@@ -400,6 +457,7 @@ export const translations = {
       responsabile: 'Ответственный',
       selectResponsabile: 'Выберите ответственного...',
       orari: 'Время встреч',
+      orariHelp: 'Рекомендуемый формат: Сб 17:00 / Вс 10:00',
       indirizzo: 'Адрес',
       telefono: 'Телефон',
       configura: 'Настроить собрание',
@@ -449,6 +507,7 @@ export const translations = {
       distanceFrom: 'расстояние от',
       loadingOratori: 'Загрузка ораторов...',
       calculatingDistances: 'Расчёт расстояний...',
+      distanceHelp: 'Расстояние рассчитывается от вашего города в профиле.',
       availableFor: 'Доступны на',
       notAvailable: 'Недоступны на эту дату',
       occupied: 'Занят',
@@ -468,6 +527,17 @@ export const translations = {
       // Delete
       confirmDelete: 'Подтверждение удаления',
       confirmDeleteText: 'Вы уверены, что хотите удалить программу от',
+    },
+
+    // Discorsi
+    discorsi: {
+      title: 'Полный список речей',
+      subtitle: 'Нумерованный список доступных речей',
+      searchPlaceholder: 'Поиск по номеру или названию...',
+      totalPrefix: 'Показано',
+      totalSuffix: 'из',
+      clearSearch: 'Очистить',
+      noResults: 'Ничего не найдено',
     },
 
     // Profile

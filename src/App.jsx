@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { AuthProvider, useAuth } from './context/AuthContext'
 import { LanguageProvider } from './context/LanguageContext'
+import { ToastProvider } from './context/ToastContext'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import Login from './pages/Login'
 import Home from './pages/Home'
@@ -12,6 +13,7 @@ import Privacy from './pages/Privacy'
 import PrivacyConsent from './pages/PrivacyConsent'
 import DataReviewReminder from './components/modals/DataReviewReminder'
 import Doc from './pages/Doc'
+import Discorsi from './pages/Discorsi'
 
 // Componente per gestire il redirect al consenso privacy
 function PrivacyConsentGuard({ children }) {
@@ -58,6 +60,14 @@ function AppRoutes() {
           }
         />
         <Route
+          path="/discorsi"
+          element={
+            <ProtectedRoute>
+              <Discorsi />
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/programmi"
           element={
             <ProtectedRoute>
@@ -100,9 +110,11 @@ function App() {
   return (
     <LanguageProvider>
       <AuthProvider>
-        <Router>
-          <AppRoutes />
-        </Router>
+        <ToastProvider>
+          <Router>
+            <AppRoutes />
+          </Router>
+        </ToastProvider>
       </AuthProvider>
     </LanguageProvider>
   )

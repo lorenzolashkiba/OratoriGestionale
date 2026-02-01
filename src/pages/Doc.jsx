@@ -218,6 +218,102 @@ const DOC_CONTENT = {
           },
         ],
       },
+      {
+        id: 'usage',
+        title: 'Guida all’uso',
+        sections: [
+          {
+            id: 'usage-login',
+            title: 'Accesso e primo utilizzo',
+            body: [
+              'Accedi con Google. Al primo accesso viene richiesto di accettare la Privacy Policy.',
+              'L’account entra in stato “pending” finché un admin non lo approva.',
+            ],
+          },
+          {
+            id: 'usage-profile',
+            title: 'Profilo utente',
+            body: [
+              'Completa il profilo con congregazione e località per abilitare tutte le funzionalità.',
+              'Se sei un oratore, collega il tuo profilo a un oratore esistente nella lista.',
+            ],
+          },
+          {
+            id: 'usage-oratori',
+            title: 'Gestione oratori',
+            body: [
+              'Usa la pagina Oratori per creare, modificare e aggiornare la lista condivisa.',
+              'Le congregazioni sono raggruppate e collassate per impostazione predefinita.',
+              'Senza filtri, la tua congregazione viene evidenziata in alto.',
+            ],
+          },
+          {
+            id: 'usage-programmi',
+            title: 'Programmi',
+            body: [
+              'Crea i programmi inserendo data, orario, oratore e discorso.',
+              'Il sistema segnala eventuali sovrapposizioni o oratori già occupati.',
+            ],
+          },
+          {
+            id: 'usage-admin',
+            title: 'Funzionalità admin',
+            body: [
+              'Nel pannello Admin puoi approvare/rifiutare utenti, cambiare ruolo e vedere le statistiche.',
+              'Dopo l’approvazione, l’utente riceve l’accesso completo.',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'release',
+        title: 'Release e manutenzione',
+        sections: [
+          {
+            id: 'release-checklist',
+            title: 'Checklist di rilascio',
+            body: [
+              {
+                type: 'list',
+                items: [
+                  'Verifica che le variabili d’ambiente in Netlify siano aggiornate.',
+                  'Se hai aggiornato la privacy, cambia `VITE_PRIVACY_VERSION` e `PRIVACY_VERSION`.',
+                  'Esegui `npm run build` e controlla che non ci siano errori.',
+                  'Dopo il deploy, verifica login, oratori e programmi.',
+                ],
+              },
+            ],
+          },
+          {
+            id: 'release-backup',
+            title: 'Backup e ripristino',
+            body: [
+              'Il sistema non esegue backup automatici lato app. Per export utenti usa la funzione GDPR nel profilo o esporta manualmente dal database.',
+              {
+                type: 'note',
+                tone: 'warning',
+                title: 'Attenzione',
+                text: 'Qualsiasi ripristino manuale sul database può impattare i dati correnti. Fai sempre un backup prima di modifiche massive.',
+              },
+            ],
+          },
+          {
+            id: 'release-troubleshooting',
+            title: 'Troubleshooting',
+            body: [
+              {
+                type: 'list',
+                items: [
+                  'Login fallisce: controlla Firebase Auth e le variabili `VITE_FIREBASE_*`.',
+                  'API 401/403: verifica il token e i ruoli in `users`.',
+                  'Funzioni non rispondono: controlla i log Netlify Functions.',
+                  'Email non inviate: verifica `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_EMAIL`.',
+                ],
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
   ru: {
@@ -428,6 +524,102 @@ const DOC_CONTENT = {
                 items: [
                   'Чтобы принудительно показать напоминание, сбросьте `dataReviewAcceptedAt` у пользователей.',
                   'Для диагностики API смотрите логи функций в Netlify.',
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
+        id: 'usage',
+        title: 'Руководство пользователя',
+        sections: [
+          {
+            id: 'usage-login',
+            title: 'Вход и первый запуск',
+            body: [
+              'Войдите через Google. При первом входе требуется принять политику конфиденциальности.',
+              'Аккаунт получает статус “pending”, пока администратор не утвердит доступ.',
+            ],
+          },
+          {
+            id: 'usage-profile',
+            title: 'Профиль пользователя',
+            body: [
+              'Заполните профиль (собрание и город), чтобы открыть все функции.',
+              'Если вы оратор, привяжите профиль к существующему оратору в списке.',
+            ],
+          },
+          {
+            id: 'usage-oratori',
+            title: 'Управление ораторами',
+            body: [
+              'Используйте страницу «Ораторы» для создания и обновления общего списка.',
+              'Собрания сгруппированы и по умолчанию свернуты.',
+              'Без фильтров ваше собрание выделяется и показывается первым.',
+            ],
+          },
+          {
+            id: 'usage-programmi',
+            title: 'Программы',
+            body: [
+              'Создавайте программы, указывая дату, время, оратора и речь.',
+              'Система предупреждает о пересечениях и занятости оратора.',
+            ],
+          },
+          {
+            id: 'usage-admin',
+            title: 'Функции администратора',
+            body: [
+              'В админ‑панели можно утверждать/отклонять пользователей, менять роли и смотреть статистику.',
+              'После утверждения пользователь получает полный доступ.',
+            ],
+          },
+        ],
+      },
+      {
+        id: 'release',
+        title: 'Релизы и обслуживание',
+        sections: [
+          {
+            id: 'release-checklist',
+            title: 'Чек‑лист релиза',
+            body: [
+              {
+                type: 'list',
+                items: [
+                  'Проверьте, что переменные окружения в Netlify актуальны.',
+                  'Если обновляли privacy, измените `VITE_PRIVACY_VERSION` и `PRIVACY_VERSION`.',
+                  'Запустите `npm run build` и убедитесь, что ошибок нет.',
+                  'После деплоя проверьте логин, ораторов и программы.',
+                ],
+              },
+            ],
+          },
+          {
+            id: 'release-backup',
+            title: 'Резервное копирование и восстановление',
+            body: [
+              'Приложение не делает автоматические бэкапы. Для выгрузки пользователей используйте GDPR‑экспорт в профиле или экспортируйте данные вручную из БД.',
+              {
+                type: 'note',
+                tone: 'warning',
+                title: 'Внимание',
+                text: 'Любое ручное восстановление БД может повлиять на текущие данные. Всегда делайте резервную копию перед массовыми изменениями.',
+              },
+            ],
+          },
+          {
+            id: 'release-troubleshooting',
+            title: 'Troubleshooting',
+            body: [
+              {
+                type: 'list',
+                items: [
+                  'Не работает логин: проверьте Firebase Auth и переменные `VITE_FIREBASE_*`.',
+                  'API 401/403: проверьте токен и роли в `users`.',
+                  'Функции не отвечают: проверьте логи Netlify Functions.',
+                  'Email не отправляются: проверьте `RESEND_API_KEY`, `EMAIL_FROM`, `ADMIN_EMAIL`.',
                 ],
               },
             ],

@@ -166,6 +166,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 {t('oratori.discorsiRange')}
               </label>
+              <p className="text-xs text-gray-500 mb-2">{t('oratori.discorsiHelp')}</p>
               <div className="flex gap-2">
                 <input
                   type="number"
