@@ -25,7 +25,7 @@ const GUIDE_CONTENT = {
       },
       {
         title: 'Gestisci oratori e congregazioni',
-        text: 'Aggiungi o aggiorna gli oratori, imposta il coordinatore degli oratori e gli orari delle adunanze.',
+        text: 'Aggiungi o aggiorna gli oratori, imposta il coordinatore dei discorsi e gli orari delle adunanze.',
       },
       {
         title: 'Crea i programmi',
@@ -50,7 +50,7 @@ const GUIDE_CONTENT = {
         bullets: [
           'Usa i filtri per trovare rapidamente un oratore e la sua congregazione.',
           'Apri una congregazione per vedere contatti, discorsi e programmi futuri degli oratori.',
-          'Per ogni congregazione puoi configurare orari, indirizzo e coordinatore degli oratori.',
+          'Per ogni congregazione puoi configurare orari, indirizzo e coordinatore dei discorsi.',
           'I dati sono condivisi: tienili aggiornati per tutti.',
         ],
         ctaKey: 'nav.oratori',
@@ -129,7 +129,7 @@ const GUIDE_CONTENT = {
       },
       {
         title: 'Управляйте ораторами и собраниями',
-        text: 'Добавляйте и обновляйте ораторов, задавайте координатора ораторов и время встреч.',
+        text: 'Добавляйте и обновляйте ораторов, задавайте координатора речей и время встреч.',
       },
       {
         title: 'Создавайте программы',
@@ -154,7 +154,7 @@ const GUIDE_CONTENT = {
         bullets: [
           'Используйте фильтры, чтобы быстро найти оратора и его собрание.',
           'Откройте собрание, чтобы видеть контакты, речи и будущие программы ораторов.',
-          'Для каждого собрания можно задать время, адрес и координатора ораторов.',
+          'Для каждого собрания можно задать время, адрес и координатора речей.',
           'Данные общие — поддерживайте их в актуальном виде.',
         ],
         ctaKey: 'nav.oratori',
