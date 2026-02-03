@@ -9,6 +9,7 @@ export const translations = {
       profilo: 'Profilo',
       admin: 'Admin',
       doc: 'Doc',
+      guida: 'Guida',
       logout: 'Esci',
     },
 
@@ -337,6 +338,7 @@ export const translations = {
       profilo: 'Профиль',
       admin: 'Админ',
       doc: 'Документация',
+      guida: 'Руководство',
       logout: 'Выйти',
     },
 

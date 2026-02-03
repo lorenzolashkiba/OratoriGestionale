@@ -27,6 +27,12 @@ export default function Layout({ children }) {
                 </Link>
               )}
               <Link
+                to="/guida"
+                className="hover:text-gray-700 transition-colors"
+              >
+                {t('nav.guida')}
+              </Link>
+              <Link
                 to="/privacy"
                 className="hover:text-gray-700 transition-colors"
               >

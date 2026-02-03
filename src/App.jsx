@@ -14,6 +14,7 @@ import PrivacyConsent from './pages/PrivacyConsent'
 import DataReviewReminder from './components/modals/DataReviewReminder'
 import Doc from './pages/Doc'
 import Discorsi from './pages/Discorsi'
+import Guida from './pages/Guida'
 
 // Componente per gestire il redirect al consenso privacy
 function PrivacyConsentGuard({ children }) {
@@ -96,6 +97,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <Doc />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/guida"
+          element={
+            <ProtectedRoute>
+              <Guida />
             </ProtectedRoute>
           }
         />
