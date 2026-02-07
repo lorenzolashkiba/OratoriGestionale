@@ -1,11 +1,9 @@
 import { useState, useEffect } from 'react'
 import { useLanguage } from '../../context/LanguageContext'
-import { useAuth } from '../../context/AuthContext'
 import { oratoriApi } from '../../services/api'
 
 export default function CongregazioneForm({ congregazione, initialNome, onSave, onCancel, loading }) {
   const { t } = useLanguage()
-  const { isAdmin } = useAuth()
   const [formData, setFormData] = useState({
     nome: '',
     responsabileOratoreId: '',
@@ -73,7 +71,7 @@ export default function CongregazioneForm({ congregazione, initialNome, onSave, 
 
   // Se modifica e non admin, non permettere cambio nome/responsabile
   const isEditing = !!congregazione
-  const canEditNomeResponsabile = isAdmin
+  const canEditNomeResponsabile = true
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
@@ -126,7 +124,6 @@ export default function CongregazioneForm({ congregazione, initialNome, onSave, 
                   name="responsabileOratoreId"
                   value={formData.responsabileOratoreId}
                   onChange={handleChange}
-                  required
                   disabled={isEditing && !canEditNomeResponsabile}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:bg-gray-100 disabled:text-gray-500"
                 >

@@ -11,20 +11,13 @@ export default function CongregazioneHeader({
   onConfigura,
   onEdit,
 }) {
-  const { isAdmin, profile } = useAuth()
+  const { isAdmin } = useAuth()
   const { t } = useLanguage()
 
   const displayName = nome || t('oratori.noCongregazione')
   const hasConfig = !!congregazione
 
-  // Verifica se l'utente corrente è collegato all'oratore responsabile
-  // profile.oratoreId è l'oratore collegato all'utente corrente
-  // congregazione.responsabileOratoreId è l'oratore responsabile della congregazione
-  const isResponsabile =
-    profile?.oratoreId &&
-    (congregazione?.responsabileOratoreId?.toString() === profile.oratoreId.toString() ||
-      congregazione?.responsabile?._id?.toString() === profile.oratoreId.toString())
-  const canEdit = isAdmin || isResponsabile
+  const canEdit = true
 
   return (
     <div className="w-full">

@@ -130,7 +130,7 @@ export default function Oratori() {
       setDeleteConfirm(null)
       showToast({ type: 'success', message: t('toast.oratoreDeleted') })
     } catch (err) {
-      showToast({ type: 'error', message: `${t('toast.deleteError')}: ${err.message}` })
+      showToast({ type: 'error', message: `${t('toast.deleteError')}: ${mapOratoreDeleteErrorMessage(err.message)}` })
     }
   }
 
@@ -146,7 +146,7 @@ export default function Oratori() {
       setEditingOratore(null)
       showToast({ type: 'success', message: t('toast.oratoreSaved') })
     } catch (err) {
-      showToast({ type: 'error', message: `${t('toast.saveError')}: ${err.message}` })
+      showToast({ type: 'error', message: `${t('toast.saveError')}: ${mapOratoreErrorMessage(err.message)}` })
     } finally {
       setSaving(false)
     }
@@ -170,6 +170,37 @@ export default function Oratori() {
     setShowCongForm(true)
   }
 
+  const PERMISSION_ERROR_IT = 'Per modificare questi dati devi fare parte di questa congregazione'
+  const LEGACY_PERMISSION_ERROR_IT = 'Non hai i permessi per modificare questa congregazione'
+  const ORATORE_PERMISSION_ERROR_IT = 'Per modificare questo oratore devi fare parte di questa congregazione'
+
+  const mapCongregazioneErrorMessage = (message) => {
+    if (!message) return message
+    const normalized = message.trim()
+    if (normalized === PERMISSION_ERROR_IT || normalized === LEGACY_PERMISSION_ERROR_IT) {
+      return t('errors.congregazionePermission')
+    }
+    return message
+  }
+
+  const mapOratoreErrorMessage = (message) => {
+    if (!message) return message
+    const normalized = message.trim()
+    if (normalized === ORATORE_PERMISSION_ERROR_IT) {
+      return t('errors.oratorePermission')
+    }
+    return message
+  }
+
+  const mapOratoreDeleteErrorMessage = (message) => {
+    if (!message) return message
+    const normalized = message.trim()
+    if (normalized === 'Per eliminare questo oratore devi fare parte di questa congregazione') {
+      return t('errors.oratoreDeletePermission')
+    }
+    return message
+  }
+
   const handleSaveCongregazione = async (data) => {
     setSavingCong(true)
     try {
@@ -183,7 +214,7 @@ export default function Oratori() {
       setConfiguringCongNome(null)
       showToast({ type: 'success', message: t('toast.congregazioneSaved') })
     } catch (err) {
-      showToast({ type: 'error', message: `${t('toast.saveError')}: ${err.message}` })
+      showToast({ type: 'error', message: `${t('toast.saveError')}: ${mapCongregazioneErrorMessage(err.message)}` })
     } finally {
       setSavingCong(false)
     }

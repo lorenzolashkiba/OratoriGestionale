@@ -173,7 +173,7 @@ async function congregazioniHandler(event, context, user, dbUser) {
         }
       }
 
-      // Verifica permessi: admin o utente collegato all'oratore responsabile
+      // Verifica permessi: admin, responsabile o utente della stessa congregazione
       const isAdmin = currentUser.role === 'admin'
 
       // Controlla se l'utente corrente è collegato all'oratore responsabile
@@ -182,11 +182,20 @@ async function congregazioniHandler(event, context, user, dbUser) {
         isResponsabile = congregazione.responsabileOratoreId.toString() === currentUser.oratoreId.toString()
       }
 
-      if (!isAdmin && !isResponsabile) {
+      const normalize = (value) => (value || '').trim().replace(/\s+/g, ' ').toLowerCase()
+      const isSameCongregazione =
+        normalize(currentUser.congregazione) &&
+        normalize(congregazione.nome) === normalize(currentUser.congregazione)
+
+      const canEdit = isAdmin || isResponsabile || isSameCongregazione
+
+      if (!canEdit) {
         return {
           statusCode: 403,
           headers,
-          body: JSON.stringify({ message: 'Non hai i permessi per modificare questa congregazione' }),
+          body: JSON.stringify({
+            message: 'Per modificare questi dati devi fare parte di questa congregazione',
+          }),
         }
       }
 
@@ -194,8 +203,8 @@ async function congregazioniHandler(event, context, user, dbUser) {
         updatedAt: new Date(),
       }
 
-      // Solo admin puo cambiare nome e responsabile
-      if (isAdmin) {
+      // Admin, responsabile o utente della stessa congregazione possono cambiare nome e responsabile
+      if (isAdmin || isResponsabile || isSameCongregazione) {
         if (nome) {
           // Verifica unicita del nuovo nome (escluso se stesso)
           const existing = await congregazioniCollection.findOne({
@@ -212,25 +221,22 @@ async function congregazioniHandler(event, context, user, dbUser) {
           updateData.nome = nome.trim()
         }
 
-        if (responsabileOratoreId) {
-          const responsabile = await oratoriCollection.findOne({
-            _id: new ObjectId(responsabileOratoreId),
-          })
-          if (!responsabile) {
-            return {
-              statusCode: 404,
-              headers,
-              body: JSON.stringify({ message: 'Oratore responsabile non trovato' }),
+        if (responsabileOratoreId !== undefined) {
+          if (!responsabileOratoreId) {
+            updateData.responsabileOratoreId = null
+          } else {
+            const responsabile = await oratoriCollection.findOne({
+              _id: new ObjectId(responsabileOratoreId),
+            })
+            if (!responsabile) {
+              return {
+                statusCode: 404,
+                headers,
+                body: JSON.stringify({ message: 'Oratore responsabile non trovato' }),
+              }
             }
+            updateData.responsabileOratoreId = new ObjectId(responsabileOratoreId)
           }
-          updateData.responsabileOratoreId = new ObjectId(responsabileOratoreId)
-        }
-      } else if (responsabileOratoreId && responsabileOratoreId !== congregazione.responsabileOratoreId?.toString()) {
-        // Responsabile non puo cambiare se stesso
-        return {
-          statusCode: 403,
-          headers,
-          body: JSON.stringify({ message: 'Non puoi cambiare il responsabile' }),
         }
       }
 

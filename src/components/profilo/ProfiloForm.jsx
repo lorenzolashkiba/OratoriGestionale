@@ -91,6 +91,7 @@ export default function ProfiloForm({ profile, onSave, loading }) {
             placeholder={t('profilo.form.congregazionePlaceholder')}
             className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
           />
+          <p className="text-xs text-gray-500 mt-1">{t('common.congregazioneHint')}</p>
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1.5">

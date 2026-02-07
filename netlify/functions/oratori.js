@@ -127,22 +127,47 @@ async function oratoriHandler(event, context, user, dbUser) {
         }
       }
 
+      const existingOratore = await oratoriCollection.findOne({ _id: new ObjectId(id) })
+      if (!existingOratore) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ message: 'Oratore non trovato' }),
+        }
+      }
+
+      const normalize = (value) => (value || '').trim().replace(/\s+/g, ' ').toLowerCase()
+      const isAdmin = currentUser.role === 'admin'
+      const userCongregazione = normalize(currentUser.congregazione)
+      const oratoreCongregazione = normalize(existingOratore.congregazione)
+      const isSameCongregazione = userCongregazione && oratoreCongregazione && userCongregazione === oratoreCongregazione
+
+      if (!isAdmin && !isSameCongregazione) {
+        return {
+          statusCode: 403,
+          headers,
+          body: JSON.stringify({
+            message: 'Per modificare questo oratore devi fare parte di questa congregazione',
+          }),
+        }
+      }
+
+      const updateData = {
+        nome: nome || '',
+        cognome: cognome || '',
+        email: email || '',
+        telefono: telefono || '',
+        congregazione: isAdmin ? (congregazione || '') : existingOratore.congregazione || '',
+        localita: localita || '',
+        discorsi: discorsi || [],
+        updatedAt: new Date(),
+        updatedBy: currentUser._id,
+        updatedByName: `${currentUser.nome} ${currentUser.cognome}`.trim() || currentUser.email,
+      }
+
       const result = await oratoriCollection.findOneAndUpdate(
         { _id: new ObjectId(id) },
-        {
-          $set: {
-            nome: nome || '',
-            cognome: cognome || '',
-            email: email || '',
-            telefono: telefono || '',
-            congregazione: congregazione || '',
-            localita: localita || '',
-            discorsi: discorsi || [],
-            updatedAt: new Date(),
-            updatedBy: currentUser._id,
-            updatedByName: `${currentUser.nome} ${currentUser.cognome}`.trim() || currentUser.email,
-          },
-        },
+        { $set: updateData },
         { returnDocument: 'after' }
       )
 
@@ -171,6 +196,31 @@ async function oratoriHandler(event, context, user, dbUser) {
           statusCode: 400,
           headers,
           body: JSON.stringify({ message: 'ID obbligatorio' }),
+        }
+      }
+
+      const existingOratore = await oratoriCollection.findOne({ _id: new ObjectId(id) })
+      if (!existingOratore) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ message: 'Oratore non trovato' }),
+        }
+      }
+
+      const normalize = (value) => (value || '').trim().replace(/\s+/g, ' ').toLowerCase()
+      const isAdmin = currentUser.role === 'admin'
+      const userCongregazione = normalize(currentUser.congregazione)
+      const oratoreCongregazione = normalize(existingOratore.congregazione)
+      const isSameCongregazione = userCongregazione && oratoreCongregazione && userCongregazione === oratoreCongregazione
+
+      if (!isAdmin && !isSameCongregazione) {
+        return {
+          statusCode: 403,
+          headers,
+          body: JSON.stringify({
+            message: 'Per eliminare questo oratore devi fare parte di questa congregazione',
+          }),
         }
       }
 

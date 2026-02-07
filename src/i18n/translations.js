@@ -31,6 +31,7 @@ export const translations = {
       created: 'Creato',
       updated: 'Aggiornato',
       by: 'Da',
+      congregazioneHint: 'Il nome deve essere uguale a quello nella lista oratori',
     },
 
     // Toast
@@ -119,6 +120,13 @@ export const translations = {
 
       // Grouping
       noCongregazione: 'Senza congregazione',
+    },
+
+    // Errors
+    errors: {
+      congregazionePermission: 'Per modificare questi dati devi fare parte di questa congregazione',
+      oratorePermission: 'Per modificare questo oratore devi fare parte di questa congregazione',
+      oratoreDeletePermission: 'Per eliminare questo oratore devi fare parte di questa congregazione',
     },
 
     // Congregazioni
@@ -360,6 +368,7 @@ export const translations = {
       created: 'Создано',
       updated: 'Обновлено',
       by: 'От',
+      congregazioneHint: 'Название должно совпадать с тем, что в списке ораторов',
     },
 
     // Toast
@@ -448,6 +457,13 @@ export const translations = {
 
       // Grouping
       noCongregazione: 'Без собрания',
+    },
+
+    // Errors
+    errors: {
+      congregazionePermission: 'Чтобы изменять эти данные, вы должны быть участником этого собрания',
+      oratorePermission: 'Чтобы изменять этого оратора, вы должны быть участником этого собрания',
+      oratoreDeletePermission: 'Чтобы удалить этого оратора, вы должны быть участником этого собрания',
     },
 
     // Congregazioni
