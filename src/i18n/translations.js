@@ -11,6 +11,8 @@ export const translations = {
       doc: 'Doc',
       guida: 'Guida',
       logout: 'Esci',
+      profileIncomplete: 'Completa il tuo profilo',
+      missingResponsabile: 'Congregazione senza coordinatore',
     },
 
     // Common
@@ -62,6 +64,8 @@ export const translations = {
       viewProfile: 'Il tuo Profilo',
       completeProfile: 'Completa il tuo profilo',
       completeProfileHint: 'Aggiungi la tua congregazione e altri dati per sfruttare tutte le funzionalità.',
+      missingResponsabileTitle: 'Manca il coordinatore dei discorsi',
+      missingResponsabileHint: 'La tua congregazione non ha un coordinatore assegnato. Aggiorna i dati della congregazione.',
       goToProfile: 'Vai al profilo',
       oratoriDesc: 'Gestisci la lista condivisa degli oratori',
       programmiDesc: 'Crea e gestisci i tuoi programmi',
@@ -348,6 +352,8 @@ export const translations = {
       doc: 'Документация',
       guida: 'Руководство',
       logout: 'Выйти',
+      profileIncomplete: 'Заполните профиль',
+      missingResponsabile: 'Собрание без координатора',
     },
 
     // Common
@@ -399,6 +405,8 @@ export const translations = {
       viewProfile: 'Ваш профиль',
       completeProfile: 'Заполните профиль',
       completeProfileHint: 'Добавьте своё собрание и другие данные для полного использования функций.',
+      missingResponsabileTitle: 'Нет координатора речей',
+      missingResponsabileHint: 'В вашем собрании не назначен координатор. Обновите данные собрания.',
       goToProfile: 'Перейти к профилю',
       oratoriDesc: 'Управление общим списком ораторов',
       programmiDesc: 'Создание и управление вашими программами',

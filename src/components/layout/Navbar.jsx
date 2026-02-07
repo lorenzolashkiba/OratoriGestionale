@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { useLanguage } from '../../context/LanguageContext'
+import { congregazioniApi } from '../../services/api'
 
 // Componente bandiera
 function FlagIcon({ country }) {
@@ -30,12 +31,41 @@ function FlagIcon({ country }) {
 }
 
 export default function Navbar() {
-  const { user, logout, isAdmin } = useAuth()
+  const { user, profile, logout, isAdmin } = useAuth()
   const { language, toggleLanguage, t } = useLanguage()
   const location = useLocation()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [missingResponsabile, setMissingResponsabile] = useState(false)
 
   const isActive = (path) => location.pathname === path
+  const isProfileIncomplete =
+    !profile?.nome || !profile?.cognome || !profile?.congregazione || !profile?.localita
+
+  useEffect(() => {
+    let isMounted = true
+
+    const loadCongregazione = async () => {
+      if (!profile?.congregazione) {
+        if (isMounted) setMissingResponsabile(false)
+        return
+      }
+
+      try {
+        const congregazione = await congregazioniApi.getByNome(profile.congregazione)
+        const hasResponsabile =
+          !!congregazione?.responsabileOratoreId || !!congregazione?.responsabile?._id
+        if (isMounted) setMissingResponsabile(!hasResponsabile)
+      } catch (err) {
+        if (isMounted) setMissingResponsabile(false)
+      }
+    }
+
+    loadCongregazione()
+
+    return () => {
+      isMounted = false
+    }
+  }, [profile?.congregazione])
 
   const baseNavLinks = [
     { path: '/', labelKey: 'nav.home', icon: (
@@ -110,7 +140,21 @@ export default function Navbar() {
                 }`}
               >
                 {link.icon}
-                {t(link.labelKey)}
+                <span className="relative">
+                  {t(link.labelKey)}
+                  {link.path === '/profilo' && isProfileIncomplete && (
+                    <span
+                      title={t('nav.profileIncomplete')}
+                      className="absolute -top-1.5 -right-3 h-2.5 w-2.5 rounded-full bg-amber-500 ring-2 ring-white"
+                    />
+                  )}
+                  {link.path === '/oratori' && missingResponsabile && (
+                    <span
+                      title={t('nav.missingResponsabile')}
+                      className="absolute -top-1.5 -right-3 h-2.5 w-2.5 rounded-full bg-amber-500 ring-2 ring-white"
+                    />
+                  )}
+                </span>
               </Link>
             ))}
           </div>
@@ -191,7 +235,21 @@ export default function Navbar() {
                 }`}
               >
                 {link.icon}
-                {t(link.labelKey)}
+                <span className="relative">
+                  {t(link.labelKey)}
+                  {link.path === '/profilo' && isProfileIncomplete && (
+                    <span
+                      title={t('nav.profileIncomplete')}
+                      className="absolute -top-1.5 -right-3 h-2.5 w-2.5 rounded-full bg-amber-500 ring-2 ring-white"
+                    />
+                  )}
+                  {link.path === '/oratori' && missingResponsabile && (
+                    <span
+                      title={t('nav.missingResponsabile')}
+                      className="absolute -top-1.5 -right-3 h-2.5 w-2.5 rounded-full bg-amber-500 ring-2 ring-white"
+                    />
+                  )}
+                </span>
               </Link>
             ))}
 

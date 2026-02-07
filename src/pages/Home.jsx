@@ -1,13 +1,44 @@
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useLanguage } from '../context/LanguageContext'
 import Layout from '../components/layout/Layout'
+import { congregazioniApi } from '../services/api'
 
 export default function Home() {
   const { profile, user } = useAuth()
   const { t } = useLanguage()
+  const [missingResponsabile, setMissingResponsabile] = useState(false)
 
   const userName = profile?.nome || user?.displayName?.split(' ')[0] || 'Utente'
+  const isProfileIncomplete =
+    !profile?.nome || !profile?.cognome || !profile?.congregazione || !profile?.localita
+
+  useEffect(() => {
+    let isMounted = true
+
+    const loadCongregazione = async () => {
+      if (!profile?.congregazione) {
+        if (isMounted) setMissingResponsabile(false)
+        return
+      }
+
+      try {
+        const congregazione = await congregazioniApi.getByNome(profile.congregazione)
+        const hasResponsabile =
+          !!congregazione?.responsabileOratoreId || !!congregazione?.responsabile?._id
+        if (isMounted) setMissingResponsabile(!hasResponsabile)
+      } catch (err) {
+        if (isMounted) setMissingResponsabile(false)
+      }
+    }
+
+    loadCongregazione()
+
+    return () => {
+      isMounted = false
+    }
+  }, [profile?.congregazione])
 
   return (
     <Layout>
@@ -34,7 +65,7 @@ export default function Home() {
         </div>
 
         {/* Profile incomplete warning */}
-        {!profile?.congregazione && (
+        {isProfileIncomplete && (
           <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
             <div className="flex items-start gap-3">
               <div className="bg-amber-100 rounded-full p-2 shrink-0">
@@ -56,6 +87,25 @@ export default function Home() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Congregazione without responsabile warning */}
+        {profile?.congregazione && missingResponsabile && (
+          <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6">
+            <div className="flex items-start gap-3">
+              <div className="bg-amber-100 rounded-full p-2 shrink-0">
+                <svg className="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <p className="font-semibold text-amber-800">{t('home.missingResponsabileTitle')}</p>
+                <p className="text-sm text-amber-700 mt-0.5">
+                  {t('home.missingResponsabileHint')}
+                </p>
               </div>
             </div>
           </div>
