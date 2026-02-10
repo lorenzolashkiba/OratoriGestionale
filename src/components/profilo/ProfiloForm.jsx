@@ -1,7 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useLanguage } from '../../context/LanguageContext'
 
-export default function ProfiloForm({ profile, onSave, loading }) {
+export default function ProfiloForm({
+  profile,
+  onSave,
+  loading,
+  congregazioniOptions = [],
+  congregazioniLoading = false,
+}) {
   const { t } = useLanguage()
   const [formData, setFormData] = useState({
     nome: '',
@@ -32,6 +38,14 @@ export default function ProfiloForm({ profile, onSave, loading }) {
     e.preventDefault()
     onSave(formData)
   }
+
+  const sortedCongregazioni = useMemo(() => {
+    return [...congregazioniOptions].sort((a, b) => a.localeCompare(b))
+  }, [congregazioniOptions])
+
+  const hasCurrentCongregazione =
+    !!formData.congregazione &&
+    sortedCongregazioni.some((c) => c.toLowerCase() === formData.congregazione.toLowerCase())
 
   return (
     <form onSubmit={handleSubmit} className="space-y-5">
@@ -83,14 +97,23 @@ export default function ProfiloForm({ profile, onSave, loading }) {
           <label className="block text-sm font-medium text-gray-700 mb-1.5">
             {t('profilo.form.congregazioneLabel')}
           </label>
-          <input
-            type="text"
+          <select
             name="congregazione"
             value={formData.congregazione}
             onChange={handleChange}
-            placeholder={t('profilo.form.congregazionePlaceholder')}
-            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base"
-          />
+            disabled={congregazioniLoading}
+            className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base bg-white disabled:bg-gray-100"
+          >
+            <option value="">{t('profilo.form.congregazionePlaceholder')}</option>
+            {!hasCurrentCongregazione && formData.congregazione && (
+              <option value={formData.congregazione}>{formData.congregazione}</option>
+            )}
+            {sortedCongregazioni.map((cong) => (
+              <option key={cong} value={cong}>
+                {cong}
+              </option>
+            ))}
+          </select>
           <p className="text-xs text-gray-500 mt-1">{t('common.congregazioneHint')}</p>
         </div>
         <div>

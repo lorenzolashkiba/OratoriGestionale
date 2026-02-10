@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Layout from '../components/layout/Layout'
 import ProfiloForm from '../components/profilo/ProfiloForm'
@@ -34,6 +34,19 @@ export default function Profilo() {
     }
     fetchOratori()
   }, [])
+
+  const congregazioniOptions = useMemo(() => {
+    const map = new Map()
+    oratori.forEach((oratore) => {
+      const original = (oratore.congregazione || '').trim()
+      if (!original) return
+      const key = original.toLowerCase()
+      if (!map.has(key)) {
+        map.set(key, original)
+      }
+    })
+    return Array.from(map.values()).sort((a, b) => a.localeCompare(b))
+  }, [oratori])
 
   const handleSave = async (data) => {
     setSaving(true)
@@ -206,7 +219,13 @@ export default function Profilo() {
               </div>
             )}
 
-            <ProfiloForm profile={profile} onSave={handleSave} loading={saving} />
+            <ProfiloForm
+              profile={profile}
+              onSave={handleSave}
+              loading={saving}
+              congregazioniOptions={congregazioniOptions}
+              congregazioniLoading={loadingOratori}
+            />
           </div>
         </div>
 
