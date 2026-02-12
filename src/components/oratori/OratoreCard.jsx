@@ -23,6 +23,10 @@ export default function OratoreCard({ oratore, onEdit, onDelete, grouped = false
       : t('oratori.missingInfoTooltip')
 
   const discorsiDisponibili = (oratore.discorsi || []).filter(isDiscorsoDisponibile)
+  const hasCreatedAt = Boolean(oratore.createdAt)
+  const hasUpdatedAt = Boolean(oratore.updatedAt)
+  const hasCreatedBy = Boolean(oratore.createdByName && oratore.createdByName.trim())
+  const showMeta = hasCreatedAt || hasUpdatedAt || hasCreatedBy
 
   // Stili diversi se raggruppato (dentro una sezione) o standalone
   const containerClass = grouped
@@ -172,13 +176,13 @@ export default function OratoreCard({ oratore, onEdit, onDelete, grouped = false
             </div>
 
             {/* Date */}
-            <div className="text-xs text-gray-400 space-y-1 sm:text-right">
-              <p>{t('common.created')}: {formatDate(oratore.createdAt)}</p>
-              <p>{t('common.updated')}: {formatDate(oratore.updatedAt)}</p>
-              {oratore.createdByName && (
-                <p>{t('common.by')}: {oratore.createdByName}</p>
-              )}
-            </div>
+            {showMeta && (
+              <div className="text-xs text-gray-400 space-y-1 sm:text-right">
+                {hasCreatedAt && <p>{t('common.created')}: {formatDate(oratore.createdAt)}</p>}
+                {hasUpdatedAt && <p>{t('common.updated')}: {formatDate(oratore.updatedAt)}</p>}
+                {hasCreatedBy && <p>{t('common.by')}: {oratore.createdByName}</p>}
+              </div>
+            )}
           </div>
 
           {/* Programmi futuri */}
