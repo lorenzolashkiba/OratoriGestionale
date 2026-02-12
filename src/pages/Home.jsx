@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { useLanguage } from '../context/LanguageContext'
+import { isDiscorsoDisponibile } from '../data/discorsi'
 import Layout from '../components/layout/Layout'
 import { congregazioniApi } from '../services/api'
 
@@ -192,9 +193,9 @@ export default function Home() {
                   {profile.oratore.cognome} {profile.oratore.nome}
                   {profile.oratore.congregazione && ` - ${profile.oratore.congregazione}`}
                 </p>
-                {profile.oratore.discorsi?.length > 0 && (
+                {profile.oratore.discorsi?.filter(isDiscorsoDisponibile).length > 0 && (
                   <p className="text-xs text-blue-600 mt-1">
-                    {profile.oratore.discorsi.length} {t('home.discorsiAvailable')}
+                    {profile.oratore.discorsi.filter(isDiscorsoDisponibile).length} {t('home.discorsiAvailable')}
                   </p>
                 )}
               </div>

@@ -3,7 +3,7 @@ import { oratoriApi, programmiApi } from '../../services/api'
 import { useAuth } from '../../context/AuthContext'
 import { useLanguage } from '../../context/LanguageContext'
 import { getDistanceBetweenLocalities, formatDistance } from '../../services/geocoding'
-import { getDiscorsoTitolo } from '../../data/discorsi'
+import { getDiscorsoTitolo, isDiscorsoDisponibile } from '../../data/discorsi'
 
 export default function ProgrammaForm({ programma, onSave, onCancel, loading }) {
   const { profile } = useAuth()
@@ -25,6 +25,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
   const [dateError, setDateError] = useState('')
   const [showOratoriList, setShowOratoriList] = useState(false)
   const [monthlyWarning, setMonthlyWarning] = useState(null)
+  const availableDiscorsi = selectedOratore?.discorsi?.filter(isDiscorsoDisponibile) || []
 
   // Carica tutti gli oratori e le loro date occupate
   useEffect(() => {
@@ -457,7 +458,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
               </div>
             )}
 
-            {selectedOratore && selectedOratore.discorsi && selectedOratore.discorsi.length > 0 && (
+            {selectedOratore && availableDiscorsi.length > 0 && (
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
                   Discorso *
@@ -470,7 +471,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 text-base appearance-none bg-white"
                 >
                   <option value="">Seleziona discorso...</option>
-                  {selectedOratore.discorsi.sort((a, b) => a - b).map((num) => (
+                  {availableDiscorsi.sort((a, b) => a - b).map((num) => (
                     <option key={num} value={num}>
                       {num}. {getDiscorsoTitolo(num)}
                     </option>
@@ -479,7 +480,7 @@ export default function ProgrammaForm({ programma, onSave, onCancel, loading }) 
               </div>
             )}
 
-            {selectedOratore && (!selectedOratore.discorsi || selectedOratore.discorsi.length === 0) && (
+            {selectedOratore && availableDiscorsi.length === 0 && (
               <div className="bg-yellow-50 p-4 rounded-xl text-yellow-800 text-sm border border-yellow-100 flex items-start gap-3">
                 <svg className="w-5 h-5 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />

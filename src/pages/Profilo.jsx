@@ -4,6 +4,7 @@ import Layout from '../components/layout/Layout'
 import ProfiloForm from '../components/profilo/ProfiloForm'
 import { useAuth } from '../context/AuthContext'
 import { useLanguage } from '../context/LanguageContext'
+import { isDiscorsoDisponibile } from '../data/discorsi'
 import { useToast } from '../context/ToastContext'
 import { usersApi, oratoriApi } from '../services/api'
 
@@ -254,18 +255,18 @@ export default function Profilo() {
                   {profile.oratore.congregazione && (
                     <p className="text-sm text-gray-600">{profile.oratore.congregazione}</p>
                   )}
-                  {profile.oratore.discorsi && profile.oratore.discorsi.length > 0 && (
+                  {profile.oratore.discorsi && profile.oratore.discorsi.filter(isDiscorsoDisponibile).length > 0 && (
                     <div className="mt-3">
                       <p className="text-xs text-gray-500 mb-1">{t('profilo.discorsiLabel')}</p>
                       <div className="flex flex-wrap gap-1.5">
-                        {profile.oratore.discorsi.slice(0, 8).map((d) => (
+                        {profile.oratore.discorsi.filter(isDiscorsoDisponibile).slice(0, 8).map((d) => (
                           <span key={d} className="bg-blue-100 text-blue-700 text-xs px-2.5 py-1 rounded-full font-medium">
                             {d}
                           </span>
                         ))}
-                        {profile.oratore.discorsi.length > 8 && (
+                        {profile.oratore.discorsi.filter(isDiscorsoDisponibile).length > 8 && (
                           <span className="text-xs text-gray-500 py-1">
-                            {formatMoreDiscorsi(profile.oratore.discorsi.length - 8)}
+                            {formatMoreDiscorsi(profile.oratore.discorsi.filter(isDiscorsoDisponibile).length - 8)}
                           </span>
                         )}
                       </div>

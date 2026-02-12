@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { getDiscorsoTitolo } from '../../data/discorsi'
+import { getDiscorsoTitolo, isDiscorsoDisponibile } from '../../data/discorsi'
 import { useLanguage } from '../../context/LanguageContext'
 
 export default function OratoreCard({ oratore, onEdit, onDelete, grouped = false }) {
@@ -21,6 +21,8 @@ export default function OratoreCard({ oratore, onEdit, onDelete, grouped = false
     : missingContacts
       ? t('oratori.missingContactsTooltip')
       : t('oratori.missingInfoTooltip')
+
+  const discorsiDisponibili = (oratore.discorsi || []).filter(isDiscorsoDisponibile)
 
   // Stili diversi se raggruppato (dentro una sezione) o standalone
   const containerClass = grouped
@@ -90,12 +92,12 @@ export default function OratoreCard({ oratore, onEdit, onDelete, grouped = false
             </div>
           )}
           {/* Contatore discorsi */}
-          {oratore.discorsi && oratore.discorsi.length > 0 && (
+          {discorsiDisponibili.length > 0 && (
             <div className="flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 rounded-full">
               <svg className="w-4 h-4 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
               </svg>
-              <span className="text-sm font-medium text-blue-700">{oratore.discorsi.length}</span>
+              <span className="text-sm font-medium text-blue-700">{discorsiDisponibili.length}</span>
             </div>
           )}
         </div>
@@ -243,13 +245,13 @@ export default function OratoreCard({ oratore, onEdit, onDelete, grouped = false
           )}
 
           {/* Discorsi */}
-          {oratore.discorsi && oratore.discorsi.length > 0 && (
+          {discorsiDisponibili.length > 0 && (
             <div className="mt-3 pt-3 border-t border-gray-200">
               <p className="text-xs font-medium text-gray-500 uppercase tracking-wide mb-2">
-                {t('oratori.discorsi')} ({oratore.discorsi.length})
+                {t('oratori.discorsi')} ({discorsiDisponibili.length})
               </p>
               <div className="space-y-1.5">
-                {oratore.discorsi.sort((a, b) => a - b).map((discorso) => (
+                {discorsiDisponibili.sort((a, b) => a - b).map((discorso) => (
                   <div
                     key={discorso}
                     className="flex items-start gap-2 text-sm"

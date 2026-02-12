@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getDiscorsoTitolo } from '../../data/discorsi'
+import { getDiscorsoTitolo, isDiscorsoDisponibile } from '../../data/discorsi'
 import { useLanguage } from '../../context/LanguageContext'
 
 export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
@@ -24,7 +24,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
         telefono: oratore.telefono || '',
         congregazione: oratore.congregazione || '',
         localita: oratore.localita || '',
-        discorsi: oratore.discorsi || [],
+        discorsi: (oratore.discorsi || []).filter(isDiscorsoDisponibile),
       })
     }
   }, [oratore])
@@ -36,7 +36,7 @@ export default function OratoreForm({ oratore, onSave, onCancel, loading }) {
 
   const addDiscorso = () => {
     const num = parseInt(discorsoInput, 10)
-    if (num >= 1 && num <= 194 && !formData.discorsi.includes(num)) {
+    if (num >= 1 && num <= 194 && isDiscorsoDisponibile(num) && !formData.discorsi.includes(num)) {
       setFormData((prev) => ({
         ...prev,
         discorsi: [...prev.discorsi, num].sort((a, b) => a - b),
