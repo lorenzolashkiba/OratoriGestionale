@@ -2,6 +2,82 @@ import { ObjectId } from 'mongodb'
 import { connectToDatabase } from './utils/mongodb.js'
 import { requireApprovedUser } from './utils/auth.js'
 
+const normalize = (value) => (value || '').trim().replace(/\s+/g, ' ').toLowerCase()
+
+const escapeRegex = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+
+async function getResponsabileDetails(congregazione, oratoriCollection, usersCollection) {
+  if (congregazione?.responsabileUserId) {
+    const responsabileUser = await usersCollection.findOne(
+      { _id: congregazione.responsabileUserId },
+      { projection: { nome: 1, cognome: 1, email: 1, telefono: 1 } }
+    )
+    if (responsabileUser) {
+      return { ...responsabileUser, source: 'user' }
+    }
+  }
+
+  if (congregazione?.responsabileOratoreId) {
+    const responsabileOratore = await oratoriCollection.findOne(
+      { _id: congregazione.responsabileOratoreId },
+      { projection: { nome: 1, cognome: 1, email: 1, telefono: 1 } }
+    )
+    if (responsabileOratore) {
+      return { ...responsabileOratore, source: 'oratore' }
+    }
+  }
+
+  return null
+}
+
+async function resolveResponsabileSelection({
+  selection,
+  targetCongregazioneNome,
+  oratoriCollection,
+  usersCollection,
+}) {
+  if (!selection) return null
+
+  const rawSelection = selection.toString().trim()
+  const [typePart, idPart] = rawSelection.includes(':') ? rawSelection.split(':', 2) : ['oratore', rawSelection]
+
+  if (!ObjectId.isValid(idPart)) {
+    throw new Error('INVALID_RESPONSABILE_ID')
+  }
+
+  const responsabileId = new ObjectId(idPart)
+
+  if (typePart === 'user') {
+    const responsabileUser = await usersCollection.findOne({ _id: responsabileId })
+    if (!responsabileUser) throw new Error('RESPONSABILE_USER_NOT_FOUND')
+
+    if (normalize(responsabileUser.congregazione) !== normalize(targetCongregazioneNome)) {
+      throw new Error('RESPONSABILE_NOT_IN_CONGREGAZIONE')
+    }
+
+    return {
+      responsabileOratoreId: null,
+      responsabileUserId: responsabileId,
+      responsabile: responsabileUser,
+      source: 'user',
+    }
+  }
+
+  const responsabileOratore = await oratoriCollection.findOne({ _id: responsabileId })
+  if (!responsabileOratore) throw new Error('RESPONSABILE_ORATORE_NOT_FOUND')
+
+  if (normalize(responsabileOratore.congregazione) !== normalize(targetCongregazioneNome)) {
+    throw new Error('RESPONSABILE_NOT_IN_CONGREGAZIONE')
+  }
+
+  return {
+    responsabileOratoreId: responsabileId,
+    responsabileUserId: null,
+    responsabile: responsabileOratore,
+    source: 'oratore',
+  }
+}
+
 async function congregazioniHandler(event, context, user, dbUser) {
   const { db } = await connectToDatabase()
   const congregazioniCollection = db.collection('congregazioni')
@@ -26,10 +102,61 @@ async function congregazioniHandler(event, context, user, dbUser) {
     if (event.httpMethod === 'GET') {
       const params = event.queryStringParameters || {}
 
+      // GET /congregazioni?responsabili=true&nome=X - Candidati responsabile per congregazione
+      if (params.responsabili === 'true') {
+        if (!params.nome) {
+          return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({ message: 'Nome congregazione obbligatorio' }),
+          }
+        }
+
+        const nomeRegex = { $regex: `^${escapeRegex(params.nome.trim())}$`, $options: 'i' }
+
+        const [oratori, users] = await Promise.all([
+          oratoriCollection
+            .find({ congregazione: nomeRegex }, { projection: { nome: 1, cognome: 1, email: 1, telefono: 1 } })
+            .toArray(),
+          usersCollection
+            .find({ congregazione: nomeRegex }, { projection: { nome: 1, cognome: 1, email: 1, telefono: 1 } })
+            .toArray(),
+        ])
+
+        const responsabili = [
+          ...oratori.map((oratore) => ({
+            id: `oratore:${oratore._id.toString()}`,
+            type: 'oratore',
+            nome: oratore.nome || '',
+            cognome: oratore.cognome || '',
+            email: oratore.email || '',
+            telefono: oratore.telefono || '',
+          })),
+          ...users.map((utente) => ({
+            id: `user:${utente._id.toString()}`,
+            type: 'user',
+            nome: utente.nome || '',
+            cognome: utente.cognome || '',
+            email: utente.email || '',
+            telefono: utente.telefono || '',
+          })),
+        ].sort((a, b) => {
+          const cognomeCompare = a.cognome.localeCompare(b.cognome)
+          if (cognomeCompare !== 0) return cognomeCompare
+          return a.nome.localeCompare(b.nome)
+        })
+
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify(responsabili),
+        }
+      }
+
       // GET /congregazioni?nome=X - Dettaglio per nome
       if (params.nome) {
         const congregazione = await congregazioniCollection.findOne({
-          nome: { $regex: `^${params.nome}$`, $options: 'i' },
+          nome: { $regex: `^${escapeRegex(params.nome)}$`, $options: 'i' },
         })
 
         if (!congregazione) {
@@ -40,12 +167,8 @@ async function congregazioniHandler(event, context, user, dbUser) {
           }
         }
 
-        // Popola dati responsabile (oratore)
-        if (congregazione.responsabileOratoreId) {
-          const responsabile = await oratoriCollection.findOne(
-            { _id: congregazione.responsabileOratoreId },
-            { projection: { nome: 1, cognome: 1, email: 1, telefono: 1 } }
-          )
+        const responsabile = await getResponsabileDetails(congregazione, oratoriCollection, usersCollection)
+        if (responsabile) {
           congregazione.responsabile = responsabile
         }
 
@@ -56,27 +179,18 @@ async function congregazioniHandler(event, context, user, dbUser) {
         }
       }
 
-      // GET /congregazioni - Lista tutte con responsabili (oratori)
-      const congregazioni = await congregazioniCollection
-        .aggregate([
-          {
-            $lookup: {
-              from: 'oratori',
-              localField: 'responsabileOratoreId',
-              foreignField: '_id',
-              as: 'responsabile',
-              pipeline: [{ $project: { nome: 1, cognome: 1, email: 1, telefono: 1 } }],
-            },
-          },
-          { $unwind: { path: '$responsabile', preserveNullAndEmptyArrays: true } },
-          { $sort: { nome: 1 } },
-        ])
-        .toArray()
+      // GET /congregazioni - Lista tutte con responsabili (oratori o utenti)
+      const congregazioni = await congregazioniCollection.find({}).sort({ nome: 1 }).toArray()
+      const congregazioniWithResponsabile = await Promise.all(congregazioni.map(async (congregazione) => {
+        const responsabile = await getResponsabileDetails(congregazione, oratoriCollection, usersCollection)
+        if (responsabile) return { ...congregazione, responsabile }
+        return congregazione
+      }))
 
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify(congregazioni),
+        body: JSON.stringify(congregazioniWithResponsabile),
       }
     }
 
@@ -91,9 +205,10 @@ async function congregazioniHandler(event, context, user, dbUser) {
       }
 
       const data = JSON.parse(event.body)
-      const { nome, responsabileOratoreId, orari, indirizzo } = data
+      const { nome, responsabileId, responsabileOratoreId, orari, indirizzo } = data
+      const selectedResponsabile = responsabileId ?? responsabileOratoreId
 
-      if (!nome || !responsabileOratoreId) {
+      if (!nome || !selectedResponsabile) {
         return {
           statusCode: 400,
           headers,
@@ -103,7 +218,7 @@ async function congregazioniHandler(event, context, user, dbUser) {
 
       // Verifica unicita nome
       const existing = await congregazioniCollection.findOne({
-        nome: { $regex: `^${nome}$`, $options: 'i' },
+        nome: { $regex: `^${escapeRegex(nome)}$`, $options: 'i' },
       })
       if (existing) {
         return {
@@ -113,21 +228,43 @@ async function congregazioniHandler(event, context, user, dbUser) {
         }
       }
 
-      // Verifica che l'oratore esista
-      const responsabile = await oratoriCollection.findOne({
-        _id: new ObjectId(responsabileOratoreId),
-      })
-      if (!responsabile) {
-        return {
-          statusCode: 404,
-          headers,
-          body: JSON.stringify({ message: 'Oratore responsabile non trovato' }),
+      let resolvedResponsabile
+      try {
+        resolvedResponsabile = await resolveResponsabileSelection({
+          selection: selectedResponsabile,
+          targetCongregazioneNome: nome,
+          oratoriCollection,
+          usersCollection,
+        })
+      } catch (resolveError) {
+        if (resolveError.message === 'INVALID_RESPONSABILE_ID') {
+          return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({ message: 'ID responsabile non valido' }),
+          }
         }
+        if (resolveError.message === 'RESPONSABILE_USER_NOT_FOUND' || resolveError.message === 'RESPONSABILE_ORATORE_NOT_FOUND') {
+          return {
+            statusCode: 404,
+            headers,
+            body: JSON.stringify({ message: 'Responsabile non trovato' }),
+          }
+        }
+        if (resolveError.message === 'RESPONSABILE_NOT_IN_CONGREGAZIONE') {
+          return {
+            statusCode: 400,
+            headers,
+            body: JSON.stringify({ message: 'Il responsabile deve appartenere alla stessa congregazione' }),
+          }
+        }
+        throw resolveError
       }
 
       const newCongregazione = {
         nome: nome.trim(),
-        responsabileOratoreId: new ObjectId(responsabileOratoreId),
+        responsabileOratoreId: resolvedResponsabile.responsabileOratoreId,
+        responsabileUserId: resolvedResponsabile.responsabileUserId,
         orari: orari || '',
         indirizzo: indirizzo || '',
         createdAt: new Date(),
@@ -138,10 +275,12 @@ async function congregazioniHandler(event, context, user, dbUser) {
       const result = await congregazioniCollection.insertOne(newCongregazione)
       newCongregazione._id = result.insertedId
       newCongregazione.responsabile = {
-        _id: responsabile._id,
-        nome: responsabile.nome,
-        cognome: responsabile.cognome,
-        email: responsabile.email,
+        _id: resolvedResponsabile.responsabile._id,
+        nome: resolvedResponsabile.responsabile.nome,
+        cognome: resolvedResponsabile.responsabile.cognome,
+        email: resolvedResponsabile.responsabile.email,
+        telefono: resolvedResponsabile.responsabile.telefono,
+        source: resolvedResponsabile.source,
       }
 
       return {
@@ -154,7 +293,7 @@ async function congregazioniHandler(event, context, user, dbUser) {
     // PUT - Modifica congregazione
     if (event.httpMethod === 'PUT') {
       const data = JSON.parse(event.body)
-      const { id, nome, responsabileOratoreId, orari, indirizzo } = data
+      const { id, nome, responsabileId, responsabileOratoreId, orari, indirizzo } = data
 
       if (!id) {
         return {
@@ -178,11 +317,12 @@ async function congregazioniHandler(event, context, user, dbUser) {
 
       // Controlla se l'utente corrente è collegato all'oratore responsabile
       let isResponsabile = false
-      if (congregazione.responsabileOratoreId && currentUser.oratoreId) {
+      if (congregazione.responsabileUserId && currentUser._id) {
+        isResponsabile = congregazione.responsabileUserId.toString() === currentUser._id.toString()
+      } else if (congregazione.responsabileOratoreId && currentUser.oratoreId) {
         isResponsabile = congregazione.responsabileOratoreId.toString() === currentUser.oratoreId.toString()
       }
 
-      const normalize = (value) => (value || '').trim().replace(/\s+/g, ' ').toLowerCase()
       const isSameCongregazione =
         normalize(currentUser.congregazione) &&
         normalize(congregazione.nome) === normalize(currentUser.congregazione)
@@ -208,7 +348,7 @@ async function congregazioniHandler(event, context, user, dbUser) {
         if (nome) {
           // Verifica unicita del nuovo nome (escluso se stesso)
           const existing = await congregazioniCollection.findOne({
-            nome: { $regex: `^${nome}$`, $options: 'i' },
+            nome: { $regex: `^${escapeRegex(nome)}$`, $options: 'i' },
             _id: { $ne: new ObjectId(id) },
           })
           if (existing) {
@@ -221,21 +361,46 @@ async function congregazioniHandler(event, context, user, dbUser) {
           updateData.nome = nome.trim()
         }
 
-        if (responsabileOratoreId !== undefined) {
-          if (!responsabileOratoreId) {
+        const selectedResponsabile = responsabileId ?? responsabileOratoreId
+        if (responsabileId !== undefined || responsabileOratoreId !== undefined) {
+          if (!selectedResponsabile) {
             updateData.responsabileOratoreId = null
+            updateData.responsabileUserId = null
           } else {
-            const responsabile = await oratoriCollection.findOne({
-              _id: new ObjectId(responsabileOratoreId),
-            })
-            if (!responsabile) {
-              return {
-                statusCode: 404,
-                headers,
-                body: JSON.stringify({ message: 'Oratore responsabile non trovato' }),
+            const targetCongregazioneNome = nome || congregazione.nome
+            try {
+              const resolvedResponsabile = await resolveResponsabileSelection({
+                selection: selectedResponsabile,
+                targetCongregazioneNome,
+                oratoriCollection,
+                usersCollection,
+              })
+              updateData.responsabileOratoreId = resolvedResponsabile.responsabileOratoreId
+              updateData.responsabileUserId = resolvedResponsabile.responsabileUserId
+            } catch (resolveError) {
+              if (resolveError.message === 'INVALID_RESPONSABILE_ID') {
+                return {
+                  statusCode: 400,
+                  headers,
+                  body: JSON.stringify({ message: 'ID responsabile non valido' }),
+                }
               }
+              if (resolveError.message === 'RESPONSABILE_USER_NOT_FOUND' || resolveError.message === 'RESPONSABILE_ORATORE_NOT_FOUND') {
+                return {
+                  statusCode: 404,
+                  headers,
+                  body: JSON.stringify({ message: 'Responsabile non trovato' }),
+                }
+              }
+              if (resolveError.message === 'RESPONSABILE_NOT_IN_CONGREGAZIONE') {
+                return {
+                  statusCode: 400,
+                  headers,
+                  body: JSON.stringify({ message: 'Il responsabile deve appartenere alla stessa congregazione' }),
+                }
+              }
+              throw resolveError
             }
-            updateData.responsabileOratoreId = new ObjectId(responsabileOratoreId)
           }
         }
       }
@@ -250,12 +415,8 @@ async function congregazioniHandler(event, context, user, dbUser) {
         { returnDocument: 'after' }
       )
 
-      // Popola responsabile (oratore)
-      if (result.responsabileOratoreId) {
-        const responsabile = await oratoriCollection.findOne(
-          { _id: result.responsabileOratoreId },
-          { projection: { nome: 1, cognome: 1, email: 1, telefono: 1 } }
-        )
+      const responsabile = await getResponsabileDetails(result, oratoriCollection, usersCollection)
+      if (responsabile) {
         result.responsabile = responsabile
       }
 

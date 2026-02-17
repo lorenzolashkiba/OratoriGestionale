@@ -98,6 +98,7 @@ export const programmiApi = {
 export const congregazioniApi = {
   getAll: () => fetchWithAuth('/congregazioni'),
   getByNome: (nome) => fetchWithAuth(`/congregazioni?nome=${encodeURIComponent(nome)}`),
+  getResponsabiliByNome: (nome) => fetchWithAuth(`/congregazioni?responsabili=true&nome=${encodeURIComponent(nome)}`),
   create: (data) => fetchWithAuth('/congregazioni', {
     method: 'POST',
     body: JSON.stringify(data),

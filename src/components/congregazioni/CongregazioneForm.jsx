@@ -1,24 +1,34 @@
 import { useState, useEffect } from 'react'
 import { useLanguage } from '../../context/LanguageContext'
-import { oratoriApi } from '../../services/api'
+import { congregazioniApi } from '../../services/api'
 
 export default function CongregazioneForm({ congregazione, initialNome, onSave, onCancel, loading }) {
   const { t } = useLanguage()
   const [formData, setFormData] = useState({
     nome: '',
-    responsabileOratoreId: '',
+    responsabileId: '',
     orari: '',
     indirizzo: '',
   })
-  const [oratori, setOratori] = useState([])
-  const [loadingOratori, setLoadingOratori] = useState(true)
+  const [responsabili, setResponsabili] = useState([])
+  const [loadingResponsabili, setLoadingResponsabili] = useState(true)
+
+  // Determina il nome della congregazione per filtrare (usa initialNome per nuove, congregazione.nome per modifica)
+  const congregazioneNomePerFiltro = initialNome || congregazione?.nome
 
   useEffect(() => {
+    const responsabileIdFromCongregazione = congregazione?.responsabileUserId
+      ? `user:${congregazione.responsabileUserId.toString()}`
+      : congregazione?.responsabileOratoreId
+        ? `oratore:${congregazione.responsabileOratoreId.toString()}`
+        : congregazione?.responsabile?._id
+          ? `${congregazione.responsabile.source === 'user' ? 'user' : 'oratore'}:${congregazione.responsabile._id.toString()}`
+          : ''
+
     if (congregazione) {
       setFormData({
         nome: congregazione.nome || '',
-        responsabileOratoreId:
-          congregazione.responsabileOratoreId?.toString() || congregazione.responsabile?._id?.toString() || '',
+        responsabileId: responsabileIdFromCongregazione,
         orari: congregazione.orari || '',
         indirizzo: congregazione.indirizzo || '',
       })
@@ -28,36 +38,25 @@ export default function CongregazioneForm({ congregazione, initialNome, onSave, 
   }, [congregazione, initialNome])
 
   useEffect(() => {
-    const loadOratori = async () => {
+    const loadResponsabili = async () => {
+      if (!congregazioneNomePerFiltro) {
+        setResponsabili([])
+        setLoadingResponsabili(false)
+        return
+      }
+
       try {
-        const allOratori = await oratoriApi.getAll()
-        // Ordina per cognome e nome
-        allOratori.sort((a, b) => {
-          const cognomeCompare = (a.cognome || '').localeCompare(b.cognome || '')
-          if (cognomeCompare !== 0) return cognomeCompare
-          return (a.nome || '').localeCompare(b.nome || '')
-        })
-        setOratori(allOratori)
+        setLoadingResponsabili(true)
+        const allResponsabili = await congregazioniApi.getResponsabiliByNome(congregazioneNomePerFiltro)
+        setResponsabili(allResponsabili)
       } catch (err) {
-        console.error('Errore caricamento oratori:', err)
+        console.error('Errore caricamento responsabili:', err)
       } finally {
-        setLoadingOratori(false)
+        setLoadingResponsabili(false)
       }
     }
-    loadOratori()
-  }, [])
-
-  // Funzione per normalizzare stringhe (rimuove spazi extra e converte in lowercase)
-  const normalizeString = (str) => (str || '').trim().replace(/\s+/g, ' ').toLowerCase()
-
-  // Determina il nome della congregazione per filtrare (usa initialNome per nuove, congregazione.nome per modifica)
-  const congregazioneNomePerFiltro = initialNome || congregazione?.nome
-
-  // Filtra oratori per la congregazione corrente
-  // Confronto normalizzato: case-insensitive e ignora spazi extra
-  const filteredOratori = congregazioneNomePerFiltro
-    ? oratori.filter((o) => normalizeString(o.congregazione) === normalizeString(congregazioneNomePerFiltro))
-    : oratori
+    loadResponsabili()
+  }, [congregazioneNomePerFiltro])
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -115,22 +114,23 @@ export default function CongregazioneForm({ congregazione, initialNome, onSave, 
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 {t('congregazioni.responsabile')} *
               </label>
-              {loadingOratori ? (
+              {loadingResponsabili ? (
                 <div className="w-full px-4 py-3 border border-gray-200 rounded-xl bg-gray-50 text-gray-500">
                   {t('common.loading')}
                 </div>
               ) : (
                 <select
-                  name="responsabileOratoreId"
-                  value={formData.responsabileOratoreId}
+                  name="responsabileId"
+                  value={formData.responsabileId}
                   onChange={handleChange}
                   disabled={isEditing && !canEditNomeResponsabile}
                   className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-base disabled:bg-gray-100 disabled:text-gray-500"
                 >
                   <option value="">{t('congregazioni.selectResponsabile')}</option>
-                  {filteredOratori.map((oratore) => (
-                    <option key={oratore._id} value={oratore._id}>
-                      {oratore.cognome} {oratore.nome}
+                  {responsabili.map((responsabile) => (
+                    <option key={responsabile.id} value={responsabile.id}>
+                      {(responsabile.cognome || '').trim()} {(responsabile.nome || '').trim()}
+                      {responsabile.type === 'user' ? ' (Utente)' : ' (Oratore)'}
                     </option>
                   ))}
                 </select>
