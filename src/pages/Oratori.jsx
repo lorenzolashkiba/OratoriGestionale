@@ -10,9 +10,64 @@ import { useCongregazioni } from '../hooks/useCongregazioni'
 import { useLanguage } from '../context/LanguageContext'
 import { useAuth } from '../context/AuthContext'
 import { useToast } from '../context/ToastContext'
+import { oratoriApi } from '../services/api'
+import { getDiscorsoTitolo, isDiscorsoDisponibile } from '../data/discorsi'
+
+const PDF_FONT_FAMILY = 'NotoSans'
+const PDF_FONT_REGULAR_FILE = 'NotoSans-Regular.ttf'
+const PDF_FONT_BOLD_FILE = 'NotoSans-Bold.ttf'
+const PDF_FONT_LOAD_ERROR = 'PDF_FONT_LOAD_ERROR'
+let cachedPdfFontBase64 = null
+
+function arrayBufferToBase64(buffer) {
+  const bytes = new Uint8Array(buffer)
+  const chunkSize = 0x8000
+  let binary = ''
+
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    const chunk = bytes.subarray(i, i + chunkSize)
+    binary += String.fromCharCode(...chunk)
+  }
+
+  return btoa(binary)
+}
+
+async function loadPdfFontBase64() {
+  if (cachedPdfFontBase64) return cachedPdfFontBase64
+
+  const [regularResponse, boldResponse] = await Promise.all([
+    fetch('/fonts/NotoSans-Regular.ttf'),
+    fetch('/fonts/NotoSans-Bold.ttf'),
+  ])
+
+  if (!regularResponse.ok || !boldResponse.ok) {
+    throw new Error(PDF_FONT_LOAD_ERROR)
+  }
+
+  const [regularBuffer, boldBuffer] = await Promise.all([
+    regularResponse.arrayBuffer(),
+    boldResponse.arrayBuffer(),
+  ])
+
+  cachedPdfFontBase64 = {
+    regular: arrayBufferToBase64(regularBuffer),
+    bold: arrayBufferToBase64(boldBuffer),
+  }
+
+  return cachedPdfFontBase64
+}
+
+async function registerPdfFonts(doc) {
+  const fontData = await loadPdfFontBase64()
+
+  doc.addFileToVFS(PDF_FONT_REGULAR_FILE, fontData.regular)
+  doc.addFont(PDF_FONT_REGULAR_FILE, PDF_FONT_FAMILY, 'normal', 'Identity-H')
+  doc.addFileToVFS(PDF_FONT_BOLD_FILE, fontData.bold)
+  doc.addFont(PDF_FONT_BOLD_FILE, PDF_FONT_FAMILY, 'bold', 'Identity-H')
+}
 
 export default function Oratori() {
-  const { t } = useLanguage()
+  const { t, language } = useLanguage()
   const { showToast } = useToast()
   const { profile } = useAuth()
   const {
@@ -43,6 +98,7 @@ export default function Oratori() {
   const [editingCongregazione, setEditingCongregazione] = useState(null)
   const [configuringCongNome, setConfiguringCongNome] = useState(null)
   const [savingCong, setSavingCong] = useState(false)
+  const [exportingPdf, setExportingPdf] = useState(false)
 
   // Raggruppa oratori per congregazione (normalizzato: trim + lowercase per raggruppamento)
   const hasActiveFilters = useMemo(() => Object.values(filters).some((value) => value), [filters])
@@ -226,6 +282,150 @@ export default function Oratori() {
     setConfiguringCongNome(null)
   }
 
+  const normalizeCongregazione = (value) => (value || '').trim().replace(/\s+/g, ' ').toLowerCase()
+
+  const createCongregazionePdf = async (PdfClass, congregazioneNome, congregazioneOratori) => {
+    const doc = new PdfClass({ unit: 'pt', format: 'a4' })
+    await registerPdfFonts(doc)
+
+    const margin = 40
+    const pageWidth = doc.internal.pageSize.getWidth()
+    const pageHeight = doc.internal.pageSize.getHeight()
+    const maxWidth = pageWidth - (margin * 2)
+    const locale = language === 'ru' ? 'ru-RU' : 'it-IT'
+    let y = margin
+
+    const ensureSpace = (neededHeight = 16) => {
+      if (y + neededHeight <= pageHeight - margin) return
+      doc.addPage()
+      y = margin
+    }
+
+    const addWrappedText = (text, options = {}) => {
+      if (!text) return
+
+      const { fontSize = 11, style = 'normal', indent = 0, spacingAfter = 4 } = options
+      doc.setFont(PDF_FONT_FAMILY, style)
+      doc.setFontSize(fontSize)
+
+      const lines = doc.splitTextToSize(String(text), maxWidth - indent)
+      const lineHeight = fontSize + 3
+
+      ensureSpace((lines.length * lineHeight) + spacingAfter)
+      lines.forEach((line) => {
+        doc.text(line, margin + indent, y)
+        y += lineHeight
+      })
+      y += spacingAfter
+    }
+
+    addWrappedText(`${t('oratori.pdfDocumentTitle')}: ${congregazioneNome}`, {
+      fontSize: 16,
+      style: 'bold',
+      spacingAfter: 8,
+    })
+    addWrappedText(`${t('oratori.pdfGeneratedAt')}: ${new Date().toLocaleString(locale)}`, {
+      fontSize: 10,
+      spacingAfter: 12,
+    })
+
+    congregazioneOratori.forEach((oratore, index) => {
+      const nomeCompleto = `${oratore.cognome || ''} ${oratore.nome || ''}`.trim()
+      const discorsi = (oratore.discorsi || [])
+        .filter(isDiscorsoDisponibile)
+        .sort((a, b) => a - b)
+      const discorsiConTitolo = discorsi.map((numero) => (
+        language === 'ru'
+          ? `${numero}. ${getDiscorsoTitolo(numero)}`
+          : `${t('oratori.pdfTalk')} ${numero}`
+      ))
+
+      const contacts = []
+      if (oratore.telefono) contacts.push(`${t('oratori.telefono')}: ${oratore.telefono}`)
+      if (oratore.email) contacts.push(`${t('oratori.email')}: ${oratore.email}`)
+      if (oratore.localita) contacts.push(`${t('oratori.localita')}: ${oratore.localita}`)
+
+      ensureSpace(70)
+      addWrappedText(`${index + 1}. ${nomeCompleto}`, {
+        fontSize: 12,
+        style: 'bold',
+        spacingAfter: 2,
+      })
+      addWrappedText(`${t('oratori.pdfContacts')}: ${contacts.length > 0 ? contacts.join(' | ') : t('oratori.noContatti')}`, {
+        indent: 14,
+        spacingAfter: 3,
+      })
+      if (discorsiConTitolo.length > 0) {
+        addWrappedText(`${t('oratori.pdfDiscorsi')}:`, {
+          indent: 14,
+          spacingAfter: 2,
+        })
+        discorsiConTitolo.forEach((discorso) => {
+          addWrappedText(`- ${discorso}`, {
+            indent: 24,
+            spacingAfter: 1,
+          })
+        })
+        y += 4
+      } else {
+        addWrappedText(`${t('oratori.pdfDiscorsi')}: ${t('oratori.pdfNoDiscorsi')}`, {
+          indent: 14,
+          spacingAfter: 8,
+        })
+      }
+
+      ensureSpace(8)
+      doc.setDrawColor(230, 230, 230)
+      doc.line(margin, y, pageWidth - margin, y)
+      y += 10
+    })
+
+    const safeCongregazione = normalizeCongregazione(congregazioneNome)
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '') || 'congregazione'
+    const dateStamp = new Date().toISOString().slice(0, 10)
+    const filePrefix = language === 'ru' ? 'oratori-ru' : 'oratori'
+
+    doc.save(`${filePrefix}-${safeCongregazione}-${dateStamp}.pdf`)
+  }
+
+  const handlePrintUserCongregazionePdf = async () => {
+    const userCongregazione = (profile?.congregazione || '').trim()
+    if (!userCongregazione) {
+      showToast({ type: 'warning', message: t('oratori.pdfMissingCongregazione') })
+      return
+    }
+
+    setExportingPdf(true)
+    try {
+      const fetchedOratori = await oratoriApi.getAll({ congregazione: userCongregazione })
+      const userCongregazioneKey = normalizeCongregazione(userCongregazione)
+      const congregazioneOratori = fetchedOratori
+        .filter((oratore) => normalizeCongregazione(oratore.congregazione) === userCongregazioneKey)
+        .sort((a, b) => {
+          const cognomeCompare = (a.cognome || '').localeCompare(b.cognome || '')
+          if (cognomeCompare !== 0) return cognomeCompare
+          return (a.nome || '').localeCompare(b.nome || '')
+        })
+
+      if (congregazioneOratori.length === 0) {
+        showToast({ type: 'warning', message: t('oratori.pdfNoOratoriToExport') })
+        return
+      }
+
+      const { jsPDF } = await import('jspdf')
+      await createCongregazionePdf(jsPDF, userCongregazione, congregazioneOratori)
+      showToast({ type: 'success', message: t('toast.exportSuccess') })
+    } catch (err) {
+      const mappedMessage = err.message === PDF_FONT_LOAD_ERROR
+        ? t('oratori.pdfFontLoadError')
+        : err.message
+      showToast({ type: 'error', message: `${t('toast.exportError')}: ${mappedMessage}` })
+    } finally {
+      setExportingPdf(false)
+    }
+  }
+
   return (
     <Layout>
       {/* Header */}
@@ -315,6 +515,8 @@ export default function Oratori() {
                     oratoriCount={congregazioneOratori.length}
                     isCollapsed={isCollapsed}
                     isUserCongregazione={isUserCongregazione}
+                    onPrintPdf={isUserCongregazione ? handlePrintUserCongregazionePdf : null}
+                    isPrintingPdf={isUserCongregazione ? exportingPdf : false}
                     onToggle={() => toggleSection(congKey)}
                     onConfigura={handleConfiguraCongregazione}
                     onEdit={handleEditCongregazione}

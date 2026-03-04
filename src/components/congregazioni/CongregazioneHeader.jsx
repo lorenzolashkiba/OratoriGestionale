@@ -7,6 +7,8 @@ export default function CongregazioneHeader({
   oratoriCount,
   isCollapsed,
   isUserCongregazione = false,
+  onPrintPdf,
+  isPrintingPdf = false,
   onToggle,
   onConfigura,
   onEdit,
@@ -21,46 +23,66 @@ export default function CongregazioneHeader({
 
   return (
     <div className="w-full">
-      <button
-        onClick={onToggle}
-        className={`w-full flex items-center justify-between px-4 py-3 transition-colors ${
-          isUserCongregazione ? 'bg-blue-50 hover:bg-blue-100' : 'bg-gray-50 hover:bg-gray-100'
-        }`}
-      >
-        <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-lg ${isUserCongregazione ? 'bg-blue-200' : 'bg-blue-100'}`}>
-            <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
-              />
-            </svg>
-          </div>
-          <div className="text-left">
-            <div className="flex items-center gap-2 flex-wrap">
-              <h3 className="font-semibold text-gray-900">{displayName}</h3>
-              {isUserCongregazione && (
-                <span className="inline-flex items-center text-xs font-semibold text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full">
-                  {t('oratori.yourCongregazione')}
-                </span>
-              )}
+      <div className="relative">
+        <button
+          onClick={onToggle}
+          className={`w-full flex items-center justify-between px-4 py-3 transition-colors ${
+            isUserCongregazione ? 'bg-blue-50 hover:bg-blue-100' : 'bg-gray-50 hover:bg-gray-100'
+          } ${isUserCongregazione && onPrintPdf ? 'pr-52 sm:pr-60' : ''}`}
+        >
+          <div className="flex items-center gap-3">
+            <div className={`p-2 rounded-lg ${isUserCongregazione ? 'bg-blue-200' : 'bg-blue-100'}`}>
+              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"
+                />
+              </svg>
             </div>
-            <p className="text-sm text-gray-500">
-              {oratoriCount} {oratoriCount !== 1 ? t('oratori.oratoriPlural') : t('oratori.oratore')}
-            </p>
+            <div className="text-left">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="font-semibold text-gray-900">{displayName}</h3>
+                {isUserCongregazione && (
+                  <span className="inline-flex items-center text-xs font-semibold text-blue-700 bg-blue-100 px-2 py-0.5 rounded-full">
+                    {t('oratori.yourCongregazione')}
+                  </span>
+                )}
+              </div>
+              <p className="text-sm text-gray-500">
+                {oratoriCount} {oratoriCount !== 1 ? t('oratori.oratoriPlural') : t('oratori.oratore')}
+              </p>
+            </div>
           </div>
-        </div>
+        </button>
+
         <svg
-          className={`w-5 h-5 text-gray-400 transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
+          className={`pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 transition-transform ${isCollapsed ? '' : 'rotate-180'}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
-      </button>
+
+        {isUserCongregazione && onPrintPdf && (
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation()
+              onPrintPdf()
+            }}
+            disabled={isPrintingPdf}
+            className="absolute right-12 top-1/2 -translate-y-1/2 inline-flex items-center gap-1.5 bg-white text-blue-700 border border-blue-200 px-2.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium hover:bg-blue-50 disabled:opacity-60 disabled:cursor-not-allowed transition-colors"
+          >
+            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 9V2h12v7M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2M6 14h12v8H6v-8z" />
+            </svg>
+            {isPrintingPdf ? t('oratori.generatingPdf') : t('oratori.printPdf')}
+          </button>
+        )}
+      </div>
 
       {/* Info congregazione (se configurata) */}
       {hasConfig && !isCollapsed && (
