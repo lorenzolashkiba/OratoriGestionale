@@ -1,0 +1,126 @@
+[
+  {
+    "_id": {
+      "$oid": "6962ed33f776478cbce3b8ba"
+    },
+    "userId": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "data": {
+      "$date": {
+        "$numberLong": "1768608000000"
+      }
+    },
+    "orario": "14:00",
+    "oratoreId": {
+      "$oid": "6962ec9e81a965e682cb8dbe"
+    },
+    "discorso": {
+      "$numberInt": "78"
+    },
+    "note": "ci sono immagini, da ospitare + invito a pranzo",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1768090931028"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1768090945563"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69641979d26e94b2e1a497fc"
+    },
+    "userId": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "data": {
+      "$date": {
+        "$numberLong": "1769212800000"
+      }
+    },
+    "orario": "01:43",
+    "oratoreId": {
+      "$oid": "6962ec9e81a965e682cb8dbe"
+    },
+    "discorso": {
+      "$numberInt": "78"
+    },
+    "note": "m",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1768167801901"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1768167801901"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69820135c9d9b86a9e1d9f21"
+    },
+    "userId": {
+      "$oid": "6981f8bb9b10d124c8b5afff"
+    },
+    "data": {
+      "$date": {
+        "$numberLong": "1770508800000"
+      }
+    },
+    "orario": "10:00",
+    "oratoreId": {
+      "$oid": "697ba1e51638f998b1931317"
+    },
+    "discorso": {
+      "$numberInt": "129"
+    },
+    "note": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770127669965"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770127669965"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984a26dcb34cce462d9b58e"
+    },
+    "userId": {
+      "$oid": "6981f8bb9b10d124c8b5afff"
+    },
+    "data": {
+      "$date": {
+        "$numberLong": "1771718400000"
+      }
+    },
+    "orario": "10:00",
+    "oratoreId": {
+      "$oid": "697b968904e7e8695ef9384d"
+    },
+    "discorso": {
+      "$numberInt": "54"
+    },
+    "note": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770300013379"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770300013379"
+      }
+    }
+  }
+]

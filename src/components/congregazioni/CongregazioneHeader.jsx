@@ -28,7 +28,7 @@ export default function CongregazioneHeader({
           onClick={onToggle}
           className={`w-full flex items-center justify-between px-4 py-3 transition-colors ${
             isUserCongregazione ? 'bg-blue-50 hover:bg-blue-100' : 'bg-gray-50 hover:bg-gray-100'
-          } ${isUserCongregazione && onPrintPdf ? 'pr-52 sm:pr-60' : ''}`}
+          } ${onPrintPdf ? 'pr-52 sm:pr-60' : ''}`}
         >
           <div className="flex items-center gap-3">
             <div className={`p-2 rounded-lg ${isUserCongregazione ? 'bg-blue-200' : 'bg-blue-100'}`}>
@@ -66,7 +66,7 @@ export default function CongregazioneHeader({
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
 
-        {isUserCongregazione && onPrintPdf && (
+        {onPrintPdf && (
           <button
             type="button"
             onClick={(e) => {

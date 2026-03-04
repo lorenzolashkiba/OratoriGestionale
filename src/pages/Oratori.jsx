@@ -69,7 +69,7 @@ async function registerPdfFonts(doc) {
 export default function Oratori() {
   const { t, language } = useLanguage()
   const { showToast } = useToast()
-  const { profile } = useAuth()
+  const { profile, isAdmin } = useAuth()
   const {
     oratori,
     loading,
@@ -98,7 +98,7 @@ export default function Oratori() {
   const [editingCongregazione, setEditingCongregazione] = useState(null)
   const [configuringCongNome, setConfiguringCongNome] = useState(null)
   const [savingCong, setSavingCong] = useState(false)
-  const [exportingPdf, setExportingPdf] = useState(false)
+  const [exportingPdfCongKey, setExportingPdfCongKey] = useState(null)
 
   // Raggruppa oratori per congregazione (normalizzato: trim + lowercase per raggruppamento)
   const hasActiveFilters = useMemo(() => Object.values(filters).some((value) => value), [filters])
@@ -334,11 +334,7 @@ export default function Oratori() {
       const discorsi = (oratore.discorsi || [])
         .filter(isDiscorsoDisponibile)
         .sort((a, b) => a - b)
-      const discorsiConTitolo = discorsi.map((numero) => (
-        language === 'ru'
-          ? `${numero}. ${getDiscorsoTitolo(numero)}`
-          : `${t('oratori.pdfTalk')} ${numero}`
-      ))
+      const discorsiConTitolo = discorsi.map((numero) => `${numero}. ${getDiscorsoTitolo(numero)}`)
 
       const contacts = []
       if (oratore.telefono) contacts.push(`${t('oratori.telefono')}: ${oratore.telefono}`)
@@ -389,19 +385,20 @@ export default function Oratori() {
     doc.save(`${filePrefix}-${safeCongregazione}-${dateStamp}.pdf`)
   }
 
-  const handlePrintUserCongregazionePdf = async () => {
-    const userCongregazione = (profile?.congregazione || '').trim()
-    if (!userCongregazione) {
+  const handlePrintCongregazionePdf = async (congregazioneNome, congregationKey = null) => {
+    const targetCongregazione = (congregazioneNome || '').trim()
+    if (!targetCongregazione) {
       showToast({ type: 'warning', message: t('oratori.pdfMissingCongregazione') })
       return
     }
 
-    setExportingPdf(true)
+    const targetKey = congregationKey || normalizeCongregazione(targetCongregazione)
+    setExportingPdfCongKey(targetKey)
     try {
-      const fetchedOratori = await oratoriApi.getAll({ congregazione: userCongregazione })
-      const userCongregazioneKey = normalizeCongregazione(userCongregazione)
+      const fetchedOratori = await oratoriApi.getAll({ congregazione: targetCongregazione })
+      const normalizedTarget = normalizeCongregazione(targetCongregazione)
       const congregazioneOratori = fetchedOratori
-        .filter((oratore) => normalizeCongregazione(oratore.congregazione) === userCongregazioneKey)
+        .filter((oratore) => normalizeCongregazione(oratore.congregazione) === normalizedTarget)
         .sort((a, b) => {
           const cognomeCompare = (a.cognome || '').localeCompare(b.cognome || '')
           if (cognomeCompare !== 0) return cognomeCompare
@@ -414,7 +411,7 @@ export default function Oratori() {
       }
 
       const { jsPDF } = await import('jspdf')
-      await createCongregazionePdf(jsPDF, userCongregazione, congregazioneOratori)
+      await createCongregazionePdf(jsPDF, targetCongregazione, congregazioneOratori)
       showToast({ type: 'success', message: t('toast.exportSuccess') })
     } catch (err) {
       const mappedMessage = err.message === PDF_FONT_LOAD_ERROR
@@ -422,7 +419,7 @@ export default function Oratori() {
         : err.message
       showToast({ type: 'error', message: `${t('toast.exportError')}: ${mappedMessage}` })
     } finally {
-      setExportingPdf(false)
+      setExportingPdfCongKey(null)
     }
   }
 
@@ -501,6 +498,8 @@ export default function Oratori() {
               const isCollapsed = collapsedSections[congKey] !== false // Default collassato
               const userCongregazioneKey = (profile?.congregazione || '').trim().toLowerCase()
               const isUserCongregazione = !!userCongregazioneKey && congKey === userCongregazioneKey
+              const canPrintPdf = Boolean(congKey) && (isAdmin || isUserCongregazione)
+              const pdfTargetCongregazione = displayName
 
               return (
                 <div
@@ -515,8 +514,8 @@ export default function Oratori() {
                     oratoriCount={congregazioneOratori.length}
                     isCollapsed={isCollapsed}
                     isUserCongregazione={isUserCongregazione}
-                    onPrintPdf={isUserCongregazione ? handlePrintUserCongregazionePdf : null}
-                    isPrintingPdf={isUserCongregazione ? exportingPdf : false}
+                    onPrintPdf={canPrintPdf ? () => handlePrintCongregazionePdf(pdfTargetCongregazione, congKey) : null}
+                    isPrintingPdf={canPrintPdf ? exportingPdfCongKey === congKey : false}
                     onToggle={() => toggleSection(congKey)}
                     onConfigura={handleConfiguraCongregazione}
                     onEdit={handleEditCongregazione}

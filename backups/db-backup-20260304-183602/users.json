@@ -1,0 +1,1413 @@
+[
+  {
+    "_id": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "googleId": "0H2poO0iYdVO2Jt5hgSdeR8aV313",
+    "email": "lorenzoboiko@gmail.com",
+    "nome": "lorenzo",
+    "cognome": "Lashkiba",
+    "telefono": "+393274105610",
+    "congregazione": "Treviso Mura",
+    "localita": "Treviso ",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1768090485475"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770730386974"
+      }
+    },
+    "oratoreId": {
+      "$oid": "6962ec9e81a965e682cb8dbe"
+    },
+    "role": "admin",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1769979564768"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1769980340879"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697fa2787d246e42c4d51ef6"
+    },
+    "googleId": "j7htYFWTdzc8ehCxjvupE9Z5PI72",
+    "email": "michele.catalano.mc@gmail.com",
+    "nome": "Michele",
+    "cognome": "Catalano",
+    "telefono": "+393803250183",
+    "congregazione": "Milano Nord",
+    "localita": "Milano",
+    "oratoreId": {
+      "$oid": "6973e60a38ff6ec7e457ada1"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770307808872"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1769972344770"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1769972980669"
+      }
+    },
+    "approvedBy": {
+      "$oid": "696389d7496ed10828726aaa"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769972344770"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770726205926"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770307813470"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "googleId": "k1eDgoH2oSacLKnxBZre1KjIsFt1",
+    "email": "circoscrizionerussa2@gmail.com",
+    "nome": "Fabio",
+    "cognome": "Guerini",
+    "telefono": "3493358807",
+    "congregazione": "Treviso Mura Russa",
+    "localita": "Treviso",
+    "oratoreId": null,
+    "role": "admin",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1769982108972"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1769974336921"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1769974360755"
+      }
+    },
+    "approvedBy": {
+      "$oid": "696389d7496ed10828726aaa"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769974336921"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770022806187"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770022806187"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6980f3d99821806dc61cb311"
+    },
+    "googleId": "QQFfzyk30sOwEQxoUykrdjn5CLI2",
+    "email": "ealeks70@gmail.com",
+    "nome": "Александр",
+    "cognome": "Елецкий",
+    "telefono": "+393884237402",
+    "congregazione": "Treviso Mura",
+    "localita": "Treviso ",
+    "oratoreId": {
+      "$oid": "698758037f23428187c312a3"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770058713753"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770058713753"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770058713753"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770058762775"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770058713753"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770477612173"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6981f8bb9b10d124c8b5afff"
+    },
+    "googleId": "eMP7A0xwA2TQ3LDNiUnBMklzKh33",
+    "email": "mark.winny@gmail.com",
+    "nome": "Marco",
+    "cognome": "Vinella",
+    "telefono": "+393276128919",
+    "congregazione": "Genova Castelletto",
+    "localita": "Genova",
+    "oratoreId": {
+      "$oid": "698200ef39d73f89d2163f51"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770125499557"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770125499557"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770125499557"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770126711933"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770125499557"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770127685167"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984a21b629535200cfeb80a"
+    },
+    "googleId": "1DzE5lzH0PO9lx1RLKvqYleFUOp1",
+    "email": "teocorra@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": {
+      "$oid": "697b968904e7e8695ef9384d"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770299931241"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770299931241"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770299931241"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770300204864"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770299931241"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770387057283"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984a7159c241470690e4d8d"
+    },
+    "googleId": "lkBdxIdQLUODG7S1hPPgGuEiSGz2",
+    "email": "gcarta09@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770301205188"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770301205188"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770301205188"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770308070354"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770301205188"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770308070354"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984a91a10fcdf8760e941a8"
+    },
+    "googleId": "Cs4DBC5QWlN2JvlHiFupsmVBtye2",
+    "email": "enrico.menegotto@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770301722853"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770301722853"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770301722853"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770308066587"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770301722853"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770308066587"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984b0bc02df1f3e2f537e7c"
+    },
+    "googleId": "TnjiuqDtvCMezp01ZuNzrJKwKP23",
+    "email": "tommi.tikkala@gmail.com",
+    "nome": "Tommi",
+    "cognome": "Tikkala",
+    "telefono": "+393341733177",
+    "congregazione": "Segrate",
+    "localita": "MI",
+    "oratoreId": {
+      "$oid": "697b968904e7e8695ef93849"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770303676701"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770303676701"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770303676701"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770308063098"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770303676701"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770904544357"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984b9e3a01e795bb63a6565"
+    },
+    "googleId": "dxTEGwNghDNOipJZ8y7AgHK0Kpm1",
+    "email": "benedettodim@gmail.com",
+    "nome": "Benedetto ",
+    "cognome": "Di Modugno ",
+    "telefono": "3336643591",
+    "congregazione": "Bergamo",
+    "localita": "Bergamo via Don Luigi Palazzolo 23/b",
+    "oratoreId": {
+      "$oid": "69940836e16286c5bba71f16"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770306019214"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770306019214"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770306019214"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770308059679"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770306019214"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771309254132"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984c1a949f0b05cb7e0c41d"
+    },
+    "googleId": "HwFzlVcalyQPiN8IBYYHQ9UfzGf1",
+    "email": "dimafedy94@gmail.com",
+    "nome": "Dumitru",
+    "cognome": "Fediucovici",
+    "telefono": "3664193274",
+    "congregazione": "Ud torre",
+    "localita": "Udine ",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770308009281"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770308009281"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770308009281"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770308055819"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770308009281"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770454317874"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984c784aa59c0c4385948e5"
+    },
+    "googleId": "1YLAOWsJVQS404qyiIss3DBB0hC3",
+    "email": "ahalynchanskyy@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770309508629"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770309508629"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770309508629"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770316721512"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770309508629"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770316721512"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984caa07501916b0b9cb699"
+    },
+    "googleId": "Ro34Uod50cPu3hQDwqp5v21WgiI3",
+    "email": "boaretto.n@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770310304281"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770310304281"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770310304281"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770316718499"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770310304281"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770316718499"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984ccdf16cd0f46da4f1161"
+    },
+    "googleId": "cm0eiobPGhVhaoRtvTh5i1u4DXy1",
+    "email": "stdacol@gmail.com",
+    "nome": "Stefano ",
+    "cognome": "Da Col",
+    "telefono": "3319509644",
+    "congregazione": "Belluno gruppo",
+    "localita": "Belluno ",
+    "oratoreId": {
+      "$oid": "6973e2802f104089efcde262"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770310879077"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770310879077"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770310879077"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770316714831"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770310879077"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771708538095"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6984cf9afaff34d2211ba27d"
+    },
+    "googleId": "NnOCtNw2gYg5d3evyeQG41fAjT93",
+    "email": "solontsev@gmail.com",
+    "nome": "Sergei",
+    "cognome": "Olontsev",
+    "telefono": "+39 351 145 9209",
+    "congregazione": "Fino Mornasco",
+    "localita": "Como",
+    "oratoreId": {
+      "$oid": "697b968904e7e8695ef93853"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770311578832"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770311578832"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770311578832"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770316711024"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770311578832"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771313083250"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6985e2a20dc1e2fab9d6fa6b"
+    },
+    "googleId": "pJ6wRvvyCxVXrGFNXkIb4b8cVak2",
+    "email": "sypkym@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770381986891"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770381986891"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770381986891"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770384804190"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770381986891"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770384804190"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6985f6174778906e3d80ab1f"
+    },
+    "googleId": "xHmjRArddlhL6c82vdSKsSw8dNW2",
+    "email": "llanni76@gmail.com",
+    "nome": "LUIGI",
+    "cognome": "LANNI",
+    "telefono": "3287581928",
+    "congregazione": "Venezia",
+    "localita": "Venezia",
+    "oratoreId": {
+      "$oid": "6973e55938ff6ec7e457ad9e"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770386967223"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770386967223"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770386967223"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770387180299"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770386967223"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771096837102"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6985f9b0ff3c9f75023e802d"
+    },
+    "googleId": "EvJDI11AL0SX531INWt48ogRdlQ2",
+    "email": "gennarodangiolella@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770387888703"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770387888703"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770387888703"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770388994488"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770387888703"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770388994488"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6987ade9c4cd017400eb9ff6"
+    },
+    "googleId": "77sgFUN8NIUzyC4pjqWELxFuuG22",
+    "email": "juniorbiscuitdoggy@gmail.com",
+    "nome": "Lorenzo",
+    "cognome": "boiko",
+    "telefono": "",
+    "congregazione": "Treviso Mura",
+    "localita": "Treviso ",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770499561287"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770499561287"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770499561287"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770499568841"
+      }
+    },
+    "approvedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770499561287"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771318739367"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6988db06f02bda7601a0ba00"
+    },
+    "googleId": "mcKjkTVy24OUEVIKCALtjiziOW92",
+    "email": "rossettidavide94@gmail.com",
+    "nome": "Davide",
+    "cognome": "Rossetti",
+    "telefono": "+39 3345267194",
+    "congregazione": "Brescia",
+    "localita": "Brescia",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770576646661"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770576646661"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770576646661"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770577297795"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770576646661"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770580497575"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "698f47d54d0bd49571ee6b16"
+    },
+    "googleId": "PdeaubIsnMR5HzsNoLqzsgWmoL02",
+    "email": "gio.motta1980@gmail.com",
+    "nome": "Giovanni",
+    "cognome": "Motta",
+    "telefono": "+393200459046",
+    "congregazione": "Torino",
+    "localita": "Torino",
+    "oratoreId": {
+      "$oid": "697b968904e7e8695ef9384f"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770997717846"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1770997717846"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1770997717846"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1770997861583"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770997717846"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770998700213"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69941436076141f5200c320b"
+    },
+    "googleId": "G5F4Ti5AGdTWSRLjzlkMEta5N8M2",
+    "email": "andreafrigo87@gmail.com",
+    "nome": "Andrea",
+    "cognome": "Frigo",
+    "telefono": "3495652867",
+    "congregazione": "Verona gruppo",
+    "localita": "Verona",
+    "oratoreId": {
+      "$oid": "6973e4e338ff6ec7e457ad9c"
+    },
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771312182403"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771312182403"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1771312182403"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1771312691831"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771312182403"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771513102670"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "699418eb076141f5200c320c"
+    },
+    "googleId": "Bc19jRi17SVtQTWZg42yHaJUJv93",
+    "email": "marco.lumina@gmail.com",
+    "nome": "Marco",
+    "cognome": "Lumina",
+    "telefono": "3492918343",
+    "congregazione": "Fino Mornasco",
+    "localita": "Cantú",
+    "oratoreId": null,
+    "role": "admin",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771313387882"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771313387882"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1771313387882"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1771313610010"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771313387882"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771313740732"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69945227db0daf6c0e960305"
+    },
+    "googleId": "UIYJma8x2PUdEgRFZm4RFwvVnop1",
+    "email": "parasioncik@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771328039267"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771328039267"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1771328039267"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1771328802724"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771328039267"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771328802724"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6994c8b79e6ab13b33203d0c"
+    },
+    "googleId": "U1jMELAe1ThDDctcVXCO93pnBH22",
+    "email": "igor.shpitser@gmail.com",
+    "nome": "Igor",
+    "cognome": "Shpitser",
+    "telefono": "3881991926",
+    "congregazione": "Milano Sud",
+    "localita": "Milano",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771358391523"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771358391523"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1771358391523"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1771411327869"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771358391523"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771413416233"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "699b467cd7f4e4d1247bb48e"
+    },
+    "googleId": "VdcWgN9NKPPKT6SSGJyqDxxc7NJ3",
+    "email": "lupascu.victor1@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771783804478"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1771783804478"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1771783804478"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1771802764640"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771783804478"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771802764640"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69a44d99ed068e2cdc419f36"
+    },
+    "googleId": "YTqA72PLJzWw2C9KnmIjJ4411DV2",
+    "email": "antonylebed89@gmail.com",
+    "nome": "",
+    "cognome": "",
+    "telefono": "",
+    "congregazione": "",
+    "localita": "",
+    "oratoreId": null,
+    "role": "user",
+    "status": "active",
+    "privacyAcceptedAt": {
+      "$date": {
+        "$numberLong": "1772375449289"
+      }
+    },
+    "privacyAcceptedVersion": "2025-01",
+    "dataReviewAcceptedAt": {
+      "$date": {
+        "$numberLong": "1772375449289"
+      }
+    },
+    "requestedAt": {
+      "$date": {
+        "$numberLong": "1772375449290"
+      }
+    },
+    "approvedAt": {
+      "$date": {
+        "$numberLong": "1772573976672"
+      }
+    },
+    "approvedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "rejectedAt": null,
+    "rejectedBy": null,
+    "rejectionReason": null,
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1772375449290"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1772573976672"
+      }
+    }
+  }
+]

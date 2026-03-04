@@ -1,0 +1,726 @@
+[
+  {
+    "_id": {
+      "$oid": "697543bfd5c7cc8a2308542a"
+    },
+    "nome": "Badalona, Spagna",
+    "responsabileOratoreId": {
+      "$oid": "6975438e5ca8edc6d192e064"
+    },
+    "orari": "Dom 12:15",
+    "indirizzo": "",
+    "telefono": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769292735039"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769292735039"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697544c9d5c7cc8a2308542b"
+    },
+    "nome": "Belluno gruppo",
+    "responsabileOratoreId": {
+      "$oid": "6973e2802f104089efcde262"
+    },
+    "orari": "Sab 15:00",
+    "indirizzo": "",
+    "telefono": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769293001353"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769293001353"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697545e1807225cab7807ea6"
+    },
+    "nome": "Treviso Mura",
+    "responsabileOratoreId": null,
+    "orari": "Sab 14:00",
+    "indirizzo": "via monte santo 16",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769293281620"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771319147249"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "responsabileUserId": {
+      "$oid": "6980f3d99821806dc61cb311"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6975484eaa0e030c41b1bef9"
+    },
+    "nome": "Bergamo",
+    "responsabileOratoreId": null,
+    "orari": "Dom 14:15",
+    "indirizzo": "Bergamo via Don Luigi Palazzolo 23 B",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769293902929"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771322614197"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "responsabileUserId": {
+      "$oid": "6984b9e3a01e795bb63a6565"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69754862aa0e030c41b1befa"
+    },
+    "nome": "Bergamo Russa",
+    "responsabileOratoreId": {
+      "$oid": "69940836e16286c5bba71f16"
+    },
+    "orari": "Dom 14:15",
+    "indirizzo": "Via Palazzolo 23c - Bergamo",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769293922337"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771310727129"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6977add46a44eccaf81d642c"
+    },
+    "nome": "Padova Borgomagno gruppo",
+    "responsabileOratoreId": {
+      "$oid": "6973e79c77fab877d3ee8180"
+    },
+    "orari": "",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769450964777"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769450984484"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9385a"
+    },
+    "nome": "Padova Borgomagno",
+    "responsabileOratoreId": {
+      "$oid": "6973e79c77fab877d3ee8180"
+    },
+    "orari": "Sabato, 15:15",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769982676364"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9385d"
+    },
+    "nome": "Segrate",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef93849"
+    },
+    "orari": "Domenica, 14:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93855"
+    },
+    "nome": "Venezia Russa",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef9383f"
+    },
+    "orari": "Domenica, 13:30",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93862"
+    },
+    "nome": "Fino Mornasco",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef93853"
+    },
+    "orari": "Domenica, 10:15",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771313857363"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93859"
+    },
+    "nome": "Milano Russa Sud",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef93844"
+    },
+    "orari": "Domenica, 12:30",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93860"
+    },
+    "nome": "Torino",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef9384f"
+    },
+    "orari": "Domenica, 17:30",
+    "indirizzo": "Via Dronero 15b Torino",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770998744700"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93858"
+    },
+    "nome": "Milano Russa Nord",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef93843"
+    },
+    "orari": "Domenica, 10:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9385b"
+    },
+    "nome": "Pordenone Meduna",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef93847"
+    },
+    "orari": "Sabato, 14:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9385c"
+    },
+    "nome": "Sanremo Ovest",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef93848"
+    },
+    "orari": "Domenica, 16:30",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9385f"
+    },
+    "nome": "Trento Sud",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef9384d"
+    },
+    "orari": "Domenica, 10:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93856"
+    },
+    "nome": "Genova Certosa",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef93840"
+    },
+    "orari": "Domenica, 10:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93857"
+    },
+    "nome": "Marostica",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef93842"
+    },
+    "orari": "Sabato, 15:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9385e"
+    },
+    "nome": "Treviso Est",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef9384b"
+    },
+    "orari": "Domenica, 14:45",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93861"
+    },
+    "nome": "Udine Torre",
+    "responsabileOratoreId": {
+      "$oid": "697b968904e7e8695ef93852"
+    },
+    "orari": "Sabato , 14:45",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145401"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769709426292"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b96dd86bfa3c53769d94f"
+    },
+    "nome": "Brescia Russa",
+    "responsabileOratoreId": {
+      "$oid": "6973e36b2f104089efcde265"
+    },
+    "orari": "Domenica, 09:30",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707229331"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707229331"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b96dd86bfa3c53769d950"
+    },
+    "nome": "Busto Arsizio Nord",
+    "responsabileOratoreId": {
+      "$oid": "6973e51638ff6ec7e457ad9d"
+    },
+    "orari": "Sabato, 15:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707229432"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707229432"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b96dd86bfa3c53769d951"
+    },
+    "nome": "Verona",
+    "responsabileOratoreId": {
+      "$oid": "6973e4e338ff6ec7e457ad9c"
+    },
+    "orari": "Domenica, 10:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707229556"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707229556"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b9c480b3c561aff389c1e"
+    },
+    "nome": "Bolzano gruppa",
+    "responsabileOratoreId": {
+      "$oid": "6973e0942f104089efcde25c"
+    },
+    "orari": "Dom 10:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769708616031"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769708616031"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b9d0f0b3c561aff389c1f"
+    },
+    "nome": "Brescia",
+    "responsabileOratoreId": null,
+    "orari": "Dom 10:00",
+    "indirizzo": "Via Villa Glori, 30, 25126 Brescia BS",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769708815799"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771514135789"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "responsabileUserId": {
+      "$oid": "6988db06f02bda7601a0ba00"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b9d670b3c561aff389c20"
+    },
+    "nome": "Busto Arsizio Nord gruppo",
+    "responsabileOratoreId": {
+      "$oid": "697b9d5c1638f998b1931313"
+    },
+    "orari": "Sab 15:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769708903947"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769708903947"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b9da20b3c561aff389c21"
+    },
+    "nome": "Venezia",
+    "responsabileOratoreId": {
+      "$oid": "6990cd73474e4402eb77fb25"
+    },
+    "orari": "Dom 15:00",
+    "indirizzo": "Via Castellana 34A",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769708962796"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771097469557"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b9e450b3c561aff389c22"
+    },
+    "nome": "Milano Sud",
+    "responsabileOratoreId": {
+      "$oid": "697b9e381638f998b1931314"
+    },
+    "orari": "Dom 12:30",
+    "indirizzo": "Via Calabiana 16 Millano",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769709125504"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771351016252"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "responsabileUserId": null
+  },
+  {
+    "_id": {
+      "$oid": "697ba18b0b3c561aff389c23"
+    },
+    "nome": "Milano Nord",
+    "responsabileOratoreId": {
+      "$oid": "6973e60a38ff6ec7e457ada1"
+    },
+    "orari": "Dom 10:00",
+    "indirizzo": "Via Maria Melato 9 20157 Milano MI",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769709963379"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770673017652"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "6980dc324145bf54c8229d3d"
+    },
+    "nome": "Bolzano gruppo",
+    "responsabileOratoreId": {
+      "$oid": "6973e0942f104089efcde25c"
+    },
+    "orari": "Dom 10:00",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770052658236"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770052658236"
+      }
+    },
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "69823f1f6b662ed5d887ed65"
+    },
+    "nome": "Genova Castelletto",
+    "responsabileOratoreId": {
+      "$oid": "698200ef39d73f89d2163f51"
+    },
+    "orari": "",
+    "indirizzo": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770143519818"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770143519818"
+      }
+    },
+    "createdBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    }
+  },
+  {
+    "_id": {
+      "$oid": "699724beb52aa0aa5109b4ed"
+    },
+    "nome": "Verona gruppo",
+    "responsabileOratoreId": null,
+    "responsabileUserId": {
+      "$oid": "69941436076141f5200c320b"
+    },
+    "orari": "Domenica 17:00",
+    "indirizzo": "Via Belvedere 7, Verona",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771513022965"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771513196086"
+      }
+    },
+    "createdBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    }
+  }
+]

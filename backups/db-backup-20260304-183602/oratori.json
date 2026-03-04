@@ -1,0 +1,2142 @@
+[
+  {
+    "_id": {
+      "$oid": "6962ece881a965e682cb8dbf"
+    },
+    "nome": "Fabio",
+    "cognome": "Guerini",
+    "email": "fabio@ilmioweb.net",
+    "telefono": "+393493358807",
+    "congregazione": "Treviso Mura",
+    "localita": "Treviso",
+    "discorsi": [
+      {
+        "$numberInt": "16"
+      },
+      {
+        "$numberInt": "53"
+      },
+      {
+        "$numberInt": "114"
+      },
+      {
+        "$numberInt": "120"
+      },
+      {
+        "$numberInt": "168"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1768090856765"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771311294610"
+      }
+    },
+    "updatedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "updatedByName": "Fabio Guerini"
+  },
+  {
+    "_id": {
+      "$oid": "6973e0942f104089efcde25c"
+    },
+    "nome": "Andriy",
+    "cognome": "Halynchanskyy",
+    "email": "ahalynchanskyy@gmail.com",
+    "telefono": "",
+    "congregazione": "Bolzano gruppo",
+    "localita": "Bolzano",
+    "discorsi": [
+      {
+        "$numberInt": "7"
+      },
+      {
+        "$numberInt": "8"
+      },
+      {
+        "$numberInt": "9"
+      },
+      {
+        "$numberInt": "16"
+      },
+      {
+        "$numberInt": "68"
+      },
+      {
+        "$numberInt": "120"
+      },
+      {
+        "$numberInt": "128"
+      },
+      {
+        "$numberInt": "159"
+      },
+      {
+        "$numberInt": "160"
+      },
+      {
+        "$numberInt": "173"
+      },
+      {
+        "$numberInt": "174"
+      },
+      {
+        "$numberInt": "176"
+      },
+      {
+        "$numberInt": "188"
+      },
+      {
+        "$numberInt": "194"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769201812518"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770052636814"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "6973e0cc2f104089efcde25d"
+    },
+    "nome": "Ваня ",
+    "cognome": "Маньи ",
+    "email": "manjunja74@yahoo.it",
+    "telefono": "+39 329 914 5358",
+    "congregazione": "Bolzano gruppo",
+    "localita": "Bolzano",
+    "discorsi": [
+      {
+        "$numberInt": "13"
+      },
+      {
+        "$numberInt": "16"
+      },
+      {
+        "$numberInt": "33"
+      },
+      {
+        "$numberInt": "42"
+      },
+      {
+        "$numberInt": "65"
+      },
+      {
+        "$numberInt": "67"
+      },
+      {
+        "$numberInt": "71"
+      },
+      {
+        "$numberInt": "72"
+      },
+      {
+        "$numberInt": "76"
+      },
+      {
+        "$numberInt": "100"
+      },
+      {
+        "$numberInt": "114"
+      },
+      {
+        "$numberInt": "123"
+      },
+      {
+        "$numberInt": "133"
+      },
+      {
+        "$numberInt": "161"
+      },
+      {
+        "$numberInt": "184"
+      },
+      {
+        "$numberInt": "190"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769201868433"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770052624009"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "6973e0f12f104089efcde25e"
+    },
+    "nome": "Taralunga",
+    "cognome": "Dragosh",
+    "email": "Dragtara@gmail.com",
+    "telefono": "+39 331 741 2455",
+    "congregazione": "Bolzano gruppo",
+    "localita": "Bolzano",
+    "discorsi": [
+      {
+        "$numberInt": "1"
+      },
+      {
+        "$numberInt": "24"
+      },
+      {
+        "$numberInt": "50"
+      },
+      {
+        "$numberInt": "154"
+      },
+      {
+        "$numberInt": "165"
+      },
+      {
+        "$numberInt": "171"
+      },
+      {
+        "$numberInt": "184"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769201905519"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770052642098"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "6973e2802f104089efcde262"
+    },
+    "nome": "Стефано",
+    "cognome": "Да Кол",
+    "email": "DaColStefano@jwpub.org",
+    "telefono": "+39 331 950 9641",
+    "congregazione": "Belluno gruppo",
+    "localita": "Belluno",
+    "discorsi": [
+      {
+        "$numberInt": "65"
+      },
+      {
+        "$numberInt": "175"
+      },
+      {
+        "$numberInt": "181"
+      },
+      {
+        "$numberInt": "192"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769202304247"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770500344013"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6987ade9c4cd017400eb9ff6"
+    },
+    "updatedByName": "Lorenzo boiko"
+  },
+  {
+    "_id": {
+      "$oid": "6973e2e92f104089efcde263"
+    },
+    "nome": "Сергей",
+    "cognome": "Галак",
+    "email": "ser.galac@gmail.com",
+    "telefono": "ser.galac@gmail.com",
+    "congregazione": "Bergamo   ",
+    "localita": "Bergamo ",
+    "discorsi": [
+      {
+        "$numberInt": "32"
+      },
+      {
+        "$numberInt": "75"
+      },
+      {
+        "$numberInt": "99"
+      },
+      {
+        "$numberInt": "123"
+      },
+      {
+        "$numberInt": "135"
+      },
+      {
+        "$numberInt": "167"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769202409216"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769709608908"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "6973e31a2f104089efcde264"
+    },
+    "nome": "Андрей",
+    "cognome": "Кирдин",
+    "email": "andreikirdin@gmail.com",
+    "telefono": "+39 389 991 3951",
+    "congregazione": "Bergamo ",
+    "localita": "Bergamo",
+    "discorsi": [
+      {
+        "$numberInt": "172"
+      },
+      {
+        "$numberInt": "194"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769202458907"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769202458907"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "6973e36b2f104089efcde265"
+    },
+    "nome": "Джанлука ",
+    "cognome": "Факко",
+    "email": "gianlucafacco@gmail.com",
+    "telefono": "+39 339 862 4738",
+    "congregazione": "Brescia",
+    "localita": "Brescia",
+    "discorsi": [
+      {
+        "$numberInt": "6"
+      },
+      {
+        "$numberInt": "62"
+      },
+      {
+        "$numberInt": "76"
+      },
+      {
+        "$numberInt": "124"
+      },
+      {
+        "$numberInt": "132"
+      },
+      {
+        "$numberInt": "139"
+      },
+      {
+        "$numberInt": "187"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769202539247"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771272656463"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6988db06f02bda7601a0ba00"
+    },
+    "updatedByName": "Davide Rossetti"
+  },
+  {
+    "_id": {
+      "$oid": "6973e4e338ff6ec7e457ad9c"
+    },
+    "nome": "Андреа",
+    "cognome": "Фриго",
+    "email": "andreafrigo87@gmail.com",
+    "telefono": "+39 349 565 2867",
+    "congregazione": "Verona gruppo",
+    "localita": "Verona",
+    "discorsi": [],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769202915275"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769202915275"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "6973e51638ff6ec7e457ad9d"
+    },
+    "nome": "Антонино",
+    "cognome": "Семилиа",
+    "email": "antoninosemilia78@gmail.com",
+    "telefono": "+39 349 108 5457",
+    "congregazione": "Busto Arsizio Nord gruppo",
+    "localita": "Busto Arsizio",
+    "discorsi": [
+      {
+        "$numberInt": "87"
+      },
+      {
+        "$numberInt": "143"
+      },
+      {
+        "$numberInt": "149"
+      },
+      {
+        "$numberInt": "171"
+      },
+      {
+        "$numberInt": "181"
+      },
+      {
+        "$numberInt": "186"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769202966949"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769709900052"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "6973e55938ff6ec7e457ad9e"
+    },
+    "nome": "Luigi",
+    "cognome": "Lanni",
+    "email": "llanni76@gmail.com",
+    "telefono": "+39 328 758 1928",
+    "congregazione": "Venezia",
+    "localita": "Venezia",
+    "discorsi": [
+      {
+        "$numberInt": "69"
+      },
+      {
+        "$numberInt": "107"
+      },
+      {
+        "$numberInt": "125"
+      },
+      {
+        "$numberInt": "186"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769203033475"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771096880403"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6985f6174778906e3d80ab1f"
+    },
+    "updatedByName": "LUIGI LANNI"
+  },
+  {
+    "_id": {
+      "$oid": "6973e58438ff6ec7e457ad9f"
+    },
+    "nome": "Чиро",
+    "cognome": "Греко",
+    "email": "ciro.greco@icloud.com",
+    "telefono": "+39 328 859 5981",
+    "congregazione": "Venezia",
+    "localita": "Venezia",
+    "discorsi": [
+      {
+        "$numberInt": "37"
+      },
+      {
+        "$numberInt": "105"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769203076568"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769203076568"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "6973e5d138ff6ec7e457ada0"
+    },
+    "nome": "Filippo",
+    "cognome": "Pecora",
+    "email": "filippo.pecora12@icloud.com",
+    "telefono": "+39 339 6056264",
+    "congregazione": "Milano Nord",
+    "localita": "Milano",
+    "discorsi": [
+      {
+        "$numberInt": "21"
+      },
+      {
+        "$numberInt": "24"
+      },
+      {
+        "$numberInt": "50"
+      },
+      {
+        "$numberInt": "63"
+      },
+      {
+        "$numberInt": "96"
+      },
+      {
+        "$numberInt": "165"
+      },
+      {
+        "$numberInt": "169"
+      },
+      {
+        "$numberInt": "177"
+      },
+      {
+        "$numberInt": "180"
+      },
+      {
+        "$numberInt": "188"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769203153397"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770726257253"
+      }
+    },
+    "updatedBy": {
+      "$oid": "697fa2787d246e42c4d51ef6"
+    },
+    "updatedByName": "Michele Catalano"
+  },
+  {
+    "_id": {
+      "$oid": "6973e60a38ff6ec7e457ada1"
+    },
+    "nome": "Michele",
+    "cognome": "Catalano",
+    "email": "michele.catalano@live.com",
+    "telefono": "+39 380 3250183",
+    "congregazione": "Milano Nord",
+    "localita": "Milano",
+    "discorsi": [
+      {
+        "$numberInt": "2"
+      },
+      {
+        "$numberInt": "60"
+      },
+      {
+        "$numberInt": "62"
+      },
+      {
+        "$numberInt": "101"
+      },
+      {
+        "$numberInt": "114"
+      },
+      {
+        "$numberInt": "131"
+      },
+      {
+        "$numberInt": "137"
+      },
+      {
+        "$numberInt": "148"
+      },
+      {
+        "$numberInt": "155"
+      },
+      {
+        "$numberInt": "164"
+      },
+      {
+        "$numberInt": "176"
+      },
+      {
+        "$numberInt": "184"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769203210790"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769974865226"
+      }
+    },
+    "updatedBy": {
+      "$oid": "697fa2787d246e42c4d51ef6"
+    },
+    "updatedByName": "Michele Catalano"
+  },
+  {
+    "_id": {
+      "$oid": "6973e6ca77fab877d3ee817c"
+    },
+    "nome": "Михайл ",
+    "cognome": "Товарницкий",
+    "email": "mihail.tovarnitskiy@gmail.com",
+    "telefono": "+39 327 582 0449",
+    "congregazione": "Milano Sud",
+    "localita": "Milano",
+    "discorsi": [
+      {
+        "$numberInt": "27"
+      },
+      {
+        "$numberInt": "49"
+      },
+      {
+        "$numberInt": "78"
+      },
+      {
+        "$numberInt": "160"
+      },
+      {
+        "$numberInt": "192"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769203402407"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771414368017"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6994c8b79e6ab13b33203d0c"
+    },
+    "updatedByName": "Igor Shpitser"
+  },
+  {
+    "_id": {
+      "$oid": "6973e6f277fab877d3ee817d"
+    },
+    "nome": "Стефано",
+    "cognome": "Кольнаги",
+    "email": "solostiopa@gmail.com",
+    "telefono": "+39 349 502 5583",
+    "congregazione": "Milano Sud",
+    "localita": "Milano",
+    "discorsi": [
+      {
+        "$numberInt": "15"
+      },
+      {
+        "$numberInt": "124"
+      },
+      {
+        "$numberInt": "173"
+      },
+      {
+        "$numberInt": "177"
+      },
+      {
+        "$numberInt": "187"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769203442659"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771350759990"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6985d7bd49f4d7b6c466ae09"
+    },
+    "updatedByName": "Igor Shpitser"
+  },
+  {
+    "_id": {
+      "$oid": "6973e71977fab877d3ee817e"
+    },
+    "nome": "Роберто",
+    "cognome": "Порчиелло",
+    "email": "roberto_porciello@libero.it",
+    "telefono": "+39 393 093 0995",
+    "congregazione": "Milano Sud",
+    "localita": "Milano",
+    "discorsi": [
+      {
+        "$numberInt": "6"
+      },
+      {
+        "$numberInt": "9"
+      },
+      {
+        "$numberInt": "19"
+      },
+      {
+        "$numberInt": "24"
+      },
+      {
+        "$numberInt": "35"
+      },
+      {
+        "$numberInt": "101"
+      },
+      {
+        "$numberInt": "150"
+      },
+      {
+        "$numberInt": "193"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769203481097"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771350603885"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6985d7bd49f4d7b6c466ae09"
+    },
+    "updatedByName": "Igor Shpitser"
+  },
+  {
+    "_id": {
+      "$oid": "6973e74477fab877d3ee817f"
+    },
+    "nome": "Николай ",
+    "cognome": "Бадрак",
+    "email": "nbadrak98@gmail.com",
+    "telefono": "+39 327 582 8925",
+    "congregazione": "Milano Sud",
+    "localita": "Milano",
+    "discorsi": [
+      {
+        "$numberInt": "86"
+      },
+      {
+        "$numberInt": "139"
+      },
+      {
+        "$numberInt": "194"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769203524125"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771350668489"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6985d7bd49f4d7b6c466ae09"
+    },
+    "updatedByName": "Igor Shpitser"
+  },
+  {
+    "_id": {
+      "$oid": "6973e79c77fab877d3ee8180"
+    },
+    "nome": "Nicola",
+    "cognome": "Boaretto",
+    "email": "boaretto.n@gmail.com",
+    "telefono": "+39 349 713 4658",
+    "congregazione": "Padova Borgomagno",
+    "localita": "Padova",
+    "discorsi": [
+      {
+        "$numberInt": "170"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769203612515"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769982669817"
+      }
+    },
+    "updatedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "updatedByName": "Fabio Guerini"
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9384a"
+    },
+    "nome": "Marco",
+    "cognome": "Paoletta",
+    "email": "ipotini@gmail.com",
+    "telefono": "+39 328 64 59 558",
+    "congregazione": "Segrate",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "41"
+      },
+      {
+        "$numberInt": "68"
+      },
+      {
+        "$numberInt": "76"
+      },
+      {
+        "$numberInt": "100"
+      },
+      {
+        "$numberInt": "161"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9384e"
+    },
+    "nome": "Serghei",
+    "cognome": "Palamarchiuk",
+    "email": "PalamarchuSerhii@jwpub.org",
+    "telefono": "+39 351 6434480",
+    "congregazione": "Trento Sud",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "67"
+      },
+      {
+        "$numberInt": "101"
+      },
+      {
+        "$numberInt": "160"
+      },
+      {
+        "$numberInt": "165"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93846"
+    },
+    "nome": "Danel",
+    "cognome": "Zegrya",
+    "email": "danelzegrya@gmail.com",
+    "telefono": "+39 329 733 5331",
+    "congregazione": "Padova Borgomagno",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "67"
+      },
+      {
+        "$numberInt": "76"
+      },
+      {
+        "$numberInt": "110"
+      },
+      {
+        "$numberInt": "114"
+      },
+      {
+        "$numberInt": "168"
+      },
+      {
+        "$numberInt": "176"
+      },
+      {
+        "$numberInt": "184"
+      },
+      {
+        "$numberInt": "190"
+      },
+      {
+        "$numberInt": "192"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93845"
+    },
+    "nome": "Enrico",
+    "cognome": "Menegotto",
+    "email": "enrico.menegotto@gmail.com",
+    "telefono": "+39 349 353 6405",
+    "congregazione": "Padova Borgomagno",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "1"
+      },
+      {
+        "$numberInt": "115"
+      },
+      {
+        "$numberInt": "123"
+      },
+      {
+        "$numberInt": "173"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93847"
+    },
+    "nome": "Anton",
+    "cognome": "Lebid",
+    "email": "LebidA11@jwpub.org",
+    "telefono": "+39 392 791 8584",
+    "congregazione": "Pordenone Meduna",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "1"
+      },
+      {
+        "$numberInt": "160"
+      },
+      {
+        "$numberInt": "170"
+      },
+      {
+        "$numberInt": "179"
+      },
+      {
+        "$numberInt": "180"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93849"
+    },
+    "nome": "Tommi",
+    "cognome": "Tikkala",
+    "email": "tommi.tikkala@gmail.com",
+    "telefono": "+39 334 17 33 177",
+    "congregazione": "Segrate",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "45"
+      },
+      {
+        "$numberInt": "53"
+      },
+      {
+        "$numberInt": "56"
+      },
+      {
+        "$numberInt": "57"
+      },
+      {
+        "$numberInt": "65"
+      },
+      {
+        "$numberInt": "67"
+      },
+      {
+        "$numberInt": "105"
+      },
+      {
+        "$numberInt": "134"
+      },
+      {
+        "$numberInt": "156"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93850"
+    },
+    "nome": "Alexandr",
+    "cognome": "Gincu",
+    "email": "gincualexandr4@jwpub.org",
+    "telefono": "+39 347 327 1279",
+    "congregazione": "Torino",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "1"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9384d"
+    },
+    "nome": "Matteo",
+    "cognome": "Corradetti",
+    "email": "1MatteoCorradetti@jwpub.org",
+    "telefono": "+39 333 833 6149",
+    "congregazione": "Trento Sud",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "54"
+      },
+      {
+        "$numberInt": "98"
+      },
+      {
+        "$numberInt": "153"
+      },
+      {
+        "$numberInt": "157"
+      },
+      {
+        "$numberInt": "168"
+      },
+      {
+        "$numberInt": "182"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93851"
+    },
+    "nome": "Yuriy",
+    "cognome": "Savchenko",
+    "email": "bm3366ap@gmail.com",
+    "telefono": "+39 324 694 5389",
+    "congregazione": "Udine Torre",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "11"
+      },
+      {
+        "$numberInt": "31"
+      },
+      {
+        "$numberInt": "117"
+      },
+      {
+        "$numberInt": "165"
+      },
+      {
+        "$numberInt": "189"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93848"
+    },
+    "nome": "Igor",
+    "cognome": "Mykhalishyn",
+    "email": "igor.novara@gmail.com",
+    "telefono": "+39 389 533 3743",
+    "congregazione": "Sanremo Ovest",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "50"
+      },
+      {
+        "$numberInt": "100"
+      },
+      {
+        "$numberInt": "115"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef9384f"
+    },
+    "nome": "Giovanni",
+    "cognome": "Motta",
+    "email": "giemme@jwpub.org",
+    "telefono": "+39 320 045 9046",
+    "congregazione": "Torino",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "23"
+      },
+      {
+        "$numberInt": "176"
+      },
+      {
+        "$numberInt": "181"
+      },
+      {
+        "$numberInt": "187"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93852"
+    },
+    "nome": "Dumitru",
+    "cognome": "Fediucovici",
+    "email": "dimafedy94@gmail.com",
+    "telefono": "3664193274.0",
+    "congregazione": "Udine Torre",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "6"
+      },
+      {
+        "$numberInt": "11"
+      },
+      {
+        "$numberInt": "24"
+      },
+      {
+        "$numberInt": "41"
+      },
+      {
+        "$numberInt": "148"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b968904e7e8695ef93853"
+    },
+    "nome": "Sergey",
+    "cognome": "Olontsev",
+    "email": "Solontsev@gmail.com",
+    "telefono": "+39 351 145 9209",
+    "congregazione": "Fino Mornasco",
+    "localita": "Italia",
+    "discorsi": [
+      {
+        "$numberInt": "168"
+      },
+      {
+        "$numberInt": "190"
+      }
+    ],
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769707145304"
+      }
+    }
+  },
+  {
+    "_id": {
+      "$oid": "697b9cc01638f998b1931311"
+    },
+    "nome": "Роман",
+    "cognome": "Мурушкин",
+    "email": "",
+    "telefono": "+39 3518184863",
+    "congregazione": "Bergamo",
+    "localita": "Bergamo",
+    "discorsi": [
+      {
+        "$numberInt": "46"
+      },
+      {
+        "$numberInt": "116"
+      },
+      {
+        "$numberInt": "148"
+      },
+      {
+        "$numberInt": "177"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769708736955"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770534077681"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6984b9e3a01e795bb63a6565"
+    },
+    "updatedByName": "Benedetto  Di Modugno"
+  },
+  {
+    "_id": {
+      "$oid": "697b9d041638f998b1931312"
+    },
+    "nome": "Daniele",
+    "cognome": "Guarnieri",
+    "email": "danieleguarnieri.jw@gmail.com",
+    "telefono": "+39 380 781 3895",
+    "congregazione": "Brescia",
+    "localita": "Brescia",
+    "discorsi": [
+      {
+        "$numberInt": "36"
+      },
+      {
+        "$numberInt": "52"
+      },
+      {
+        "$numberInt": "169"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769708804063"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771272441399"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6988db06f02bda7601a0ba00"
+    },
+    "updatedByName": "Davide Rossetti"
+  },
+  {
+    "_id": {
+      "$oid": "697b9d5c1638f998b1931313"
+    },
+    "nome": "Vitali ",
+    "cognome": "Suprovic ",
+    "email": "sypkym@gmail.com",
+    "telefono": "+39 329 532 5758",
+    "congregazione": "Busto Arsizio Nord gruppo",
+    "localita": "Busto Arsizio",
+    "discorsi": [],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769708892259"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769708892259"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "697b9e381638f998b1931314"
+    },
+    "nome": "Igor",
+    "cognome": "Shpitser",
+    "email": "igor.shpitser@gmail.com",
+    "telefono": "+39 388 199 1926",
+    "congregazione": "Milano Sud",
+    "localita": "Milano",
+    "discorsi": [
+      {
+        "$numberInt": "28"
+      },
+      {
+        "$numberInt": "41"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769709112573"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771351513845"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6985d7bd49f4d7b6c466ae09"
+    },
+    "updatedByName": "Igor Shpitser"
+  },
+  {
+    "_id": {
+      "$oid": "697b9eed1638f998b1931315"
+    },
+    "nome": "Егор",
+    "cognome": "Щепачёв",
+    "email": "scepacini@gmail.com",
+    "telefono": "+39 342 73 096 73",
+    "congregazione": "Segrate",
+    "localita": "Segrate",
+    "discorsi": [
+      {
+        "$numberInt": "30"
+      },
+      {
+        "$numberInt": "68"
+      },
+      {
+        "$numberInt": "77"
+      },
+      {
+        "$numberInt": "80"
+      },
+      {
+        "$numberInt": "129"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769709293929"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771324425195"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6984b0bc02df1f3e2f537e7c"
+    },
+    "updatedByName": "Tommi Tikkala"
+  },
+  {
+    "_id": {
+      "$oid": "697ba0711638f998b1931316"
+    },
+    "nome": "Владимир",
+    "cognome": "Андрусив",
+    "email": "vova.andrusiv.va@gmail.com",
+    "telefono": "+39 389 472 7704",
+    "congregazione": "Bergamo",
+    "localita": "Bergamo",
+    "discorsi": [
+      {
+        "$numberInt": "12"
+      },
+      {
+        "$numberInt": "48"
+      },
+      {
+        "$numberInt": "170"
+      },
+      {
+        "$numberInt": "191"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "createdByName": "",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1769709681313"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1769709681313"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6962eb751a4f21d2a3b44673"
+    },
+    "updatedByName": ""
+  },
+  {
+    "_id": {
+      "$oid": "698200ef39d73f89d2163f51"
+    },
+    "nome": "Marco",
+    "cognome": "Vinella",
+    "email": "mark.winny@gmail.com",
+    "telefono": "+393276128919",
+    "congregazione": "Genova Castelletto",
+    "localita": "Genova",
+    "discorsi": [
+      {
+        "$numberInt": "73"
+      },
+      {
+        "$numberInt": "163"
+      },
+      {
+        "$numberInt": "179"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6981f8bb9b10d124c8b5afff"
+    },
+    "createdByName": "Marco Vinella",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770127599061"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770143485516"
+      }
+    },
+    "updatedBy": {
+      "$oid": "697faa400b1cf2c7dff33961"
+    },
+    "updatedByName": "Fabio Guerini"
+  },
+  {
+    "_id": {
+      "$oid": "698758037f23428187c312a3"
+    },
+    "nome": "Oleksandr",
+    "cognome": "Yeletskyi",
+    "email": "ealeks70@gmail.com",
+    "telefono": "+393884237402",
+    "congregazione": "Treviso Mura",
+    "localita": "Treviso",
+    "discorsi": [
+      {
+        "$numberInt": "113"
+      },
+      {
+        "$numberInt": "185"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6980f3d99821806dc61cb311"
+    },
+    "createdByName": "Александр Елецкий",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770477571862"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770585464619"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6980f3d99821806dc61cb311"
+    },
+    "updatedByName": "Александр Елецкий"
+  },
+  {
+    "_id": {
+      "$oid": "6987628825171895221906b5"
+    },
+    "nome": "Сергей",
+    "cognome": "Забело",
+    "email": "ser.zabelo@icloud.com",
+    "telefono": "+39 3516452148",
+    "congregazione": "Bergamo",
+    "localita": "Bergamo via don Luigi Palazzolo  23/b",
+    "discorsi": [
+      {
+        "$numberInt": "12"
+      },
+      {
+        "$numberInt": "51"
+      },
+      {
+        "$numberInt": "53"
+      },
+      {
+        "$numberInt": "55"
+      },
+      {
+        "$numberInt": "60"
+      },
+      {
+        "$numberInt": "120"
+      },
+      {
+        "$numberInt": "139"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6984b9e3a01e795bb63a6565"
+    },
+    "createdByName": "Benedetto  Di Modugno",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770480264829"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770485238897"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6984b9e3a01e795bb63a6565"
+    },
+    "updatedByName": "Benedetto  Di Modugno"
+  },
+  {
+    "_id": {
+      "$oid": "69877d8e4bc12d3a867ff686"
+    },
+    "nome": "Valeri",
+    "cognome": "Kirdin",
+    "email": "",
+    "telefono": "+39 3425744954",
+    "congregazione": "Bergamo",
+    "localita": "Bergamo",
+    "discorsi": [
+      {
+        "$numberInt": "60"
+      },
+      {
+        "$numberInt": "121"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6984b9e3a01e795bb63a6565"
+    },
+    "createdByName": "Benedetto  Di Modugno",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770487182067"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770487182067"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6984b9e3a01e795bb63a6565"
+    },
+    "updatedByName": "Benedetto  Di Modugno"
+  },
+  {
+    "_id": {
+      "$oid": "6988fd5522f5435bae3c8f50"
+    },
+    "nome": "Gionatan",
+    "cognome": "Ciavatti",
+    "email": "gciavattijw@gmail.com",
+    "telefono": "+39 339 5873073",
+    "congregazione": "Treviso Mura",
+    "localita": "Treviso ",
+    "discorsi": [
+      {
+        "$numberInt": "51"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6980f3d99821806dc61cb311"
+    },
+    "createdByName": "Александр Елецкий",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770585429765"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770715095184"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6987ade9c4cd017400eb9ff6"
+    },
+    "updatedByName": "Lorenzo boiko"
+  },
+  {
+    "_id": {
+      "$oid": "698e057a5d00f4571945e9f6"
+    },
+    "nome": "Сергей",
+    "cognome": "Олару",
+    "email": "sergheiolaru1@gmail.com",
+    "telefono": "+393515776702",
+    "congregazione": "Segrate",
+    "localita": "MI",
+    "discorsi": [
+      {
+        "$numberInt": "34"
+      },
+      {
+        "$numberInt": "59"
+      },
+      {
+        "$numberInt": "186"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6984b0bc02df1f3e2f537e7c"
+    },
+    "createdByName": "Tommi Tikkala",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770915194580"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770915194580"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6984b0bc02df1f3e2f537e7c"
+    },
+    "updatedByName": "Tommi Tikkala"
+  },
+  {
+    "_id": {
+      "$oid": "698f4cb16722dcaf15249d0e"
+    },
+    "nome": "Antonio",
+    "cognome": "Fiumanò",
+    "email": "axelfiumano@gmail.com",
+    "telefono": "+39 389 6921523",
+    "congregazione": "Torino",
+    "localita": "Torino",
+    "discorsi": [
+      {
+        "$numberInt": "185"
+      }
+    ],
+    "createdBy": {
+      "$oid": "698f47d54d0bd49571ee6b16"
+    },
+    "createdByName": "Giovanni Motta",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1770998961505"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1770998961505"
+      }
+    },
+    "updatedBy": {
+      "$oid": "698f47d54d0bd49571ee6b16"
+    },
+    "updatedByName": "Giovanni Motta"
+  },
+  {
+    "_id": {
+      "$oid": "6990cd73474e4402eb77fb25"
+    },
+    "nome": "Gennaro",
+    "cognome": "D'Angiolella",
+    "email": "gennarodangiolella@gmail.com",
+    "telefono": "349 730 3153",
+    "congregazione": "Venezia",
+    "localita": "Venezia",
+    "discorsi": [
+      {
+        "$numberInt": "32"
+      },
+      {
+        "$numberInt": "183"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6985f6174778906e3d80ab1f"
+    },
+    "createdByName": "LUIGI LANNI",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771097459596"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771097459596"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6985f6174778906e3d80ab1f"
+    },
+    "updatedByName": "LUIGI LANNI"
+  },
+  {
+    "_id": {
+      "$oid": "6994278f5dfb161892c2f907"
+    },
+    "nome": "Marco",
+    "cognome": "Lumina",
+    "email": "Marco.lumina@Gmail.com",
+    "telefono": "+39 349 291 8343",
+    "congregazione": "Fino Mornasco",
+    "localita": "Cantú",
+    "discorsi": [
+      {
+        "$numberInt": "6"
+      },
+      {
+        "$numberInt": "173"
+      },
+      {
+        "$numberInt": "176"
+      },
+      {
+        "$numberInt": "187"
+      },
+      {
+        "$numberInt": "189"
+      },
+      {
+        "$numberInt": "192"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6984cf9afaff34d2211ba27d"
+    },
+    "createdByName": "Sergei Olontsev",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771317135276"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771344819415"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6984cf9afaff34d2211ba27d"
+    },
+    "updatedByName": "Sergei Olontsev"
+  },
+  {
+    "_id": {
+      "$oid": "699428b35dfb161892c2f908"
+    },
+    "nome": "Davide",
+    "cognome": "Berté",
+    "email": "devidonoff@gmail.com",
+    "telefono": "+39 347 839 6273",
+    "congregazione": "Fino Mornasco",
+    "localita": "Cantu",
+    "discorsi": [
+      {
+        "$numberInt": "23"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6984cf9afaff34d2211ba27d"
+    },
+    "createdByName": "Sergei Olontsev",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771317427729"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771344781776"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6984cf9afaff34d2211ba27d"
+    },
+    "updatedByName": "Sergei Olontsev"
+  },
+  {
+    "_id": {
+      "$oid": "6994abab3dd3ff804229e533"
+    },
+    "nome": "Gianni",
+    "cognome": "Di Ciocco",
+    "email": "",
+    "telefono": "+39 347 767 8421",
+    "congregazione": "Milano Russa Sud",
+    "localita": "Milano",
+    "discorsi": [
+      {
+        "$numberInt": "133"
+      },
+      {
+        "$numberInt": "186"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6985d7bd49f4d7b6c466ae09"
+    },
+    "createdByName": "Igor Shpitser",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771350955714"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771350955714"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6985d7bd49f4d7b6c466ae09"
+    },
+    "updatedByName": "Igor Shpitser"
+  },
+  {
+    "_id": {
+      "$oid": "6994ac5c3dd3ff804229e534"
+    },
+    "nome": "Gianni",
+    "cognome": "Di Ciocco",
+    "email": "giannidiciocco@gmail.com",
+    "telefono": "+39 347 767 8421",
+    "congregazione": "Milano Sud",
+    "localita": "Milano",
+    "discorsi": [
+      {
+        "$numberInt": "8"
+      },
+      {
+        "$numberInt": "11"
+      },
+      {
+        "$numberInt": "70"
+      },
+      {
+        "$numberInt": "133"
+      },
+      {
+        "$numberInt": "186"
+      }
+    ],
+    "createdBy": {
+      "$oid": "6985d7bd49f4d7b6c466ae09"
+    },
+    "createdByName": "Igor Shpitser",
+    "createdAt": {
+      "$date": {
+        "$numberLong": "1771351132117"
+      }
+    },
+    "updatedAt": {
+      "$date": {
+        "$numberLong": "1771352877088"
+      }
+    },
+    "updatedBy": {
+      "$oid": "6985d7bd49f4d7b6c466ae09"
+    },
+    "updatedByName": "Igor Shpitser"
+  }
+]
