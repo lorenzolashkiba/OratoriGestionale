@@ -203,17 +203,25 @@ export function getDiscorsoTitolo(numero) {
 
 // Funzione per cercare discorsi per numero o testo nel titolo
 export function searchDiscorsi(query) {
-  const queryLower = query.toLowerCase()
-  const queryNum = parseInt(query)
+  const normalizedQuery = query.trim()
+
+  if (!normalizedQuery) {
+    return []
+  }
+
+  if (/^\d+$/.test(normalizedQuery)) {
+    const queryNum = parseInt(normalizedQuery, 10)
+
+    if (!isDiscorsoDisponibile(queryNum)) {
+      return []
+    }
+
+    return [{ numero: queryNum, titolo: getDiscorsoTitolo(queryNum) }]
+  }
+
+  const queryLower = normalizedQuery.toLowerCase()
 
   return Object.entries(discorsiMap)
-    .filter(([num, titolo]) => {
-      // Cerca per numero
-      if (!isNaN(queryNum) && num.toString().includes(query)) {
-        return true
-      }
-      // Cerca nel titolo
-      return titolo.toLowerCase().includes(queryLower)
-    })
+    .filter(([, titolo]) => titolo.toLowerCase().includes(queryLower))
     .map(([num, titolo]) => ({ numero: parseInt(num), titolo }))
 }

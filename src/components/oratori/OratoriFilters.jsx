@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { searchDiscorsi } from '../../data/discorsi'
 import { useLanguage } from '../../context/LanguageContext'
 
 export default function OratoriFilters({ filters, onFilterChange }) {

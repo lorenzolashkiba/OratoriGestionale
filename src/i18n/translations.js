@@ -172,7 +172,7 @@ export const translations = {
       searchByLocalita: 'Cerca per località...',
       searchByDiscorso: 'Discorso (numero o tema)',
       searchByDiscorsoPlaceholder: 'Es: 42 oppure testo...',
-      searchByDiscorsoHint: 'Cerca per numero o testo nel titolo',
+      searchByDiscorsoHint: 'Se inserisci un numero, viene cercato in modo esatto; altrimenti cerca nel titolo',
     },
 
     // Programmi
@@ -524,7 +524,7 @@ export const translations = {
       searchByLocalita: 'Поиск по городу...',
       searchByDiscorso: 'Речь (номер или тема)',
       searchByDiscorsoPlaceholder: 'Напр: 42 или текст...',
-      searchByDiscorsoHint: 'Поиск по номеру или тексту в названии',
+      searchByDiscorsoHint: 'Если ввести число, поиск будет точным по номеру; иначе поиск идет по названию',
     },
 
     // Programmi
