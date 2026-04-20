@@ -3,12 +3,14 @@ import { AuthProvider, useAuth } from './context/AuthContext'
 import { LanguageProvider } from './context/LanguageContext'
 import { ToastProvider } from './context/ToastContext'
 import ProtectedRoute from './components/auth/ProtectedRoute'
+import AnalyticsTracker from './components/analytics/AnalyticsTracker'
 import Login from './pages/Login'
 import Home from './pages/Home'
 import Oratori from './pages/Oratori'
 import Programmi from './pages/Programmi'
 import Profilo from './pages/Profilo'
 import Admin from './pages/Admin'
+import Analytics from './pages/Analytics'
 import Privacy from './pages/Privacy'
 import PrivacyConsent from './pages/PrivacyConsent'
 import DataReviewReminder from './components/modals/DataReviewReminder'
@@ -40,6 +42,7 @@ function PrivacyConsentGuard({ children }) {
 function AppRoutes() {
   return (
     <PrivacyConsentGuard>
+      <AnalyticsTracker />
       <DataReviewReminder />
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -89,6 +92,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <Admin />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/analytics"
+          element={
+            <ProtectedRoute>
+              <Analytics />
             </ProtectedRoute>
           }
         />

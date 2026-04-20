@@ -139,3 +139,12 @@ export const adminApi = {
     body: JSON.stringify({ userId }),
   }),
 }
+
+// Analytics API
+export const analyticsApi = {
+  getDashboard: () => fetchWithAuth('/analytics'),
+  trackVisit: (data) => fetchWithAuth('/analytics/visit', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  }),
+}

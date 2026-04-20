@@ -2,10 +2,12 @@ import { ObjectId } from 'mongodb'
 import { connectToDatabase } from './utils/mongodb.js'
 import { requireAdmin } from './utils/auth.js'
 import { sendApprovalEmail, sendRejectionEmail } from './utils/email.js'
+import { getActorSnapshot, logActivity } from './utils/activity.js'
 
 async function adminHandler(event, context, firebaseUser, adminUser) {
   const { db } = await connectToDatabase()
   const usersCollection = db.collection('users')
+  const actor = getActorSnapshot(firebaseUser, adminUser)
 
   const headers = {
     'Content-Type': 'application/json',
@@ -109,6 +111,18 @@ async function adminHandler(event, context, firebaseUser, adminUser) {
         { returnDocument: 'after' }
       )
 
+      await logActivity(db, {
+        entityType: 'users',
+        entityId: result?._id || new ObjectId(userId),
+        entityLabel: result?.email || 'Utente approvato',
+        action: 'approve',
+        description: `Utente approvato: ${result?.email || userId}`,
+        actor,
+        metadata: {
+          role: result?.role || 'user',
+        },
+      })
+
       // Invia email di approvazione
       try {
         await sendApprovalEmail(result)
@@ -149,6 +163,18 @@ async function adminHandler(event, context, firebaseUser, adminUser) {
         { returnDocument: 'after' }
       )
 
+      await logActivity(db, {
+        entityType: 'users',
+        entityId: result?._id || new ObjectId(userId),
+        entityLabel: result?.email || 'Utente rifiutato',
+        action: 'reject',
+        description: `Utente rifiutato: ${result?.email || userId}`,
+        actor,
+        metadata: {
+          reason: reason || null,
+        },
+      })
+
       // Invia email di rifiuto
       try {
         await sendRejectionEmail(result, reason)
@@ -184,6 +210,8 @@ async function adminHandler(event, context, firebaseUser, adminUser) {
         }
       }
 
+      const targetUser = await usersCollection.findOne({ _id: new ObjectId(userId) })
+
       const result = await usersCollection.deleteOne({ _id: new ObjectId(userId) })
 
       if (result.deletedCount === 0) {
@@ -193,6 +221,15 @@ async function adminHandler(event, context, firebaseUser, adminUser) {
           body: JSON.stringify({ message: 'Utente non trovato' }),
         }
       }
+
+      await logActivity(db, {
+        entityType: 'users',
+        entityId: targetUser?._id || new ObjectId(userId),
+        entityLabel: targetUser?.email || 'Utente eliminato',
+        action: 'delete',
+        description: `Utente eliminato: ${targetUser?.email || userId}`,
+        actor,
+      })
 
       return {
         statusCode: 200,
@@ -240,6 +277,18 @@ async function adminHandler(event, context, firebaseUser, adminUser) {
         },
         { returnDocument: 'after' }
       )
+
+      await logActivity(db, {
+        entityType: 'users',
+        entityId: result?._id || new ObjectId(userId),
+        entityLabel: result?.email || 'Ruolo utente aggiornato',
+        action: 'role_change',
+        description: `Ruolo aggiornato a ${role} per ${result?.email || userId}`,
+        actor,
+        metadata: {
+          role,
+        },
+      })
 
       return {
         statusCode: 200,

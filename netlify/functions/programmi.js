@@ -1,12 +1,13 @@
 import { ObjectId } from 'mongodb'
 import { connectToDatabase } from './utils/mongodb.js'
 import { requireApprovedUser } from './utils/auth.js'
+import { getActorSnapshot, logActivity } from './utils/activity.js'
 
 async function programmiHandler(event, context, user, dbUser) {
   const { db } = await connectToDatabase()
   const programmiCollection = db.collection('programmi')
-  const usersCollection = db.collection('users')
   const oratoriCollection = db.collection('oratori')
+  const actor = getActorSnapshot(user, dbUser)
 
   const headers = {
     'Content-Type': 'application/json',
@@ -143,6 +144,19 @@ async function programmiHandler(event, context, user, dbUser) {
       newProgramma._id = result.insertedId
       newProgramma.oratore = oratore
 
+      await logActivity(db, {
+        entityType: 'programmi',
+        entityId: newProgramma._id,
+        entityLabel: `${oratore.cognome || ''} ${oratore.nome || ''}`.trim() || 'Programma',
+        action: 'create',
+        description: `Creato programma del ${new Date(newProgramma.data).toLocaleDateString('it-IT')}`,
+        actor,
+        metadata: {
+          data: newProgramma.data,
+          orario: newProgramma.orario,
+        },
+      })
+
       return {
         statusCode: 201,
         headers,
@@ -227,6 +241,19 @@ async function programmiHandler(event, context, user, dbUser) {
       const oratore = await oratoriCollection.findOne({ _id: result.oratoreId })
       result.oratore = oratore
 
+      await logActivity(db, {
+        entityType: 'programmi',
+        entityId: result._id,
+        entityLabel: `${oratore?.cognome || ''} ${oratore?.nome || ''}`.trim() || 'Programma',
+        action: 'update',
+        description: `Aggiornato programma del ${new Date(result.data).toLocaleDateString('it-IT')}`,
+        actor,
+        metadata: {
+          data: result.data,
+          orario: result.orario,
+        },
+      })
+
       return {
         statusCode: 200,
         headers,
@@ -247,19 +274,39 @@ async function programmiHandler(event, context, user, dbUser) {
         }
       }
 
-      // Verifica che il programma appartenga all'utente
-      const result = await programmiCollection.deleteOne({
+      const existingProgramma = await programmiCollection.findOne({
         _id: new ObjectId(id),
         userId: currentUser._id,
       })
 
-      if (result.deletedCount === 0) {
+      if (!existingProgramma) {
         return {
           statusCode: 404,
           headers,
           body: JSON.stringify({ message: 'Programma non trovato' }),
         }
       }
+
+      // Verifica che il programma appartenga all'utente
+      await programmiCollection.deleteOne({
+        _id: new ObjectId(id),
+        userId: currentUser._id,
+      })
+
+      const deletedOratore = await oratoriCollection.findOne({ _id: existingProgramma.oratoreId })
+
+      await logActivity(db, {
+        entityType: 'programmi',
+        entityId: existingProgramma._id,
+        entityLabel: `${deletedOratore?.cognome || ''} ${deletedOratore?.nome || ''}`.trim() || 'Programma',
+        action: 'delete',
+        description: `Eliminato programma del ${new Date(existingProgramma.data).toLocaleDateString('it-IT')}`,
+        actor,
+        metadata: {
+          data: existingProgramma.data,
+          orario: existingProgramma.orario,
+        },
+      })
 
       return {
         statusCode: 200,

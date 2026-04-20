@@ -1,6 +1,7 @@
 import { ObjectId } from 'mongodb'
 import { connectToDatabase } from './utils/mongodb.js'
 import { requireApprovedUser } from './utils/auth.js'
+import { getActorSnapshot, logActivity } from './utils/activity.js'
 
 const normalize = (value) => (value || '').trim().replace(/\s+/g, ' ').toLowerCase()
 
@@ -83,6 +84,7 @@ async function congregazioniHandler(event, context, user, dbUser) {
   const congregazioniCollection = db.collection('congregazioni')
   const oratoriCollection = db.collection('oratori')
   const usersCollection = db.collection('users')
+  const actor = getActorSnapshot(user, dbUser)
 
   const headers = {
     'Content-Type': 'application/json',
@@ -283,6 +285,15 @@ async function congregazioniHandler(event, context, user, dbUser) {
         source: resolvedResponsabile.source,
       }
 
+      await logActivity(db, {
+        entityType: 'congregazioni',
+        entityId: newCongregazione._id,
+        entityLabel: newCongregazione.nome,
+        action: 'create',
+        description: `Creata congregazione ${newCongregazione.nome}`,
+        actor,
+      })
+
       return {
         statusCode: 201,
         headers,
@@ -420,6 +431,15 @@ async function congregazioniHandler(event, context, user, dbUser) {
         result.responsabile = responsabile
       }
 
+      await logActivity(db, {
+        entityType: 'congregazioni',
+        entityId: result._id,
+        entityLabel: result.nome || congregazione.nome,
+        action: 'update',
+        description: `Aggiornata congregazione ${result.nome || congregazione.nome}`,
+        actor,
+      })
+
       return {
         statusCode: 200,
         headers,
@@ -448,6 +468,8 @@ async function congregazioniHandler(event, context, user, dbUser) {
         }
       }
 
+      const existingCongregazione = await congregazioniCollection.findOne({ _id: new ObjectId(id) })
+
       const result = await congregazioniCollection.deleteOne({ _id: new ObjectId(id) })
 
       if (result.deletedCount === 0) {
@@ -457,6 +479,15 @@ async function congregazioniHandler(event, context, user, dbUser) {
           body: JSON.stringify({ message: 'Congregazione non trovata' }),
         }
       }
+
+      await logActivity(db, {
+        entityType: 'congregazioni',
+        entityId: existingCongregazione?._id || new ObjectId(id),
+        entityLabel: existingCongregazione?.nome || 'Congregazione eliminata',
+        action: 'delete',
+        description: `Eliminata congregazione ${existingCongregazione?.nome || id}`,
+        actor,
+      })
 
       return {
         statusCode: 200,

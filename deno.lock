@@ -23,6 +23,7 @@
         "npm:firebase-admin@^13.6.0",
         "npm:firebase@^12.7.0",
         "npm:globals@^16.5.0",
+        "npm:jspdf@^2.5.2",
         "npm:mongodb@7",
         "npm:netlify-cli@^23.13.3",
         "npm:react-dom@^19.2.0",

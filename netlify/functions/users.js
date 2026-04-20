@@ -1,7 +1,9 @@
+/* global process */
 import { ObjectId } from 'mongodb'
 import { connectToDatabase } from './utils/mongodb.js'
 import { requireAuth } from './utils/auth.js'
 import { sendApprovalRequestEmail } from './utils/email.js'
+import { getActorSnapshot, logActivity } from './utils/activity.js'
 
 const PRIVACY_VERSION = process.env.PRIVACY_VERSION || '2025-01'
 
@@ -62,7 +64,6 @@ async function usersHandler(event, context, user) {
       // Export completo dei dati (GDPR - diritto alla portabilità)
       if (params.export === 'true') {
         const programmiCollection = db.collection('programmi')
-        const congregazioniCollection = db.collection('congregazioni')
 
         // Raccogli tutti i dati dell'utente
         const exportData = {
@@ -164,6 +165,17 @@ async function usersHandler(event, context, user) {
         updatedAt: new Date(),
       }
       await usersCollection.insertOne(newUser)
+
+      await logActivity(db, {
+        entityType: 'users',
+        entityLabel: newUser.email,
+        action: 'request_access',
+        description: `Nuova richiesta accesso: ${newUser.email}`,
+        actor: getActorSnapshot(user, newUser),
+        metadata: {
+          role: newUser.role,
+        },
+      })
 
       // Invia email di notifica all'admin
       try {
@@ -284,6 +296,17 @@ async function usersHandler(event, context, user) {
         result.oratore = oratore
       }
 
+      if (!isPrivacyUpdate && !isDataReviewUpdate) {
+        await logActivity(db, {
+          entityType: 'users',
+          entityId: result._id,
+          entityLabel: result.email,
+          action: 'update_profile',
+          description: `Profilo aggiornato: ${result.email}`,
+          actor: getActorSnapshot(user, result),
+        })
+      }
+
       return {
         statusCode: 200,
         headers,
@@ -304,6 +327,15 @@ async function usersHandler(event, context, user) {
 
       // Elimina l'utente
       await usersCollection.deleteOne({ googleId: user.uid })
+
+      await logActivity(db, {
+        entityType: 'users',
+        entityId: existingUser._id,
+        entityLabel: existingUser.email,
+        action: 'delete_account',
+        description: `Account eliminato: ${existingUser.email}`,
+        actor: getActorSnapshot(user, existingUser),
+      })
 
       return {
         statusCode: 200,

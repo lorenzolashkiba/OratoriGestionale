@@ -1,11 +1,12 @@
 import { ObjectId } from 'mongodb'
 import { connectToDatabase } from './utils/mongodb.js'
 import { requireApprovedUser } from './utils/auth.js'
+import { getActorSnapshot, logActivity } from './utils/activity.js'
 
 async function oratoriHandler(event, context, user, dbUser) {
   const { db } = await connectToDatabase()
   const oratoriCollection = db.collection('oratori')
-  const usersCollection = db.collection('users')
+  const actor = getActorSnapshot(user, dbUser)
 
   const headers = {
     'Content-Type': 'application/json',
@@ -107,6 +108,18 @@ async function oratoriHandler(event, context, user, dbUser) {
       const result = await oratoriCollection.insertOne(newOratore)
       newOratore._id = result.insertedId
 
+      await logActivity(db, {
+        entityType: 'oratori',
+        entityId: newOratore._id,
+        entityLabel: `${newOratore.nome} ${newOratore.cognome}`.trim(),
+        action: 'create',
+        description: `Creato oratore ${`${newOratore.nome} ${newOratore.cognome}`.trim()}`,
+        actor,
+        metadata: {
+          congregazione: newOratore.congregazione || '',
+        },
+      })
+
       return {
         statusCode: 201,
         headers,
@@ -179,6 +192,18 @@ async function oratoriHandler(event, context, user, dbUser) {
         }
       }
 
+      await logActivity(db, {
+        entityType: 'oratori',
+        entityId: result._id,
+        entityLabel: `${result.nome} ${result.cognome}`.trim(),
+        action: 'update',
+        description: `Aggiornato oratore ${`${result.nome} ${result.cognome}`.trim()}`,
+        actor,
+        metadata: {
+          congregazione: result.congregazione || '',
+        },
+      })
+
       return {
         statusCode: 200,
         headers,
@@ -233,6 +258,18 @@ async function oratoriHandler(event, context, user, dbUser) {
           body: JSON.stringify({ message: 'Oratore non trovato' }),
         }
       }
+
+      await logActivity(db, {
+        entityType: 'oratori',
+        entityId: existingOratore._id,
+        entityLabel: `${existingOratore.nome} ${existingOratore.cognome}`.trim(),
+        action: 'delete',
+        description: `Eliminato oratore ${`${existingOratore.nome} ${existingOratore.cognome}`.trim()}`,
+        actor,
+        metadata: {
+          congregazione: existingOratore.congregazione || '',
+        },
+      })
 
       return {
         statusCode: 200,
